@@ -198,7 +198,7 @@ class Api {
     }
 
     /*
-    Постановка и снятие лайка продукта
+    Постановка лайка продукта
     В ответе придёт обновлённый JSON с постом. 
     */
     async setProductLike( productId ) {
@@ -224,6 +224,10 @@ class Api {
         return result;
     }
 
+    /*
+    Снятие лайка продукта
+    В ответе придёт обновлённый JSON с постом. 
+    */
     async removeProductLike( productId ) {
         const init = {
             method: 'DELETE', 
@@ -246,6 +250,63 @@ class Api {
         const result = await response.json();
 
         return result;
+    }
+
+    /*
+    изменение name и about Пользователя
+    В ответе придёт обновлённый JSON с пользователем.
+    */
+    async updateUserInfo( body ) {
+        const init = {
+            method: 'PATCH', 
+            headers: this.headers,
+            body: JSON.stringify( body ), 
+        }
+
+        const response = await fetch( `${ this.baseUrl }/v2/${ this.groupId }/users/me`, init );
+
+        if ( !response.ok ) {
+            switch ( response.status ) {
+                case 400: 
+                    const result = await response.json();
+                    
+                    throw new Error( `Status code is ${response.status}: ${result.message}` );
+                default:
+                    throw new Error( `Status code is ${response.status}: ${ response.statusText }` );                
+            }
+        }
+
+        const result = await response.json();
+
+        return result;
+    }
+
+    /*
+    изменение avatar Пользователя. 
+    data = {
+        avatar: 'https://react-learning.ru/image-compressed/default-image.jpg'
+    }
+    В ответе придёт обновлённый JSON с пользователем.
+    */
+    async updateUserAvatar( data ) {
+        const init = {
+            method: 'PATCH', 
+            headers: this.headers, 
+            body: JSON.stringify( data )
+        }
+
+        const response = await fetch( `${ this.baseUrl }/v2/${ this.groupId }/users/me/avatar`, init );
+
+        if ( !response.ok ) {
+            switch ( response.status ) {
+                case 400: 
+                    const result = await response.json();
+                    
+                    throw new Error( `Status code is ${response.status}: ${result.message}` );
+                default:
+                    throw new Error( `Status code is ${response.status}: ${ response.statusText }` );
+            }
+        }
     }
 }
 

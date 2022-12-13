@@ -1,7 +1,10 @@
-function PageTitle( { title } ) {
+function PageTitle( { children, title } ) {
     return (
         <h1 className="mb-4 text-center">
-            { title }
+            <>
+                { title }
+                { children }
+            </>
         </h1>
     );
 }
