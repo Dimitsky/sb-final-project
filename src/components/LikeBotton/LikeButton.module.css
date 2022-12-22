@@ -1,0 +1,20 @@
+.like {
+    border: none;
+    border-radius: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    background: none;
+    cursor: pointer;
+}
+
+.icon {
+    width: 19px;
+    transition: color 150ms ease-in-out;
+    color: #8E9293;
+}
+
+.liked {
+    color: var( --orange );
+}

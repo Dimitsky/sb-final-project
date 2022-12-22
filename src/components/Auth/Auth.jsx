@@ -1,11 +1,13 @@
-import React from 'react';
+import { useState, useContext, createContext } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
-import { LS_TOKEN_KEY, LS_USER_ID_KEY } from '../consts/consts';
+import { Api } from '../Api/Api';
+import { LS_TOKEN_KEY, SERVER_GROUP_NAME, BASE_SERVER_URL } from '../consts/consts';
 
-const AuthContext = React.createContext( null );
+const AuthContext = createContext( null );
 
 function useAuth() {
-    const context = React.useContext( AuthContext );
+    const context = useContext( AuthContext );
 
     if ( !context ) throw new Error('AuthContext must be used with AuthProvider');
 
@@ -13,23 +15,15 @@ function useAuth() {
 }
 
 function AuthProvider( { children } ) {
-    const [ auth, setAuth ] = React.useState( () => {
+    const [ auth, setAuth ] = useState( () => {
         const token = window.localStorage.getItem( LS_TOKEN_KEY );
-
+ 
         return token ? token : null;
-    } );
-    const [ userId, setUserId ] = React.useState( () => {
-        const id = window.localStorage.getItem( LS_USER_ID_KEY );
-
-        return id ? id : null;
     } );
 
     const login = ( user, calback ) => {
         setAuth( user.token );
         window.localStorage.setItem( LS_TOKEN_KEY, user.token );
-
-        setUserId( user.data._id );
-        window.localStorage.setItem( LS_USER_ID_KEY, user.data._id );
 
         if ( calback && typeof calback === 'function' ) calback();
     };
@@ -38,14 +32,28 @@ function AuthProvider( { children } ) {
         setAuth( null );
         window.localStorage.removeItem( LS_TOKEN_KEY );
 
-        setUserId( null );
-        window.localStorage.removeItem( LS_USER_ID_KEY );
-
         if ( calback && typeof calback === 'function' ) calback();
     }
 
+    const api = new Api( {
+        baseUrl: BASE_SERVER_URL, 
+        groupId: SERVER_GROUP_NAME, 
+        headers: {
+            'Content-Type': 'application/json', 
+            'authorization': `Bearer ${ auth }`, 
+        }
+    } );
+
+    // TanStack Query
+    const { data } = useQuery( { 
+        queryKey: [ 'getUserData' ], 
+        queryFn: () => api.getUserData() 
+    } );
+
+    const userData = data || {};
+
     return (
-        <AuthContext.Provider value={ { auth, login, logout, userId } }>
+        <AuthContext.Provider value={ { auth, login, logout, userData } }>
             { children }
         </AuthContext.Provider>
     );

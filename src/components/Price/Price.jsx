@@ -1,11 +1,24 @@
-function Price( { price, discount } ) {
+import classes from './Price.module.css';
+
+function Price( { className, price, discount } ) {
     return (
-        discount ? (
-            <>
-                <h6 className='card-subtitle text-decoration-line-through'>{ price }</h6>
-                <h5 className="card-title text-danger">{ price - ( price / 100 * discount ) }</h5>
-            </>
-        ) : <h5 className="card-title">{ price }</h5>
+        <div className={ className ? [ classes.wrap, className ].join( ' ' ) : classes.wrap }>
+            {
+                !discount ? 
+                    <span className={ classes.price }>
+                        { `${ price }₽` }
+                    </span>
+                          : 
+                    <>
+                        <span className={ [ classes.price, classes.discountPrice ].join( ' ' ) }>
+                            { `${ price - ( price / 100 * discount ) }₽` }
+                        </span>
+                        <span className={ [ classes.price, classes.oldPrice ].join( ' ' ) }>
+                            { `${ price }₽` }
+                        </span>
+                    </>
+            }
+        </div>
     );
 }
 

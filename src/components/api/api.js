@@ -197,6 +197,25 @@ class Api {
         return result;
     }
 
+    async getProduct( id ) {
+        const init = {
+            headers: this.headers, 
+        }
+
+        const response = await fetch( `${ this.baseUrl }/products/${ id }`, init );
+
+        if ( !response.ok ) {
+            switch ( response.status ) {
+                default: 
+                    throw new Error( `Error ${ response.status }: ${ response.statusText }` );
+            }
+        }
+
+        const result = await response.json();
+
+        return result;
+    }
+
     /*
     Постановка лайка продукта
     В ответе придёт обновлённый JSON с постом. 

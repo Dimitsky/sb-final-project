@@ -1,0 +1,64 @@
+.intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 60px;
+    background: rgb(255,139,56);
+    background: linear-gradient(83deg, rgba(255,139,56,1) 0%, rgba(243,102,75,1) 100%);
+}
+
+.avatar {
+    margin: 0 auto 1em;
+}
+
+.title {
+    composes: heading from '../../index.css';
+    composes: heading--xl from '../../index.css';
+    margin-bottom: 0;
+    color: #fff;
+}
+
+.email {
+    composes: paragraph from '../../index.css';
+    color: #fff;
+}
+
+.subtitle {
+    composes: heading from '../../index.css';
+    composes: heding--md from '../../index.css';
+    margin-bottom: 0.2em;
+    text-align: left;
+}
+
+.info {
+    background: #F3F6FB;
+}
+
+.panel {
+    border-radius: 0.875em;
+    background: var( --white );
+    padding: 1.375em;
+}
+
+.panel:not( :last-child ) {
+    margin-bottom: 2em;
+}
+
+.panelInfo {
+    transform: translateY( -54px );
+}
+
+.text {
+    composes: paragraph from '../../index.css';
+    text-align: left;
+}
+
+.edit {
+    composes: button from '../../index.css';
+    composes: button--text from '../../index.css';
+}
+
+.logout {
+    composes: button from '../../index.css';
+}

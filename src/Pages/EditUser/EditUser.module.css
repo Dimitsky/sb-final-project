@@ -1,0 +1,39 @@
+.intro {
+    composes: intro from '../Profile/Profile.module.css';
+    display: block;
+}
+
+.panel {
+    composes: panel from '../Profile/Profile.module.css';
+}
+
+.label {
+    composes: subtitle from '../Profile/Profile.module.css';
+}
+
+.input {
+    composes: form__input from '../../index.css';
+}
+
+.textarea {
+    composes: input;
+    min-height: 15em;
+}
+
+.box:not( :last-child ) {
+    margin-bottom: 1em;
+}
+
+.buttonWrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.button {
+    composes: button from '../../index.css';
+    composes: button--text from '../../index.css';
+}
+
+.button:not( :last-child ) {
+    margin-right: 2em;
+}

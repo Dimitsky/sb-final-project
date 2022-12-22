@@ -1,0 +1,48 @@
+.signin__wrapper {
+    padding-top: 324px;
+    background: url('./bg.svg') no-repeat top 0 left 0 / 100%;
+}
+
+.signin__logo {
+    position: absolute;
+    top: 7%;
+    left: 50%;
+    color: #fff;
+    transform: translateX(-50%);
+}
+
+.signin__heading {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.signin__paragraph {
+    margin-bottom: 1.25rem;
+    color: var( --soft-gray );
+    text-align: left;
+}
+
+.signin__button {
+    margin-top: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.signin__password-resset-link-wrap {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 2.5rem;
+}
+
+.signin__password-resset-link {
+    text-decoration: underline;
+}
+
+.signin__login-wrap {
+    color: var( --soft-gray );
+    font-size: 1em;
+    text-align: center;
+}
+
+.signin__login {
+    font-weight: 600;
+}

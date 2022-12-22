@@ -1,0 +1,55 @@
+.counter {
+    display: flex;
+    align-items: center;
+    gap: 0.45em;
+    color: var( --dark );
+    font-size: 1.125em;
+    font-weight: 500;
+}
+
+.button {
+    border: 1px solid var( --gray-1 );
+    border-radius: 0.7em;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    width: 2.333em;
+    height: 2.33em;
+    color: var(--dark);
+    font-size: inherit;
+    background: none;
+    transition: border 150ms ease-in-out;
+}
+
+.buttonLess {}
+
+.buttonMore {
+    border-color: #fff0ea;
+    color: var( --orange );
+    background: #fff0ea;
+}
+
+.button:hover {
+    color: var( --orange );
+    border-color: var( --orange );
+}
+
+.text {
+    width: 1.5em;
+    text-align: center;
+}
+
+/* icons */
+
+.icon {
+    transition: color 150ms ease-in-out;
+}
+.plus {
+    width: 0.7333em;
+    height: 0.8333em;
+}
+
+.minus {
+    width: 0.7333em;
+    height: 0.1666em;
+}

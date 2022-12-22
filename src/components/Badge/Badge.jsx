@@ -1,9 +1,19 @@
-function Badge( { newProduct, sale } ) {
+import { Children } from 'react';
+import classes from './Badge.module.css';
+
+const defaultStyle = {
+    backgroundColor: '#ff5e5b', 
+    color: '#fff', 
+}
+
+function Badge( { text, sx = defaultStyle } ) {
     return (
-        <div className="card-tags d-flex flex-column align-items-start position-absolute top-0 start-0">
-            { newProduct ? <span className="badge text-bg-danger mb-1">{ newProduct }</span> : null }
-            { sale ? <span className="badge text-bg-info">-{ sale }%</span> : null }
-        </div>
+        <span 
+            className={ [ classes.badge ].join( ' ' ) }
+            style={ sx }
+        >
+            { text }
+        </span>
     );
 }
 
