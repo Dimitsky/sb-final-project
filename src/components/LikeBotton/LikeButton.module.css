@@ -4,6 +4,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    min-width: 44px;
+    min-height: 44px;
     padding: 0;
     background: none;
     cursor: pointer;
@@ -16,5 +18,5 @@
 }
 
 .liked {
-    color: var( --orange );
+    color: red;
 }

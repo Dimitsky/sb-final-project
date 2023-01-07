@@ -178,7 +178,6 @@ class Api {
         const init = {
             headers: this.headers, 
         }
-
         const response = await fetch(`${this.baseUrl}/products`, init);
 
         if(!response.ok) {

@@ -1,18 +1,8 @@
-import { useState } from 'react';
 import classes from './LikeButton.module.css';
 
 function LikeButton( { className, handler, isLiked } ) {
-    const [ state, setState ] = useState( isLiked );
-
-    /*
-        У кнопки собственное состояние, а логика работы с сервером находится в родительском компоненте. 
-        Передача состояния кнопки происходит с помощью механизма поднятия состояния. 
-        Благодаря отделению логики работы с сервером и внутреннего состояния, эту кнопку можно использовать не только
-        для управления лайками в продуктах, но и в, например, комментариях или других компонентах где нужна кнопка-лайк. 
-    */
     const handleClick = () => {
-        setState( !state );
-        if ( handler && typeof handler === 'function' ) handler( !state );
+        if ( handler && typeof handler === 'function' ) handler( !isLiked );
     }
 
     return (
@@ -23,7 +13,7 @@ function LikeButton( { className, handler, isLiked } ) {
             onClick={ handleClick }
         >
             <svg 
-                className={ !state ? classes.icon : [ classes.icon, classes.liked ].join( ' ' ) }  
+                className={ !isLiked ? classes.icon : [ classes.icon, classes.liked ].join( ' ' ) }  
                 viewBox="0 0 19 18" 
                 xmlns="http://www.w3.org/2000/svg"
             >

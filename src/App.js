@@ -1,4 +1,7 @@
+// react router dom
 import { Routes, Route } from 'react-router-dom';
+
+// react query
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // pages
@@ -12,9 +15,8 @@ import { SignUp } from './Pages/SignUp/SignUp';
 import { NotFound } from './Pages/NotFound';
 
 // HOCs
-import { AuthProvider } from './components/Auth/Auth';
-import { RequireAuth } from './hoc/RequireAuth';
-import { RequireUnauth } from './hoc/RequireUnauth';
+import { RequireAuth } from './HOCs/RequireAuth';
+import { RequireUnauth } from './HOCs/RequireUnauth';
 
 // TEST PAGE
 import { Test } from './components/Test/Test';
@@ -26,47 +28,44 @@ function App() {
 	return (
 	<>
 		<QueryClientProvider client={ queryClient }>
-			<AuthProvider>
-				<Routes>
-					<Route path="/" element={ <Layout /> }>
-						<Route index element={ 
-							<RequireAuth>
-								<Home /> 
-							</RequireAuth>
-						} />
-						<Route path="profile" element={ 
-							<RequireAuth>
-								<Profile />
-							</RequireAuth>
-						} />
-						<Route path="/profile/edit-user" element={ 
-							<RequireAuth>
-								<EditUser />
-							</RequireAuth>
-						}
-						/>
-						<Route path="/products/:id" element={ 
-							<RequireAuth>
-								<ProductPage />
-							</RequireAuth>
-						} />
-						<Route path="*" element={ <NotFound /> } />
-					</Route>
-					<Route path="/signin" element={ 
-						<RequireUnauth>
-							<SignIn /> 
-						</RequireUnauth>
+			<Routes>
+				<Route path="/" element={ <Layout /> }>
+					<Route index element={ 
+						<RequireAuth>
+							<Home /> 
+						</RequireAuth>
 					} />
-					<Route path="/signup" element={ 
-						<RequireUnauth>
-							<SignUp /> 
-						</RequireUnauth>
-					} />
-					
-					{/* TEST ROUTE */}
-					<Route path="/test" element={ <Test ratings={[ 5, 3, 5, 1, 4, 1 ]} starColor="yellow" /> } />
-				</Routes>
-			</AuthProvider>
+					{/* <Route path="profile" element={ 
+						<RequireAuth>
+							<Profile />
+						</RequireAuth>
+					} /> */}
+					{/* <Route path="profile/edit-user" element={ 
+						<RequireAuth>
+							<EditUser />
+						</RequireAuth>
+					} /> */}
+					{/* <Route path="products/:id" element={ 
+						<RequireAuth>
+							<ProductPage />
+						</RequireAuth>
+					} /> */}
+					<Route path="*" element={ <NotFound /> } />
+				</Route>
+				<Route path="/signin" element={ 
+					<RequireUnauth>
+						<SignIn /> 
+					</RequireUnauth>
+				} />
+				<Route path="/signup" element={ 
+					<RequireUnauth>
+						<SignUp /> 
+					</RequireUnauth>
+				} />
+				
+				{/* TEST ROUTE */}
+				<Route path="/test" element={ <Test ratings={[ 5, 3, 5, 1, 4, 1 ]} starColor="yellow" /> } />
+			</Routes>
 		</QueryClientProvider>
 	</>
 	);

@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { useAuth } from '../../components/Auth/Auth';
+import { useAuth } from '../Auth/Auth';
+import { useUser } from '../../hooks/useUser';
+
 import { Avatar } from '../../components/Avatar/Avatar';
 import classes from './NavBar.module.css';
 
 function NavBar() {
     const [ isOpen, setIsOpen ] = useState( false );
-    const { userData, logout } = useAuth();
+    const { logout } = useAuth();
+    const { data: user } = useUser();
 
     const handleBurger = () => {
         setIsOpen( !isOpen );
@@ -29,10 +32,10 @@ function NavBar() {
                 >
                     <Avatar 
                         className={ classes.avatar }
-                        link={ userData.avatar }
+                        link={ user?.avatar }
                     />
                     <p className={ classes.name }>
-                        { userData.name }
+                        { user?.name }
                     </p>
                 </NavLink>
                 <ul className={ classes.list }>

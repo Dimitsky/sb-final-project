@@ -1,149 +1,179 @@
-import { useEffect, useState, useRef } from 'react';
-import { useLocation, Navigate, useNavigate } from 'react-router-dom';
+import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
 
-import { Container } from '../../components/Container/Container';
-import classes from './EditUser.module.css';
-import { useAuth } from '../../components/Auth/Auth';
-import { Api } from '../../components/Api/Api';
-import { BASE_SERVER_URL, SERVER_GROUP_NAME} from '../../components/consts/consts';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Placeholder from 'react-bootstrap/Placeholder';
+
+import { useUser } from '../../hooks/useUser';
+import { useUpdateUser } from '../../hooks/useUpdateUser';
+import { Loader } from '../../HOCs/Loader/Loader';
+
+import './edituser.css';
 
 function EditUser() {
-    const [ editData, setEditData ] = useState( {} );
-    const refNameInput = useRef();
-    const navigate = useNavigate();
-    const location = useLocation();
-    const { auth } = useAuth();
-    const from = location.state ? location.state.from : null;
+    const { data: user, error, isLoading, isError } = useUser();
 
-    useEffect( () => {
-        refNameInput.current.focus();
-        setEditData( {
-            avatar: data.avatar, 
-            name: data.name, 
-            about: data.about, 
-        } )
-    }, [] );
+     if ( isLoading ) return (
+        <Container 
+            className="edit-user__container"
+            fluid
+        >
+            <Placeholder animation="glow">
+                <Placeholder
+                    className="mb-2" 
+                    xs={4}
+                />
+            </Placeholder>
+            <Placeholder animation="glow">
+                <Placeholder className="mb-3" size="lg" xs={12}/>
+            </Placeholder>
+            <Placeholder animation="glow">
+                <Placeholder
+                    className="mb-2" 
+                    xs={4}
+                />
+            </Placeholder>
+            <Placeholder animation="glow">
+                <Placeholder className="mb-3" size="lg" xs={12}/>
+            </Placeholder>
+            <Placeholder animation="glow">
+                <Placeholder
+                    className="mb-2" 
+                    xs={4}
+                />
+            </Placeholder>
+            <Placeholder animation="glow">
+                <Placeholder className="mb-3" size="lg" xs={12}/>
+            </Placeholder>
+            <Placeholder animation="glow">
+                <Placeholder.Button 
+                    className="me-3"
+                    xs={4} 
+                />
+                <Placeholder.Button 
+                    xs={4}
+                    variant="danger" 
+                />
+            </Placeholder>
+        </Container>
+    );
 
-    /*
-        На страницу редактирования нужно перейти из страницы профиля, 
-        чтобы передать из нее загруженные данные пользователя и не загружать их повторно на странице редактирования
-    */
-    if ( !from ) return <Navigate to="/profile" />
-
-    const data = location.state.data;
-
-    const handleCancel = () => navigate( '/profile' );
-    const handleSubmit = event => {
-        event.preventDefault();
-        event.target.setAttribute( 'disabled', '' );
-
-        const api = new Api( {
-            baseUrl: BASE_SERVER_URL, 
-            groupId: SERVER_GROUP_NAME, 
-            headers: {
-                'Content-Type': 'application/json', 
-                'authorization': `Bearer ${ auth }`
-            }
-        } );
-        
-        api.updateUserAvatar( { avatar: editData.avatar } )
-            .then( () => {
-                return api.updateUserInfo( { name: editData.name, about: editData.about } );
-            } )
-            .then( () => {
-                navigate( '/profile' );
-            } )
-            .catch( error => {
-                alert( error );
-                event.target.removeAttribute( 'disabled' );
-            } );
-    }
-    const handleInput = event => {
-        const target = event.target;
-        const name = target.name;
-        const value = target.value;
-
-        setEditData( prevData => {
-            return {
-                ...prevData, 
-                [ name ]: value, 
-            }
-        } );
-    }
+    if ( isError ) return (
+        <Container fluid>
+            <Row>
+                <Col>
+                    <p>
+                        { error.message }
+                    </p>
+                </Col>
+            </Row>
+        </Container>
+    );
 
     return (
-        <section className={ classes.intro }>
-            <Container>
-                <div className={ classes.panel }>
-                    <form method="PATCH">
-                        <div className={ classes.box }>
-                            <label 
-                                className={ classes.label }
-                                htmlFor="avatar"
-                            >
-                                Ссылка на аватар
-                            </label>
-                            <input 
-                                className={ classes.input }
-                                name="avatar" 
-                                id="avatar" 
-                                type="text" 
-                                defaultValue={ data.avatar }
-                                onInput={ handleInput }
-                            />
+        <section className="edit-user">
+            <Container 
+                className="edit-user__container"
+                fluid>
+                <Row>
+                    <Col>
+                        <div className="">
+                            <EditUserForm user={ user }/>
                         </div>
-                        <div className={ classes.box }>
-                            <label 
-                                className={ classes.label }
-                                htmlFor="name"
-                            >
-                                Имя
-                            </label>
-                            <input 
-                                className={ classes.input }
-                                name="name" 
-                                id="name" 
-                                type="text" 
-                                defaultValue={ data.name }
-                                ref={ refNameInput }
-                                onInput={ handleInput }
-                            />
-                        </div>
-                        <div className={ classes.box }>
-                            <label 
-                                className={ classes.label }
-                                htmlFor="about"
-                            >
-                                Обо мне
-                            </label>
-                            <textarea 
-                                className={ classes.textarea }
-                                name="about" 
-                                id="about" 
-                                defaultValue={ data.about }
-                                onInput={ handleInput }
-                            ></textarea>
-                        </div>
-                        <div className={ [ classes.box, classes.buttonWrapper ].join( ' ' ) }>
-                            <button
-                                className={ classes.button }
-                                type="submit"
-                                onClick={ handleSubmit }
-                            >
-                                Применить
-                            </button>
-                            <button
-                                className={ classes.button }
-                                type="button"
-                                onClick={ handleCancel }
-                            >
-                                Отменить
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                    </Col>
+                </Row>
             </Container>
         </section>
+    );
+}
+
+function EditUserForm( { user } ) {
+    const navigate = useNavigate();
+    const refSubmitBtn = useRef();
+    
+    const mutation = useUpdateUser();
+
+    const formik = useFormik({
+        initialValues: {
+            avatar: user.avatar,
+            name: user.name, 
+            about: user.about, 
+        },
+        onSubmit: variables => {
+            refSubmitBtn.current.setAttribute( 'disabled', '' );
+            mutation.mutate( variables, {
+                onSettled: () => {
+                    refSubmitBtn.current.removeAttribute( 'disabled' );
+                }
+            } )
+        },
+    });
+
+    return (
+        <Form 
+            method="PATCH" 
+            onSubmit={ formik.handleSubmit }
+        >
+            <Form.Group 
+                className="mb-3"
+                controlId="avatar"
+            >
+                <Form.Label>Ссылка на аватар</Form.Label>
+                <Form.Control 
+                    name="avatar" 
+                    type="text" 
+                    placeholder="Введите url аватара"
+                    onChange={ formik.handleChange }
+                    value={ formik.values.avatar }
+                />
+            </Form.Group>
+            <Form.Group 
+                className="mb-3"
+                controlId="name"
+            >
+                <Form.Label>Ваше Имя</Form.Label>
+                <Form.Control 
+                    name="name" 
+                    type="text" 
+                    placeholder="Введите ваше имя" 
+                    onChange={ formik.handleChange } 
+                    value={ formik.values.name } 
+                />
+            </Form.Group>
+            <Form.Group 
+                className="mb-3"
+                controlId="about"
+            >
+                <Form.Label>О вас</Form.Label>
+                <Form.Control 
+                    as="textarea" 
+                    name="about" 
+                    placeholder="Напишите о себе"
+                    onChange={ formik.handleChange }
+                    value={ formik.values.about }
+                />
+            </Form.Group>
+            <Form.Group>
+                <Button
+                    className="me-3"
+                    type="submit"
+                    ref={ refSubmitBtn }
+                >
+                    Применить
+                </Button>
+                <Button
+                    variant="danger"
+                    type="button"
+                    onClick={ () => navigate( '/profile' ) }
+                >
+                    Отменить</Button>
+            </Form.Group>
+        </Form>
     );
 }
 

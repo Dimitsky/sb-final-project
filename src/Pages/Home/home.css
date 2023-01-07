@@ -1,9 +1,10 @@
 .list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5em;
     margin-top: 0;
     margin-bottom: 0;
     padding-left: 0;
     list-style: none;
+}
+
+.home__list {
+    --bs-gutter-y: 1.5rem;
 }

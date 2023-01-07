@@ -1,17 +1,22 @@
-import { useNavigate, NavLink } from 'react-router-dom';
+// redux
+import { useDispatch } from 'react-redux';
+
+// react router dom
+import { NavLink } from 'react-router-dom';
+
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+
+// react query
 import { useMutation } from '@tanstack/react-query';
 
 import { Container } from '../../components/Container/Container';
 import './signin.css';
 import { Api } from '../../components/Api/Api';
 import { BASE_SERVER_URL, SERVER_GROUP_NAME } from '../../components/consts/consts';
-import { useAuth } from '../../components/Auth/Auth';
 
 function SignIn() {
-    const { login } = useAuth();
-    const navigate = useNavigate();
+    const dispatch = useDispatch();
     
     const handleSubmit = values => {
         const api = new Api( {
@@ -24,8 +29,7 @@ function SignIn() {
 
         api.signIn( values.email, values.password )
             .then( result => {
-                login( result );
-                navigate('/');
+                dispatch({type: 'SET_TOKEN', token: result.token});
             } )
             .catch( error => {
                 alert( error.message );

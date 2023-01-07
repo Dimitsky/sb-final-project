@@ -1,0 +1,9 @@
+.card {
+    position: relative;
+    width: 100%;
+}
+
+.card__img {
+    height: 150px;
+    object-fit: cover;
+}

@@ -1,21 +1,23 @@
+// react router dom
 import { useNavigate, NavLink } from 'react-router-dom';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
+
+// react query
 import { useMutation } from '@tanstack/react-query';
 
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
+// my comps
 import { Container } from '../../components/Container/Container';
 import './signup.css';
 import '../SignUp/signup.css';
 import { Api } from '../../components/Api/Api';
 import { BASE_SERVER_URL, SERVER_GROUP_NAME } from '../../components/consts/consts';
-import { useAuth } from '../../components/Auth/Auth';
 
 function SignUp() {
-    const { login } = useAuth();
     const navigate = useNavigate();
 
     const handleSubmit = values => {
-        console.log(values)
         const api = new Api( {
             baseUrl: BASE_SERVER_URL,
             groupId: SERVER_GROUP_NAME, 
