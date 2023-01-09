@@ -5,14 +5,24 @@ export const cartReducer = (state = initialState.cart, action) => {
     switch (action.type) {
         case ADD_PRODUCT:
             return [...state, action.payload]
-        case REMOVE_PRODUCT:            
+        case REMOVE_PRODUCT:
             return state.filter(product => product.id !== action.payload);
         case INCREMENT_PRODUCT:
-            console.log('increment product');
-            return state
+            return state.map(product => {
+                if (product.id !== action.payload) return product;
+                else {
+                    product.count++;
+                    return product;
+                }
+            })
         case DECREMENT_PRODUCT:
-            console.log('decrement product');
-            return state
+            return state.map(product => {
+                if (product.id !== action.payload) return product;
+                else {
+                    product.count--;
+                    return product;
+                }
+            })
         case CHOOSE_PRODUCT:
             console.log('choose product')
             return state

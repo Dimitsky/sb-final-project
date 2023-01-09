@@ -2,7 +2,7 @@
 import { useState } from 'react';
 
 // redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { removeToken } from '../../redux/actionsCreators/tokenAC';
 
 // react router dom
@@ -20,6 +20,7 @@ import classes from './NavBar.module.css';
 
 function NavBar() {
     const dispatch = useDispatch();
+    const cart = useSelector(state => state.cart);
     const [ isOpen, setIsOpen ] = useState( false );
     const { data: user } = useUser();
 
@@ -82,6 +83,7 @@ function NavBar() {
                         >
                             <PersonIcon />
                             Корзина
+                            <CartBadge count={cart.length}/>
                         </NavLink>
                     </li>
                     <li className={ classes.item }>
@@ -152,6 +154,12 @@ function NavBurger( { handler, isExpanded } ) {
             <span className={ classes.line }></span>
         </button>
     );
+}
+
+function CartBadge({count}) {
+    return (
+        <span className={classes.cartBadge}>{count}</span>
+    )
 }
 
 export {

@@ -60,6 +60,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 1em;
     margin-top: 0;
     margin-bottom: 0;
@@ -69,6 +70,10 @@
 
 .item:last-child {
     margin-top: auto;
+}
+
+.item {
+    position: relative;
 }
 
 .link {
@@ -151,6 +156,20 @@
 
 .burger[ aria-expanded='true' ] > .line::before {
     transform: translateY( 0 ) rotate( 45deg );
+}
+
+.cartBadge {
+    position: absolute;
+    top: -25%;
+    right: -15%;
+    border-radius: 2em;
+    min-width: 1.5em;
+    padding: 0.4em;
+    background: red;
+    color: #fff;
+    font-size: 0.7em;
+    line-height: 0.75;
+    text-align: center;
 }
 
 @media screen and ( min-width: 992px ) {

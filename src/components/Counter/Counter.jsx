@@ -1,21 +1,16 @@
-import { useState } from 'react';
-
+// css module
 import classes from './Counter.module.css';
 
-function Counter( { className, maxCount, handler } ) {
-    const [ count, setCount ] = useState( 1 );
+function Counter( { className, count, maxCount, handlerIncrement, handlerDecrement } ) {
+    const handleLess = () => {
+        if ( count - 1 < 1 ) return
+        if (handlerDecrement && typeof handlerDecrement === 'function') handlerDecrement();
+    };
 
-    const handleLess = () => setCount( prevCount => {
-        if ( ( prevCount - 1 ) === 0 ) return 1;
-        if ( handler && typeof handler === 'function' ) handler( prevCount - 1 );
-        return prevCount - 1;
-    } );
-
-    const handleMore = () => setCount( prevCount => {
-        if ( ( prevCount + 1 ) > maxCount ) return maxCount;
-        if ( handler && typeof handler === 'function' ) handler( prevCount + 1 );
-        return prevCount + 1;
-    } );
+    const handleMore = () => {
+        if (count + 1 > maxCount) return;
+        if (handlerIncrement && typeof handlerIncrement === 'function') handlerIncrement();
+    };
 
     return (
         <div className={ className ? [ classes.counter, className ].join( ' ' ) : classes.counter }>

@@ -1,4 +1,4 @@
-import { ADD_PRODUCT, CHOOSE_PRODUCT, INCREMENT_PRODUCT, REMOVE_PRODUCT } from '../types/cartTypes';
+import { ADD_PRODUCT, CHOOSE_PRODUCT, DECREMENT_PRODUCT, INCREMENT_PRODUCT, REMOVE_PRODUCT } from '../types/cartTypes';
 
 export const addProduct = (id) => ({
     type: ADD_PRODUCT, 
@@ -20,7 +20,7 @@ export const incrementProduct = (id) => ({
 })
 
 export const decrementProduct = (id) => ({
-    type: INCREMENT_PRODUCT, 
+    type: DECREMENT_PRODUCT, 
     payload: id, 
 })
 
