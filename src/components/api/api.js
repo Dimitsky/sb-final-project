@@ -196,6 +196,10 @@ class Api {
         return result;
     }
 
+    async getProductsByIds(ids) {
+        return Promise.all(ids.map(id => this.getProduct(id)));
+    }
+
     async getProduct( id ) {
         const init = {
             headers: this.headers, 

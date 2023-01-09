@@ -75,6 +75,16 @@ function NavBar() {
                         </NavLink>
                     </li>
                     <li className={ classes.item }>
+                        <NavLink 
+                            className={ classes.link }
+                            to="/cart"
+                            onClick={ handleCloseMenu }
+                        >
+                            <PersonIcon />
+                            Корзина
+                        </NavLink>
+                    </li>
+                    <li className={ classes.item }>
                         <button 
                             className={ [ classes.logout, classes.link].join( ' ' ) }
                             type="button"

@@ -13,6 +13,7 @@ import { Profile } from './Pages/Profile/Profile';
 import { EditUser } from './Pages/EditUser/EditUser';
 import { SignIn } from './Pages/SignIn/SignIn';
 import { SignUp } from './Pages/SignUp/SignUp';
+import { Cart } from './Pages/Cart/Cart';
 import { NotFound } from './Pages/NotFound';
 
 // HOCs
@@ -35,6 +36,11 @@ function App() {
 					<Route index element={ 
 						<RequireAuth>
 							<Home /> 
+						</RequireAuth>
+					} />
+					<Route path="/cart" element={
+						<RequireAuth>
+							<Cart />
 						</RequireAuth>
 					} />
 					<Route path="profile" element={ 

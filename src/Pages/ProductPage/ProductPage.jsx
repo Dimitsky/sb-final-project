@@ -1,6 +1,6 @@
-// react bootstrap
-import Container from 'react-bootstrap/Container';
-import Card from 'react-bootstrap/Card';
+// redux
+import { useDispatch, useSelector } from 'react-redux';
+import { addProduct, removeProduct } from '../../redux/actionsCreators/cartAC';
 
 // my comps
 import { BackButton } from '../../components/BackButton/BackButton';
@@ -15,49 +15,89 @@ import { useUser } from '../../hooks/useUser';
 import './productpage.css';
 
 function ProductPage() {
+    const dispatch = useDispatch();
+    const cart = useSelector(state => state.cart);
     const { data: product, error, status } = useProduct();
     const { data: user } = useUser();
 
+    // handlers
+    const handleAddToCart = () => {
+        dispatch(addProduct(product._id));
+    }
+    const handleRemoveFromCart = () => {
+        dispatch(removeProduct(product._id));
+    }
+
     if ( status === 'loading') {
         return (
-            <Container>
+            <div className="container">
                 Загрузка...
-            </Container>
+            </div>
         );
     }
 
     if ( status === 'error' ) {
         return (
-            <Container>
+            <div className="container">
                 { error.message }
-            </Container>
+            </div>
         );
     }
     
     return (
-        <Container>
-            <Card className="detailed-card">
-                <Card.Header className="detailed-card__header">
+        <div className="container">
+            <div className="">
+                <div className="detailed-card__header">
                     <BackButton />
                     <LikeButton 
                         className="detailed-card__like-btn"
                         productId={product._id}
                         isLiked={product.likes.find( id => id === user._id ) ? true : false}
                     />
-                </Card.Header>
-                <Card.Img 
-                    className="detailed-card__img"
-                    variant="top"
-                    src={product.pictures}
-                />
-                <Card.Body className="detailed-card__body">
-                    <Card.Title className="detailed-card__title">
+                </div>
+                <div>
+                    <img
+                        className="detailed-card__img"
+                        src={product.pictures}
+                    />
+                </div>
+                <div className="">
+                    <h2 className="">
                         {product.name}
-                    </Card.Title>
-                </Card.Body>
-            </Card>
-        </Container>
+                    </h2>
+                    {
+                        cart.find(cartProduct => cartProduct.id === product._id) ? 
+                            <RemoveProductFromCartButton handler={handleRemoveFromCart} /> : 
+                            <AddProductToCartButton handler={handleAddToCart} />
+                    }
+                </div>
+            </div>
+        </div>
     );
+}
+
+function AddProductToCartButton({handler}) {
+    return (
+        <button 
+            className=""
+            type="button"
+            onClick={handler}
+        >
+            Добавить в корзину
+        </button>
+    )
+}
+
+function RemoveProductFromCartButton({handler}) {
+    return (
+        <button 
+            className=""
+            type="button"
+            onClick={handler}
+        >
+            Удалить из корзины
+        </button>
+    )
 }
 
 export {
