@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 
 // react query
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 // pages
 import { Layout } from './components/Layout/Layout';
@@ -28,6 +29,7 @@ function App() {
 	return (
 	<>
 		<QueryClientProvider client={ queryClient }>
+			<ReactQueryDevtools initialIsOpen={false} />
 			<Routes>
 				<Route path="/" element={ <Layout /> }>
 					<Route index element={ 
@@ -35,21 +37,21 @@ function App() {
 							<Home /> 
 						</RequireAuth>
 					} />
-					{/* <Route path="profile" element={ 
+					<Route path="profile" element={ 
 						<RequireAuth>
 							<Profile />
 						</RequireAuth>
-					} /> */}
-					{/* <Route path="profile/edit-user" element={ 
+					} />
+					<Route path="profile/edit-user" element={ 
 						<RequireAuth>
 							<EditUser />
 						</RequireAuth>
-					} /> */}
-					{/* <Route path="products/:id" element={ 
+					} />
+					<Route path="products/:id" element={ 
 						<RequireAuth>
 							<ProductPage />
 						</RequireAuth>
-					} /> */}
+					} />
 					<Route path="*" element={ <NotFound /> } />
 				</Route>
 				<Route path="/signin" element={ 

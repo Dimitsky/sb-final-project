@@ -1,14 +1,13 @@
 import Container from 'react-bootstrap/Container';
 import { ProductPreview } from '../../components/ProductPreview/ProductPreview';
 import { useProducts } from '../../hooks/useProducts';
-// import { useUser } from '../../hooks/useUser';
+import { useUser } from '../../hooks/useUser';
 
 import './home.css';
 
 function Home() {
     const { data: products, error, status: productsStatus } = useProducts();
-    // const { data: user, status: userstatus } = useUser();
-    const user = {};
+    const { data: user, status: userstatus } = useUser();
     
     if (productsStatus === 'loading') return (
         <Container>

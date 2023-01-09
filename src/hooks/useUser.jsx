@@ -1,11 +1,15 @@
+// redux
+import { useSelector } from 'react-redux';
+
+// react query
 import { useQuery } from '@tanstack/react-query';
 
-import { useAuth } from '../components/Auth/Auth';
+// my comps
 import { Api } from '../components/Api/Api';
 import { BASE_SERVER_URL, SERVER_GROUP_NAME } from '../components/consts/consts';
 
 function useUser() {
-    const { auth } = useAuth();
+    const token = useSelector(store => store.token);
 
     return useQuery({
         queryKey: ['user'], 
@@ -15,13 +19,13 @@ function useUser() {
                 groupId: SERVER_GROUP_NAME, 
                 headers: {
                     'Content-Type': 'application/json', 
-                    'authorization': `Bearer ${auth}`, 
+                    'authorization': `Bearer ${token}`, 
                 }
             });
 
             return api.getUserData();
         }, 
-        enabled: !!auth, 
+        enabled: !!token, 
     });
 }
 

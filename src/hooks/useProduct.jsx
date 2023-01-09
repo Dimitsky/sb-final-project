@@ -1,16 +1,19 @@
-import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
-
 // redux
 import { useSelector } from "react-redux";
 
+// react query
+import { useQuery } from "@tanstack/react-query";
+
+// react router dom
+import { useParams } from "react-router-dom";
+
+// me comps
 import { Api } from '../components/Api/Api';
-import { useAuth } from '../components/Auth/Auth';
 import { BASE_SERVER_URL, SERVER_GROUP_NAME } from '../components/consts/consts';
 
 function useProduct() {
     const { id: productId } = useParams();
-    const { auth } = useAuth();
+    const token = useSelector(state => state.token);
 
     const handler = (id) => {
         const api = new Api({
@@ -18,7 +21,7 @@ function useProduct() {
             groupId: SERVER_GROUP_NAME, 
             headers: {
                 'Content-Type': 'application/json', 
-                'authorization': `Bearer ${auth}`, 
+                'authorization': `Bearer ${token}`, 
             }
         });
 

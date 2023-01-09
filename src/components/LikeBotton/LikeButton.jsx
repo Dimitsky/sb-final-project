@@ -1,16 +1,63 @@
+// redux
+import { useSelector } from 'react-redux';
+
+// react query
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
+// my comps
+import { Api } from '../Api/Api';
+import { BASE_SERVER_URL, SERVER_GROUP_NAME } from '../consts/consts';
+
+// css
 import classes from './LikeButton.module.css';
 
-function LikeButton( { className, handler, isLiked } ) {
+function LikeButton( { className, productId, isLiked } ) {
+    const token = useSelector(state => state.token);
+    const queryClient = useQueryClient();
+
+    // handlers
     const handleClick = () => {
-        if ( handler && typeof handler === 'function' ) handler( !isLiked );
+        const api = new Api( {
+            baseUrl: BASE_SERVER_URL, 
+            groupId: SERVER_GROUP_NAME, 
+            headers: {
+                'Content-Type': 'application/json', 
+                'authorization': `Bearer ${ token }`, 
+            }
+        } )
+
+        /*
+            Чтобы не дублировать код подписчиков на промисы, выбираем метод в зависимости от состояния кнопки-лайк, 
+            а затем подключаем подписчиков.
+        */
+        const promise = isLiked ? api.removeProductLike( productId ) : api.setProductLike( productId );
+
+        return promise.then()
     }
+
+    const mutation = useMutation( {
+        mutationKey: ['products', {id: productId}], 
+        mutationFn: handleClick, 
+        onSuccess: (data) => {
+            /*
+                Вручную обновляем состояние клиентских данных. 
+                Ищем продукт которому мы поставили лайк и заменяем его обновленной версией, которую нам вернул сервер.
+            */
+            queryClient.setQueryData(['products'], (previous) => 
+                previous.map((prevProduct) => 
+                    prevProduct._id === productId ? data : prevProduct
+                )
+            );
+            queryClient.setQueryData(['products', {id: productId}], () => data);
+        }
+    } );
 
     return (
         <button 
             className={ className ? [ classes.like, className ].join( ' ' ) : classes.like }
             type="button"
             aria-label="Поставить лайк товару"
-            onClick={ handleClick }
+            onClick={ mutation.mutate }
         >
             <svg 
                 className={ !isLiked ? classes.icon : [ classes.icon, classes.liked ].join( ' ' ) }  

@@ -1,40 +1,49 @@
+// redux
+import { useSelector } from 'react-redux';
+
+// react query
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 
-import { useAuth } from '../components/Auth/Auth';
+// react router dom
+import { useNavigate } from 'react-router-dom';
+
+// my comps
 import { Api } from '../components/Api/Api';
 import { BASE_SERVER_URL, SERVER_GROUP_NAME } from '../components/consts/consts';
 
 function useUpdateUser() {
-    const { auth } = useAuth();
+    const token = useSelector(state => state.token);
     const queryClient = useQueryClient();
+    const navigate = useNavigate();
 
     return useMutation({
         mutationKey: ['userUpdate'], 
-        mutationFn: variables => {
+        mutationFn: values => {
             const api = new Api( {
                 baseUrl: BASE_SERVER_URL, 
                 groupId: SERVER_GROUP_NAME, 
                 headers: {
                     'Content-Type': 'application/json', 
-                    'authorization': `Bearer ${ auth }`, 
+                    'authorization': `Bearer ${ token }`, 
                 }
             } );
 
             return api.updateUserInfo({
-                name: variables.name, 
-                about: variables.about, 
+                name: values.name, 
+                about: values.about, 
             })
-                .then( () => {
+                .then(() => {
                     return api.updateUserAvatar( {
-                        avatar: variables.avatar, 
+                        avatar: values.avatar, 
                     } );
-                } )
-                .catch( error => {
+                })
+                .then(() => navigate('/profile'))
+                .catch(error => {
                     alert( error )
-                } )
+                })
         },
         onSuccess: () => {        
-            queryClient.invalidateQueries( ['user'] );
+            queryClient.invalidateQueries(['user']);
         },
     });
 }

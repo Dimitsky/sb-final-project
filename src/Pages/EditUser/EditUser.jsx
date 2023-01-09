@@ -11,7 +11,6 @@ import Placeholder from 'react-bootstrap/Placeholder';
 
 import { useUser } from '../../hooks/useUser';
 import { useUpdateUser } from '../../hooks/useUpdateUser';
-import { Loader } from '../../HOCs/Loader/Loader';
 
 import './edituser.css';
 

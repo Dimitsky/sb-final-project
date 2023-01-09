@@ -1,15 +1,26 @@
+// react
 import { useState } from 'react';
+
+// redux
+import { useDispatch } from 'react-redux';
+import { removeToken } from '../../redux/actionsCreators/tokenAC';
+
+// react router dom
 import { NavLink } from 'react-router-dom';
 
-import { useAuth } from '../Auth/Auth';
+// my hooks
 import { useUser } from '../../hooks/useUser';
 
+// my comps
 import { Avatar } from '../../components/Avatar/Avatar';
+import { LS_TOKEN_KEY } from '../consts/consts';
+
+// css
 import classes from './NavBar.module.css';
 
 function NavBar() {
+    const dispatch = useDispatch();
     const [ isOpen, setIsOpen ] = useState( false );
-    const { logout } = useAuth();
     const { data: user } = useUser();
 
     const handleBurger = () => {
@@ -17,6 +28,10 @@ function NavBar() {
     }
 
     const handleCloseMenu = () => setIsOpen( false );
+    const handleLogout = () => {
+        dispatch(removeToken());
+        window.localStorage.removeItem(LS_TOKEN_KEY);
+    };
 
     return (
         <nav className={ classes.nav }>
@@ -63,7 +78,7 @@ function NavBar() {
                         <button 
                             className={ [ classes.logout, classes.link].join( ' ' ) }
                             type="button"
-                            onClick={ () => logout() }
+                            onClick={ handleLogout }
                         >
                             <LogoutIcon />
                             Выйти

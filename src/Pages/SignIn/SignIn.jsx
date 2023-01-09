@@ -1,19 +1,20 @@
 // redux
 import { useDispatch } from 'react-redux';
+import { setToken } from '../../redux/actionsCreators/tokenAC';
 
 // react router dom
 import { NavLink } from 'react-router-dom';
 
+// 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 // react query
 import { useMutation } from '@tanstack/react-query';
 
-import { Container } from '../../components/Container/Container';
 import './signin.css';
 import { Api } from '../../components/Api/Api';
-import { BASE_SERVER_URL, SERVER_GROUP_NAME } from '../../components/consts/consts';
+import { BASE_SERVER_URL, SERVER_GROUP_NAME, LS_TOKEN_KEY } from '../../components/consts/consts';
 
 function SignIn() {
     const dispatch = useDispatch();
@@ -29,11 +30,12 @@ function SignIn() {
 
         api.signIn( values.email, values.password )
             .then( result => {
-                dispatch({type: 'SET_TOKEN', token: result.token});
+                window.localStorage.setItem( LS_TOKEN_KEY, JSON.stringify(result.token) );
+                dispatch(setToken(result.token));
             } )
-            .catch( error => {
-                alert( error.message );
-            })
+            // .catch( error => {
+            //     alert( error.message );
+            // })
     }
 
     // TanStack Query
@@ -56,7 +58,7 @@ function SignIn() {
     return (
         <div className="signin__wrapper">
             <h1 className="signin__logo">DoogFood</h1>
-            <Container>
+            <div className="container">
                 <h2 className="heading heading--xl signin__heading">
                     С возвращением
                 </h2>
@@ -109,7 +111,7 @@ function SignIn() {
                         </p>
                     </div>
                 </form>
-            </Container>
+            </div>
         </div>
     );
 }

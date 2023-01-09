@@ -1,41 +1,52 @@
+// react
 import React from "react";
+
+// redux
+import { useDispatch } from 'react-redux';
+import { removeToken } from "../../redux/actionsCreators/tokenAC";
+
+// react router dom
 import { Link } from 'react-router-dom';
 
-import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
-
+// my comps
 import { Avatar } from "../../components/Avatar/Avatar";
-import { useAuth } from '../../components/Auth/Auth';
+import { LS_TOKEN_KEY } from "../../components/consts/consts";
+
+// my hooks
 import { useUser } from '../../hooks/useUser';
 
+// css
 import './profile.css';
 
 function Profile() {
-    const { logout } = useAuth();
+    const dispatch = useDispatch();
     const { data: user, error, isLoading, isError } = useUser();
 
+    // handlers
+    const handleLogout = () => {
+        dispatch(removeToken());
+        window.localStorage.removeItem(LS_TOKEN_KEY);
+    }
+
     if ( isLoading ) return (
-        <Container>
+        <div className="container">
             <p>
                 Загрузка данных...
             </p>
-        </Container>
+        </div>
     );
 
     if ( isError ) return (
-        <Container>
+        <div className="container">
             <p>
                { error.message }
             </p>
-        </Container>
+        </div>
     );
 
     return (
         <section className="profile">
-            <Container 
-                className="profile__container"
-                fluid
-            >
+            <div className="container">
                 <Avatar 
                     className="profile__avatar"
                     link={ user.avatar }
@@ -61,21 +72,20 @@ function Profile() {
                     </p>
                     <div className="">
                         <Link 
-                            className="btn btn-primary me-3"
+                            className=""
                             to="/profile/edit-user"
                         >
                             Редактировать
                         </Link>
-                        <Button
+                        <button
                             className=""
-                            variant="danger"
-                            onClick={ logout }
+                            onClick={ handleLogout }
                         >
                             Выйти
-                        </Button>
+                        </button>
                     </div>
                 </div>
-            </Container>
+            </div>
         </section>
     );
 }

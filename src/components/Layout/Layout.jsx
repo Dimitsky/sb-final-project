@@ -1,17 +1,16 @@
 import { Outlet } from 'react-router-dom';
 
-import { Container } from '../Container/Container';
-// import { Header } from '../Header/Header';
-// import { NavBar } from '../NavBar/NavBar';
+import { Header } from '../Header/Header';
+import { NavBar } from '../NavBar/NavBar';
 
 function Layout() {
     return (
         <>
-            <Container>
-                {/* <Header>
+            <div className="container">
+                <Header>
                     <NavBar />
-                </Header> */}
-            </Container>
+                </Header>
+            </div>
             <Outlet />
         </>
     );

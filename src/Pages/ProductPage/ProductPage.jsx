@@ -2,12 +2,12 @@
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 
-// my ui components
+// my comps
 import { BackButton } from '../../components/BackButton/BackButton';
 import { LikeButton } from '../../components/LikeBotton/LikeButton';
 import { Price } from '../../components/Price/Price';
 
-// custom hooks
+// my hooks
 import { useProduct } from '../../hooks/useProduct';
 import { useUser } from '../../hooks/useUser';
 
@@ -17,9 +17,6 @@ import './productpage.css';
 function ProductPage() {
     const { data: product, error, status } = useProduct();
     const { data: user } = useUser();
-
-    // handlers
-    const handleLike = () => {}
 
     if ( status === 'loading') {
         return (
@@ -44,8 +41,8 @@ function ProductPage() {
                     <BackButton />
                     <LikeButton 
                         className="detailed-card__like-btn"
-                        isLiked={product.likes.find(id => id === user._id)}
-                        handler={handleLike}
+                        productId={product._id}
+                        isLiked={product.likes.find( id => id === user._id ) ? true : false}
                     />
                 </Card.Header>
                 <Card.Img 
