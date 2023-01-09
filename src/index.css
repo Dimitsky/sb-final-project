@@ -1,0 +1,17 @@
+:root {
+    font-family: Roboto, sans-serif;
+    box-sizing: border-box;
+}
+
+*, 
+::after, 
+::before {
+    box-sizing: inherit;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+}
