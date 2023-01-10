@@ -29,6 +29,7 @@ function useCartProducts() {
     return useQuery({
         queryKey: ['cart'], 
         queryFn: handler, 
+        cacheTime: 0, 
     })
 }
 

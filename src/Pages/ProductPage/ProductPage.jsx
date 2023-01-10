@@ -5,7 +5,6 @@ import { addProduct, removeProduct } from '../../redux/actionsCreators/cartAC';
 // my comps
 import { BackButton } from '../../components/BackButton/BackButton';
 import { LikeButton } from '../../components/LikeBotton/LikeButton';
-import { Price } from '../../components/Price/Price';
 
 // my hooks
 import { useProduct } from '../../hooks/useProduct';
