@@ -24,7 +24,13 @@ export const cartReducer = (state = initialState.cart, action) => {
                 }
             })
         case CHOOSE_PRODUCT:
-            console.log('choose product')
+            return state.map(product => {
+                if (product.id !== action.payload) return product;
+                else {
+                    product.isChoosed = !product.isChoosed;
+                    return product;
+                }
+            })
             return state
         default:
             return state

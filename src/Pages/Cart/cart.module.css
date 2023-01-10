@@ -1,3 +1,15 @@
+.list {}
+
+.item {}
+
+.chooseProduct + .card {
+    opacity: 0.5;
+}
+
+.chooseProduct:checked + .card {
+    opacity: 1;
+}
+
 .card {
     display: flex;
     gap: 1em;
