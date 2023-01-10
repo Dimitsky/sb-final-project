@@ -113,6 +113,7 @@ function Cart() {
 
     return (
         <div className="container">
+            {!cart.length ? <CartPlaceholder /> : null}
             <ul className={classes.list}>
                 {
                     data.map(product => (
@@ -201,6 +202,13 @@ function OrderBtn({handler}) {
         >
             Оформить заказ
         </button>
+    )
+}
+
+// placeholder для корзины если она пуста
+function CartPlaceholder() {
+    return (
+        <h2>Корзина пуста</h2>
     )
 }
 
