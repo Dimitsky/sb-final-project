@@ -330,6 +330,29 @@ class Api {
             }
         }
     }
+
+    async search(param) {
+        const init = {
+            headers: this.headers, 
+        }
+
+        const response = await fetch(`${this.baseUrl}/products/search?query=${param}`, init);
+
+        if ( !response.ok ) {
+            switch ( response.status ) {
+                case 400: 
+                    const result = await response.json();
+                    
+                    throw new Error( `Status code is ${response.status}: ${result.message}` );
+                default:
+                    throw new Error( `Status code is ${response.status}: ${ response.statusText }` );
+            }
+        }
+
+        const result = await response.json();
+
+        return result;
+    }
 }
 
 export {

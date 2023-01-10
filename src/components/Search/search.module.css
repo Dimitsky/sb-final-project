@@ -1,0 +1,14 @@
+.list {
+    composes: list from global;
+    position: absolute;
+    z-index: 9000;
+    top: 90px;
+    left: 50%;
+    width: 100%;
+    max-width: 500px;
+    max-height: calc(100vh - 70px);
+    padding: 1em;
+    background: blanchedalmond;
+    overflow: auto;
+    transform: translateX(-50%);
+}
