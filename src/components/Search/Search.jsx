@@ -15,7 +15,7 @@ import { BASE_SERVER_URL, SERVER_GROUP_NAME } from '../../components/consts/cons
 // css module
 import classes from './search.module.css';
 
-function Search({handler}) {
+function Search() {
     const [value, setValue] = useState('');
     const [search, setSearch] = useState([]);
     const token = useSelector(state => state.token);
