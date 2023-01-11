@@ -4,13 +4,12 @@ import { useNavigate, NavLink } from 'react-router-dom';
 // react query
 import { useMutation } from '@tanstack/react-query';
 
+// formik
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 // my comps
-import { Container } from '../../components/Container/Container';
 import './signup.css';
-import '../SignUp/signup.css';
 import { Api } from '../../components/Api/Api';
 import { BASE_SERVER_URL, SERVER_GROUP_NAME } from '../../components/consts/consts';
 
@@ -54,7 +53,7 @@ function SignUp() {
     return (
         <div className="signup__wrapper">
             <h1 className="signin__logo">DoogFood</h1>
-            <Container>
+            <div className='container'>
                 <h2 className="heading heading--xl signup__heading">
                     Создайте ваш аккаунт
                 </h2>
@@ -104,7 +103,7 @@ function SignUp() {
                         </p>
                     </div>
                 </form>
-            </Container>
+            </div>
         </div>
     );
 }

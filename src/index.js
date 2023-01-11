@@ -14,9 +14,10 @@ import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-store.subscribe(() => {
-	console.log(store.getState().cart)
-})
+// DEV ONLY
+// store.subscribe(() => {
+// 	console.log(store.getState().cart)
+// })
 
 root.render(
 	<React.StrictMode>

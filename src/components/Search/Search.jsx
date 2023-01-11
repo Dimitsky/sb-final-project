@@ -1,5 +1,5 @@
 // react
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // redux
 import { useSelector } from "react-redux";
@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 // me comps
 import { Api } from '../../components/Api/Api';
 import { BASE_SERVER_URL, SERVER_GROUP_NAME } from '../../components/consts/consts';
-
+import { useDebounce } from '../../hooks/useDebounce';
 
 // css module
 import classes from './search.module.css';
@@ -19,6 +19,7 @@ function Search() {
     const [value, setValue] = useState('');
     const [search, setSearch] = useState([]);
     const token = useSelector(state => state.token);
+    const debounceValue = useDebounce(value, 500);
 
     const api = new Api({
         baseUrl: BASE_SERVER_URL, 
@@ -34,7 +35,6 @@ function Search() {
         // Если после первого результата поиска очистить текстовое поле, 
         // то бэкенд пришлет в ответ ВСЕ товары на сервере. 
         // Чтобы исправить такое поведение, нужно очищать состояние при пустом поле ввода
-        console.log(event.target.value, !event.target.value)
         if (!event.target.value) {
             setSearch([]);
             setValue('');
@@ -42,16 +42,19 @@ function Search() {
         }
 
         setValue(event.target.value);
-        api.search(event.target.value)
-            .then(result => setSearch(result))
-            .catch(error => alert(error.message))
-
-        // handler(api.search(event.target.value));
     }
     const handleCloseSearchResult = () => {
         setSearch([]);
         setValue('');
     }
+
+    useEffect(() => {
+        if (!debounceValue) return
+
+        api.search(debounceValue)
+            .then(result => setSearch(result))
+            .catch(error => alert(error.message))
+    }, [debounceValue])
 
     return (
         <>

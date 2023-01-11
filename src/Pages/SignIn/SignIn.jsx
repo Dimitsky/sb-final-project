@@ -33,9 +33,9 @@ function SignIn() {
                 window.localStorage.setItem( LS_TOKEN_KEY, JSON.stringify(result.token) );
                 dispatch(setToken(result.token));
             } )
-            // .catch( error => {
-            //     alert( error.message );
-            // })
+            .catch( error => {
+                alert( error.message );
+            })
     }
 
     // TanStack Query
