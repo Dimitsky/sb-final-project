@@ -13,7 +13,6 @@ import { useUser } from '../../hooks/useUser';
 
 // my comps
 import { Avatar } from '../../components/Avatar/Avatar';
-import { LS_TOKEN_KEY } from '../consts/consts';
 
 // css
 import classes from './NavBar.module.css';
@@ -31,7 +30,6 @@ function NavBar() {
     const handleCloseMenu = () => setIsOpen( false );
     const handleLogout = () => {
         dispatch(removeToken());
-        window.localStorage.removeItem(LS_TOKEN_KEY);
     };
 
     return (

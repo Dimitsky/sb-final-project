@@ -30,7 +30,6 @@ function SignIn() {
 
         api.signIn( values.email, values.password )
             .then( result => {
-                window.localStorage.setItem( LS_TOKEN_KEY, JSON.stringify(result.token) );
                 dispatch(setToken(result.token));
             } )
             .catch( error => {

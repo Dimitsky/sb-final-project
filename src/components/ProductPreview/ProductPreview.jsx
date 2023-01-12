@@ -11,7 +11,6 @@ import { LikeButton } from '../LikeBotton/LikeButton';
 
 import { Rating } from '../../components/Rating/Rating';
 
-import { useAuth } from '../../components/Auth/Auth';
 import { useUser } from '../../hooks/useUser';
 import { Api } from '../../components/Api/Api';
 import { BASE_SERVER_URL, SERVER_GROUP_NAME } from '../../components/consts/consts';
