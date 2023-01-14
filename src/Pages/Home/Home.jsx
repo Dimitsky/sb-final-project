@@ -1,4 +1,3 @@
-import Container from 'react-bootstrap/Container';
 import { ProductPreview } from '../../components/ProductPreview/ProductPreview';
 import { useProducts } from '../../hooks/useProducts';
 import { useUser } from '../../hooks/useUser';
@@ -10,25 +9,22 @@ function Home() {
     const { data: user } = useUser();
     
     if (productsStatus === 'loading') return (
-        <Container>
+        <div className='container'>
             <p>
                 Идет загрузка...
             </p>
-        </Container>
+        </div>
     ); 
 
     if (productsStatus === 'error') return (
-        <Container>
+        <div className='container'>
             {error.message}
-        </Container>
+        </div>
     ); 
     
     return ( 
         <section className="home">
-            <Container 
-                className=""
-                fluid
-            >
+            <div className="container">
                 <ul className="row list home__list">
                     {
                         products.map(product => {
@@ -43,7 +39,7 @@ function Home() {
                         })
                     }
                 </ul>
-            </Container>
+            </div>
         </section>
     );
 }

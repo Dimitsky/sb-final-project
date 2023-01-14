@@ -1,14 +1,12 @@
 import { Link } from 'react-router-dom';
-import Card from 'react-bootstrap/Card';
 import { LikeButton } from '../LikeBotton/LikeButton';
 import { Rating } from '../../components/Rating/Rating';
 
 function ProductPreview( { data: product, user } ) {    
     return (
-        <Card className="card">
-            <Card.Img
+        <div className="card">
+            <img
                 className="card__img" 
-                variant="top"
                 src={product.pictures}
             />
             <LikeButton 
@@ -16,11 +14,11 @@ function ProductPreview( { data: product, user } ) {
                 productId={product._id}
                 isLiked= {product.likes.find( id => id === user._id ) ? true : false}
             />
-            <Card.Body>
-                <Card.Title>
+            <div>
+                <h2>
                     {product.name}
-                </Card.Title>
-            </Card.Body>
+                </h2>
+            </div>
             <div>
                 <Link 
                     className=""
@@ -29,7 +27,7 @@ function ProductPreview( { data: product, user } ) {
                     Подробнее
                 </Link>
             </div>
-        </Card>
+        </div>
     );
 }
 

@@ -1,0 +1,59 @@
+/* container */
+
+.container {
+    composes: container from global;
+    max-width: 576px;
+    margin-top: 2em;
+}
+
+/* form */
+
+.submit {
+    composes: btn from global;
+    margin-bottom: 0.5em;
+}
+
+.error {
+    composes: error from '../../components/Form/form.module.css';
+}
+
+/* links */
+
+.resetPass, 
+.signup {
+    composes: link from global;
+}
+
+.resetPass {
+    align-self: flex-end;
+    margin-bottom: 2em;
+}
+
+.noPass {
+    composes: text from global;
+    text-align: center;
+}
+
+/* title */
+
+.title, 
+.subTitle {
+    composes: title from global;
+}
+
+.title {
+    margin-bottom: 1em;
+    font-size: 2em;
+    text-align: center;
+}
+
+.subTitle {
+    margin-bottom: 0.5em;
+}
+
+/* text */
+
+.text {
+    composes: text from global;
+    margin-bottom: 1em;
+}

@@ -5,16 +5,20 @@ import { setToken } from '../../RTK/slices/tokenSlice/tokenSlice';
 // react router dom
 import { NavLink } from 'react-router-dom';
 
-// 
+// formik
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 // react query
 import { useMutation } from '@tanstack/react-query';
 
-import './signin.css';
+// my comps
+import { Form, FormControl, FormBox } from '../../components/Form/Form';
 import { Api } from '../../components/Api/Api';
 import { BASE_SERVER_URL, SERVER_GROUP_NAME } from '../../components/consts/consts';
+
+// css
+import classes from './signin.module.css';
 
 function SignIn() {
     const dispatch = useDispatch();
@@ -55,20 +59,21 @@ function SignIn() {
     } );
 
     return (
-        <div className="signin__wrapper">
-            <h1 className="signin__logo">DoogFood</h1>
-            <div className="container">
-                <h2 className="heading heading--xl signin__heading">
-                    С возвращением
-                </h2>
-                <p className="paragraph signin__paragraph">
-                    Если у вас есть аккаунт, то войдите в него, используя свой логин и пароль.
-                </p>
-                <form 
-                    onSubmit={ formik.handleSubmit }
-                >
-                    <input
-                        className="form__input form__input--email signin__input"
+        <div className={classes.container}>
+            <h1 className={classes.title}>DoogFood</h1>
+            <h2 className={classes.subTitle}>
+                С возвращением
+            </h2>
+            <p className={classes.text}>
+                Если у вас есть аккаунт, то войдите в него, используя свой логин и пароль.
+            </p>
+            <Form 
+                onSubmit={ formik.handleSubmit }
+            >
+                <FormBox>
+                    <FormControl
+                        className={classes.input}
+                        variant="email"
                         id="email"
                         name="email"
                         type="email"
@@ -76,9 +81,12 @@ function SignIn() {
                         onChange={ formik.handleChange }
                         value={ formik.values.email }
                     />
-                    { formik.errors.email ? <div className="form__error">{ formik.errors.email }</div> : null }
-                    <input
-                        className="form__input form__input--lock signin__input"
+                    { formik.errors.email ? <div className={classes.error}>{ formik.errors.email }</div> : null }
+                </FormBox>
+                <FormBox>
+                    <FormControl
+                        className={classes.input}
+                        variant="password"
                         id="password"
                         name="password"
                         type="password"
@@ -86,31 +94,32 @@ function SignIn() {
                         onChange={ formik.handleChange }
                         value={ formik.values.password } 
                     />
-                    { formik.errors.password ? <div className="form__error">{ formik.errors.password }</div> : null }
+                    { formik.errors.password ? <div className={classes.error}>{ formik.errors.password }</div> : null }
+                </FormBox>
+                <FormBox>
                     <button 
-                        className="button signin__button"
+                        className={classes.submit}
                         type="submit"
                     >
                         Войти
                     </button>
-                    <div className="signin__password-resset-link-wrap">
-                        <NavLink 
-                            className="button button--text signin__password-resset-link"
-                            to="/password-reset"
-                        >
-                            Забыли пароль
-                        </NavLink>
-                    </div>
-                    <div>
-                        <p className="signin__login-wrap">
-                            Нет аккаунта?
-                            <NavLink className="button button--text signin__login" to="/signup">
-                                { " Зарегистрируйтесь" }
-                            </NavLink>
-                        </p>
-                    </div>
-                </form>
-            </div>
+                </FormBox>
+                <NavLink 
+                    className={classes.resetPass}
+                    to="/password-reset"
+                >
+                    Забыли пароль
+                </NavLink>
+                <p className={classes.noPass}>
+                    Нет аккаунта?
+                    <NavLink 
+                        className={classes.signup} 
+                        to="/signup"
+                    >
+                        { " Зарегистрируйтесь" }
+                    </NavLink>
+                </p>
+            </Form>
         </div>
     );
 }

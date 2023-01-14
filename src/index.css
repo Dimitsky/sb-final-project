@@ -1,12 +1,22 @@
 :root {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Inter', sans-serif;
     box-sizing: border-box;
+
+    /* colors */
+    --c-link-hover: #0066ff;
+    --c-btn: #212529;
+    --c-btn-focus: #343a40;
+    --c-btn-hover: #343a40;
 }
 
 *, 
 ::after, 
 ::before {
     box-sizing: inherit;
+}
+
+body {
+    margin: 0;
 }
 
 .container {
@@ -21,4 +31,58 @@
     margin-bottom: 0;
     padding-left: 0;
     list-style: none;
+}
+
+/* button */
+
+.btn {
+    border: 2px solid #333;
+    border-radius: 0.5em;
+    padding: 0.7em;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 1em;
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: center;
+    background: var(--c-btn);
+    cursor: pointer;
+    transition: background-color 200ms ease;
+}
+
+.btn:focus {
+    outline: none;
+}
+
+.btn:focus-visible {
+    background-color: var(--c-btn-focus);
+}
+
+.btn:hover {
+    background-color: var(--c-btn-hover);
+}
+
+/* link */
+
+.link {
+    color: #000;
+    transition: color 200ms ease;
+}
+
+.link:hover {
+    color: var(--c-link-hover);
+}
+
+/* text */
+
+.text {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/* heading */
+
+.title {
+    margin-top: 0;
+    margin-bottom: 0;
 }

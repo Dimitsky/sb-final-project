@@ -10,7 +10,6 @@ import { Link } from 'react-router-dom';
 
 // my comps
 import { Avatar } from "../../components/Avatar/Avatar";
-import { LS_TOKEN_KEY } from "../../components/consts/consts";
 
 // my hooks
 import { useUser } from '../../hooks/useUser';

@@ -1,0 +1,58 @@
+/* form */
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* input [text], [email], [password], eth */
+
+.control {
+    border: 1px solid #ccc;
+    border-radius: 0.5em;
+    padding: 0.7em 0.7em 0.7em 2.4em;
+    font-size: 1em;
+    font-family: 'Inter', sans-serif;
+    line-height: 1;
+    background: no-repeat left 0.7em center;
+    transition: background-color 200ms ease;
+}
+
+.control:focus {
+    outline: none;
+}
+
+.control:focus-visible {
+    background-color: #f8f9fa;
+}
+
+.email {
+    background-image: url('./icons/envelope.svg');
+}
+
+.password {
+    background-image: url('./icons/eye-slash.svg');
+}
+
+/* wrapper for controls and labels */
+
+.box {
+    display: flex;
+    flex-direction: column;
+}
+
+.box > * {
+    flex: 1;
+}
+
+.box:not(:last-of-type) {
+    margin-bottom: 1em;
+}
+
+/* error messages */
+
+.error {
+    margin-top: 0.3em;
+    color: red;
+    font-size: 0.8em;
+}
