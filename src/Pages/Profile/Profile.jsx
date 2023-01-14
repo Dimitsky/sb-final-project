@@ -25,7 +25,6 @@ function Profile() {
     // handlers
     const handleLogout = () => {
         dispatch(removeToken());
-        window.localStorage.removeItem(LS_TOKEN_KEY);
     }
 
     if ( isLoading ) return (

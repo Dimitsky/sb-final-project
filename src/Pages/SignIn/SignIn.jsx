@@ -14,7 +14,7 @@ import { useMutation } from '@tanstack/react-query';
 
 import './signin.css';
 import { Api } from '../../components/Api/Api';
-import { BASE_SERVER_URL, SERVER_GROUP_NAME, LS_TOKEN_KEY } from '../../components/consts/consts';
+import { BASE_SERVER_URL, SERVER_GROUP_NAME } from '../../components/consts/consts';
 
 function SignIn() {
     const dispatch = useDispatch();
