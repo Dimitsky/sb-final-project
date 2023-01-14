@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 
 // redux
 import { Provider } from 'react-redux';
-import { store } from './redux/store';
+import { store } from './RTK/store';
 
 // 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -13,11 +13,6 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-
-// DEV ONLY
-// store.subscribe(() => {
-// 	console.log(store.getState().cart)
-// })
 
 root.render(
 	<React.StrictMode>

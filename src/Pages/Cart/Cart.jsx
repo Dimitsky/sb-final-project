@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { chooseProduct, decrementProduct, incrementProduct, removeProduct } from '../../redux/actionsCreators/cartAC';
+import { chooseProduct, decrementProduct, incrementProduct, removeProduct, clearCart } from '../../RTK/slices/cartSlice/cartSlice';
 
 // react query
 import { useQueryClient } from '@tanstack/react-query';
@@ -84,6 +84,7 @@ function Cart() {
         // отправляем заказ только выбранных товаров
         console.log(cart.filter(cartProduct => cartProduct.isChoosed));
         console.log(price);
+        dispatch(clearCart());
     }
 
     useEffect(() => {
@@ -113,76 +114,80 @@ function Cart() {
 
     return (
         <div className="container">
-            {!cart.length ? <CartPlaceholder /> : null}
-            <ul className={classes.list}>
-                {
-                    data.map(product => (
-                        <li 
-                            className={classes.item}
-                            key={product._id}
-                        >
-                            {/* тут можем отметить товар */}
-                            <input 
-                                className={classes.chooseProduct} 
-                                type="checkbox"
-                                name={product._id}
-                                id={product._id}
-                                checked={cart.find(cartProduct => cartProduct.id === product._id).isChoosed}
-                                onChange={handleChooseProduct} 
-                            />
-                            {/* карточка товара */}
-                            <div className={classes.card}>
-                                <div className={classes.imgWrap}>
-                                    <img 
-                                        className={classes.img}
-                                        src={product.pictures} 
-                                        alt="Фотография продукта" 
-                                    />
-                                </div>
-                                <div className={classes.body}>
-                                    <h2 className={classes.name}>{product.name}</h2>
-                                    <span className={classes.price}>{product.price}₽</span>
-                                    {/* с помощью Counter клиент может изменять количество конкретного товара */}
-                                    <Counter 
-                                        // т.к. клиентский ui зависит от данных в tanStack, а количество, которое пользователь хочет купить,
-                                        // хранится в redux, то приходится для каждого товара из tanStack искать его количество в состоянии redux'а
-                                        count={cart.find(cartProduct => cartProduct.id === product._id).count}
-                                        maxCount={product.stock}
-                                        handlerDecrement={() => dispatch(decrementProduct(product._id))}
-                                        handlerIncrement={() => dispatch(incrementProduct(product._id))}
-                                    />
-                                    <div className={classes.btnWrap}>
-                                        {/* эта кнопка удаляет товар из корзины (так же товар можно удалить из корзины на странице этого товара) */}
-                                        <button
-                                            className={classes.removeBtn}
-                                            type="button"
-                                            onClick={() => handleRemove(product._id)}
-                                        >
-                                            Удалить
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    ))
-                }
-            </ul>
             {
-                // если выбранных товаров нет, то скрыть итоговую цену и кнопку "оформить заказ"
-                !cart.filter(cartProduct => cartProduct.isChoosed).length ? null : 
-                    <div className={classes.orderWrap}>
-                        <TotalBox 
-                            price={price.full}
-                            discountedPrice={price.discounted}
-                        />
-                        <OrderBtn handler={handleOrder} />
-                    </div>
+                !cart.length ? <CartPlaceholder /> : 
+                    <>
+                        <ul className={classes.list}>
+                            {
+                                data.map(product => (
+                                    <li 
+                                        className={classes.item}
+                                        key={product._id}
+                                    >
+                                        {/* тут можем отметить товар */}
+                                        <input 
+                                            className={classes.chooseProduct} 
+                                            type="checkbox"
+                                            name={product._id}
+                                            id={product._id}
+                                            checked={cart.find(cartProduct => cartProduct.id === product._id).isChoosed}
+                                            onChange={handleChooseProduct} 
+                                        />
+                                        {/* карточка товара */}
+                                        <div className={classes.card}>
+                                            <div className={classes.imgWrap}>
+                                                <img 
+                                                    className={classes.img}
+                                                    src={product.pictures} 
+                                                    alt="Фотография продукта" 
+                                                />
+                                            </div>
+                                            <div className={classes.body}>
+                                                <h2 className={classes.name}>{product.name}</h2>
+                                                <span className={classes.price}>{product.price}₽</span>
+                                                {/* с помощью Counter клиент может изменять количество конкретного товара */}
+                                                <Counter 
+                                                    // т.к. клиентский ui зависит от данных в tanStack, а количество, которое пользователь хочет купить,
+                                                    // хранится в redux, то приходится для каждого товара из tanStack искать его количество в состоянии redux'а
+                                                    count={cart.find(cartProduct => cartProduct.id === product._id).count}
+                                                    maxCount={product.stock}
+                                                    handlerDecrement={() => dispatch(decrementProduct(product._id))}
+                                                    handlerIncrement={() => dispatch(incrementProduct(product._id))}
+                                                />
+                                                <div className={classes.btnWrap}>
+                                                    {/* эта кнопка удаляет товар из корзины (так же товар можно удалить из корзины на странице этого товара) */}
+                                                    <button
+                                                        className={classes.removeBtn}
+                                                        type="button"
+                                                        onClick={() => handleRemove(product._id)}
+                                                    >
+                                                        Удалить
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                        {
+                            // если выбранных товаров нет, то скрыть итоговую цену и кнопку "оформить заказ"
+                            !cart.filter(cartProduct => cartProduct.isChoosed).length ? null : 
+                                <div className={classes.orderWrap}>
+                                    <TotalBox 
+                                        price={price.full}
+                                        discountedPrice={price.discounted}
+                                    />
+                                    <OrderBtn handler={handleOrder} />
+                                </div>
+                        }       
+                    </>
             }
         </div>
     );
 }
 
-// выводит итоговую цену без скидки, скидку и и цену с учетом скидки
+// выводит итоговую цену без скидки, скидку и цену с учетом скидки
 function TotalBox({className, price, discountedPrice}) {
     return (
         <div className={ className ? [classes.total, className].join(' ') : classes.total}>

@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { REDUX_LS_KEY } from '../../../components/consts/consts';
 
-const initialState = {
-    token: JSON.parse(window.localStorage.getItem(LS_TOKEN_KEY)) || null, 
-}
+const initialState = JSON.parse(window.localStorage.getItem(REDUX_LS_KEY))?.token || null
 
 export const tokenSlice = createSlice({
     name: 'token', 

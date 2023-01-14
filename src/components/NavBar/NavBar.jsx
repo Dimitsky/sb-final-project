@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { removeToken } from '../../redux/actionsCreators/tokenAC';
+import { removeToken } from '../../RTK/slices/tokenSlice/tokenSlice';
 
 // react router dom
 import { NavLink } from 'react-router-dom';

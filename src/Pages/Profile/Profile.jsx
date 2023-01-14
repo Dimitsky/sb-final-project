@@ -3,7 +3,7 @@ import React from "react";
 
 // redux
 import { useDispatch } from 'react-redux';
-import { removeToken } from "../../redux/actionsCreators/tokenAC";
+import { removeToken } from "../../RTK/slices/tokenSlice/tokenSlice";
 
 // react router dom
 import { Link } from 'react-router-dom';

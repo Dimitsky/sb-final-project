@@ -7,7 +7,7 @@ import './home.css';
 
 function Home() {
     const { data: products, error, status: productsStatus } = useProducts();
-    const { data: user, status: userstatus } = useUser();
+    const { data: user } = useUser();
     
     if (productsStatus === 'loading') return (
         <Container>

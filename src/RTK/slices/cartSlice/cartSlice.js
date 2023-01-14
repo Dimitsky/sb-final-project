@@ -1,40 +1,41 @@
 import { createSlice } from "@reduxjs/toolkit";
-import tokenSlice from "../tokenSlice/tokenSlice";
+import { REDUX_LS_KEY } from "../../../components/consts/consts";
 
-const initialState = {
-    cart: [], 
-}
+const initialState = JSON.parse(window.localStorage.getItem(REDUX_LS_KEY))?.cart || [];
 
 export const cartSlice = createSlice({
     name: 'cart', 
     initialState, 
     reducers: {
-        addProduct: (state, action) => [...state, action.payload], 
+        addProduct: (state, action) => {
+            const product = {
+                id: action.payload, 
+                count: 1, 
+                isChoosed: true, 
+            }
+
+            state.push(product);
+        }, 
         removeProduct: (state, action) => state.filter(product => product.id !== action.payload), 
-        incrementProduct: (state, action) => state.map(product => {
-            if (product.id !== action.payload) return product;
-            else {
-                product.count++;
-                return product;
-            }
-        }), 
-        decrementProduct: (state, action) => state.map(product => {
-            if (product.id !== action.payload) return product;
-            else {
-                product.count--;
-                return product;
-            }
-        }), 
-        chooseProduct: (state, action) => state.map(product => {
-            if (product.id !== action.payload) return product;
-            else {
-                product.isChoosed = !product.isChoosed;
-                return product;
-            }
-        })
+        incrementProduct: (state, action) => {
+            const product = state.find(product => product.id === action.payload);
+
+            product.count++;
+        }, 
+        decrementProduct: (state, action) => {
+            const product = state.find(product => product.id === action.payload);
+            
+            product.count--;
+        }, 
+        chooseProduct: (state, action) => {
+            const product = state.find(product => product.id === action.payload);
+
+            product.isChoosed = !product.isChoosed;
+        }, 
+        clearCart: () => [], 
     }
 })
 
-export const {addProduct, removeProduct, incrementProduct, decrementProduct, chooseProduct} = cartSlice.actions;
+export const {addProduct, removeProduct, incrementProduct, decrementProduct, chooseProduct, clearCart} = cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -1,6 +1,6 @@
 // redux
 import { useDispatch } from 'react-redux';
-import { setToken } from '../../redux/actionsCreators/tokenAC';
+import { setToken } from '../../RTK/slices/tokenSlice/tokenSlice';
 
 // react router dom
 import { NavLink } from 'react-router-dom';

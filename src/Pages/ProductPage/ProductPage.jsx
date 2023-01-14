@@ -1,6 +1,6 @@
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { addProduct, removeProduct } from '../../redux/actionsCreators/cartAC';
+import { addProduct, removeProduct } from '../../RTK/slices/cartSlice/cartSlice';
 
 // my comps
 import { BackButton } from '../../components/BackButton/BackButton';
@@ -16,6 +16,7 @@ import './productpage.css';
 function ProductPage() {
     const dispatch = useDispatch();
     const cart = useSelector(state => state.cart);
+    
     const { data: product, error, status } = useProduct();
     const { data: user } = useUser();
 

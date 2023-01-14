@@ -1,22 +1,7 @@
-// redux
-import { useSelector } from 'react-redux';
-
 import { Link } from 'react-router-dom';
-
 import Card from 'react-bootstrap/Card';
-
-import { Badge } from '../Badge/Badge';
-import { Price } from '../Price/Price';
 import { LikeButton } from '../LikeBotton/LikeButton';
-
 import { Rating } from '../../components/Rating/Rating';
-
-import { useUser } from '../../hooks/useUser';
-import { Api } from '../../components/Api/Api';
-import { BASE_SERVER_URL, SERVER_GROUP_NAME } from '../../components/consts/consts';
-import { Container } from 'react-bootstrap';
-
-const maxNameLength = 40;
 
 function ProductPreview( { data: product, user } ) {    
     return (
