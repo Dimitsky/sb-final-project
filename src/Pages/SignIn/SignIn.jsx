@@ -14,6 +14,7 @@ import { useMutation } from '@tanstack/react-query';
 
 // my comps
 import { Form, FormControl, FormBox } from '../../components/Form/Form';
+import { Button } from '../../components/Button/Button';
 import { Api } from '../../components/Api/Api';
 import { BASE_SERVER_URL, SERVER_GROUP_NAME } from '../../components/consts/consts';
 
@@ -59,67 +60,69 @@ function SignIn() {
     } );
 
     return (
-        <div className={classes.container}>
-            <h1 className={classes.title}>DoogFood</h1>
-            <h2 className={classes.subTitle}>
-                С возвращением
-            </h2>
-            <p className={classes.text}>
-                Если у вас есть аккаунт, то войдите в него, используя свой логин и пароль.
-            </p>
-            <Form 
-                onSubmit={ formik.handleSubmit }
-            >
-                <FormBox>
-                    <FormControl
-                        className={classes.input}
-                        variant="email"
-                        id="email"
-                        name="email"
-                        type="email"
-                        placeholder="Электронная почта"
-                        onChange={ formik.handleChange }
-                        value={ formik.values.email }
-                    />
-                    { formik.errors.email ? <div className={classes.error}>{ formik.errors.email }</div> : null }
-                </FormBox>
-                <FormBox>
-                    <FormControl
-                        className={classes.input}
-                        variant="password"
-                        id="password"
-                        name="password"
-                        type="password"
-                        placeholder="Пароль"
-                        onChange={ formik.handleChange }
-                        value={ formik.values.password } 
-                    />
-                    { formik.errors.password ? <div className={classes.error}>{ formik.errors.password }</div> : null }
-                </FormBox>
-                <FormBox>
-                    <button 
-                        className={classes.submit}
-                        type="submit"
-                    >
-                        Войти
-                    </button>
-                </FormBox>
-                <NavLink 
-                    className={classes.resetPass}
-                    to="/password-reset"
-                >
-                    Забыли пароль
-                </NavLink>
-                <p className={classes.noPass}>
-                    Нет аккаунта?
-                    <NavLink 
-                        className={classes.signup} 
-                        to="/signup"
-                    >
-                        { " Зарегистрируйтесь" }
-                    </NavLink>
+        <div className={classes.section}>
+            <div className={classes.container}>
+                <h1 className={classes.title}>DoogFood</h1>
+                <h2 className={classes.subtitle}>
+                    С возвращением
+                </h2>
+                <p className={classes.text}>
+                    Если у вас есть аккаунт, то войдите в него, используя свой логин и пароль.
                 </p>
-            </Form>
+                <Form 
+                    onSubmit={ formik.handleSubmit }
+                >
+                    <FormBox>
+                        <FormControl
+                            className={classes.input}
+                            variant="email"
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="Электронная почта"
+                            onChange={ formik.handleChange }
+                            value={ formik.values.email }
+                        />
+                        { formik.errors.email ? <div className={classes.error}>{ formik.errors.email }</div> : null }
+                    </FormBox>
+                    <FormBox>
+                        <FormControl
+                            className={classes.input}
+                            variant="password"
+                            id="password"
+                            name="password"
+                            type="password"
+                            placeholder="Пароль"
+                            onChange={ formik.handleChange }
+                            value={ formik.values.password } 
+                        />
+                        { formik.errors.password ? <div className={classes.error}>{ formik.errors.password }</div> : null }
+                    </FormBox>
+                    <FormBox>
+                        <Button 
+                            className={classes.submit}
+                            type="submit"
+                        >
+                            Войти
+                        </Button>
+                    </FormBox>
+                    <NavLink 
+                        className={classes.resetPass}
+                        to="/password-reset"
+                    >
+                        Забыли пароль
+                    </NavLink>
+                    <p className={classes.noPass}>
+                        {'Нет аккаунта? '}
+                        <NavLink 
+                            className={classes.signup} 
+                            to="/signup"
+                        >
+                            { "Зарегистрируйтесь" }
+                        </NavLink>
+                    </p>
+                </Form>
+            </div>
         </div>
     );
 }

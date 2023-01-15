@@ -9,9 +9,13 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 // my comps
-import './signup.css';
+import { Form, FormControl, FormBox } from '../../components/Form/Form';
+import { Button } from '../../components/Button/Button';
 import { Api } from '../../components/Api/Api';
 import { BASE_SERVER_URL, SERVER_GROUP_NAME } from '../../components/consts/consts';
+
+// css
+import classes from './signup.module.css';
 
 function SignUp() {
     const navigate = useNavigate();
@@ -51,58 +55,66 @@ function SignUp() {
     } );
 
     return (
-        <div className="signup__wrapper">
-            <h1 className="signin__logo">DoogFood</h1>
-            <div className='container'>
-                <h2 className="heading heading--xl signup__heading">
-                    Создайте ваш аккаунт
+        <div className={classes.section}>
+            <div className={classes.container}>
+                <h1 className={classes.title}>DoogFood</h1>
+                <h2 className={classes.subtitle}>
+                    Впервые у нас?
                 </h2>
-                <form 
+                <p className={classes.text}>
+                    Зарегистрируйте новый аккаунт и получите доступ к нашему каталогу.
+                </p>
+                <Form 
                     onSubmit={ formik.handleSubmit }
                 >
-                    <input
-                        className="form__input form__input--email"
-                        id="email"
-                        name="email"
-                        type="email"
-                        placeholder="Электронная почта"
-                        onChange={ formik.handleChange }
-                        value={ formik.values.email }
-                    />
-                    { formik.errors.email ? <div className="form__error">{ formik.errors.email }</div> : null }
-                    <input
-                        className="form__input form__input--lock"
-                        id="password"
-                        name="password"
-                        type="password"
-                        placeholder="Пароль"
-                        onChange={ formik.handleChange }
-                        value={ formik.values.password } 
-                    />
-                    { formik.errors.password ? <div className="form__error">{ formik.errors.password }</div> : null }
-                    <button 
-                        className="button signup__submit"
-                        type="submit"
-                    >
-                        Отправить
-                    </button>
-                    <div className="signin__password-resset-link-wrap">
-                        <NavLink 
-                            className="button button--text signin__password-resset-link"
-                            to="/password-reset"
+                    <FormBox>
+                        <FormControl
+                            variant="email" 
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="Электронная почта"
+                            onChange={ formik.handleChange }
+                            value={ formik.values.email }
+                        />
+                        { formik.errors.email ? <div className={classes.error}>{ formik.errors.email }</div> : null }
+                    </FormBox>
+                    <FormBox>
+                        <FormControl
+                            variant="password" 
+                            id="password"
+                            name="password"
+                            type="password"
+                            placeholder="Пароль"
+                            onChange={ formik.handleChange }
+                            value={ formik.values.password } 
+                        />
+                        { formik.errors.password ? <div className={classes.error}>{ formik.errors.password }</div> : null }
+                    </FormBox>
+                    <FormBox>
+                        <Button 
+                            className={classes.submit}
+                            type="submit"
                         >
-                            Забыли пароль
+                            Отправить
+                        </Button>
+                    </FormBox>
+                    <NavLink 
+                        className={classes.resetPass}
+                        to="/password-reset"
+                    >
+                        Забыли пароль
+                    </NavLink>
+                    <p className={classes.noPass}>
+                        {'Есть аккаунта? '}
+                        <NavLink 
+                            className={classes.signin} 
+                            to="/signin"
+                        >
+                            { "Войдите" }
                         </NavLink>
-                    </div>
-                    <div>
-                        <p className="signin__login-wrap">
-                            Есть аккаунт? 
-                            <NavLink className="button button--text signin__login" to="/signin">
-                                { "Войдите" }
-                            </NavLink>
-                        </p>
-                    </div>
-                </form>
+                    </p>
+                </Form>
             </div>
         </div>
     );

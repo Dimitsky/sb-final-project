@@ -14,7 +14,7 @@
     font-size: 1em;
     font-family: 'Inter', sans-serif;
     line-height: 1;
-    background: no-repeat left 0.7em center;
+    background: no-repeat left 0.7em center #fff;
     transition: background-color 200ms ease;
 }
 

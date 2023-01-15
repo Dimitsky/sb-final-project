@@ -1,15 +1,37 @@
+/* section */
+
+.section {
+    height: 100vh;
+    background: no-repeat center / cover url('../../img/wolf-1.webp');
+}
+
 /* container */
 
 .container {
     composes: container from global;
     max-width: 576px;
-    margin-top: 2em;
+    height: 100vh;
+    padding-top: 2em;
+    background: rgba(255 255 255 / 0.5);
+    -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px);
+}
+
+@media screen and (min-width: 576px) {
+    .section {
+        display: flex;
+    }
+
+    .container {
+        border-radius: 1em;
+        padding: 2em;
+        height: unset;
+    }
 }
 
 /* form */
 
 .submit {
-    composes: btn from global;
     margin-bottom: 0.5em;
 }
 
@@ -34,10 +56,10 @@
     text-align: center;
 }
 
-/* title */
+/* titles */
 
 .title, 
-.subTitle {
+.subtitle {
     composes: title from global;
 }
 
@@ -47,7 +69,7 @@
     text-align: center;
 }
 
-.subTitle {
+.subtitle {
     margin-bottom: 0.5em;
 }
 

@@ -1,0 +1,50 @@
+/* container */
+
+.section {
+    composes: section from '../SignIn/signin.module.css';
+    background-image: url('../../img//wolf-2.webp');
+}
+
+.container {
+    composes: container from '../SignIn/signin.module.css';
+}
+
+/* form */
+
+.submit {
+    composes: submit from '../SignIn/signin.module.css';
+}
+
+.error {
+    composes: error from '../../components/Form/form.module.css';
+}
+
+/* links */
+
+.resetPass {
+    composes: resetPass from '../SignIn/signin.module.css';
+}
+
+.noPass {
+    composes: noPass from '../SignIn/signin.module.css';
+}
+
+.signin {
+    composes: signup from '../SignIn/signin.module.css';
+}
+
+/* titles */
+
+.title {
+    composes: title from '../SignIn/signin.module.css';
+}
+
+.subtitle {
+    composes: subtitle from '../SignIn/signin.module.css';
+}
+
+/* .text */
+
+.text {
+    composes: text from '../SignIn/signin.module.css';
+}
