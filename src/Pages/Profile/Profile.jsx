@@ -10,12 +10,14 @@ import { Link } from 'react-router-dom';
 
 // my comps
 import { Avatar } from "../../components/Avatar/Avatar";
+import { Button } from '../../components/Button/Button';
+import { GlassBox, GlassBoxImg } from "../../components/GlassBox/GlassBox";
 
 // my hooks
 import { useUser } from '../../hooks/useUser';
 
 // css
-import './profile.css';
+import classes from './profile.module.css';
 
 function Profile() {
     const dispatch = useDispatch();
@@ -43,46 +45,50 @@ function Profile() {
     );
 
     return (
-        <section className="profile">
-            <div className="container">
-                <Avatar 
-                    className="profile__avatar"
-                    link={ user.avatar }
-                />
-                <div className="profile__body">
-                    <h4 className="profile__title">
+        <section className={classes.section}>
+            <div className={classes.layout}>
+                <GlassBox>
+                    <GlassBoxImg>
+                        <Avatar 
+                            className={classes.avatar}
+                            link={ user.avatar }
+                        />
+                    </GlassBoxImg>
+                    <h4 className={classes.title}>
                         { user.name }
                     </h4>
-                    <p className="">
+                    <p className={classes.text}>
                         { user.email }
                     </p>
-                    <h4 className="profile__title">ID пользователя</h4>
-                    <p className="">
+                    <h4 className={classes.title}>ID пользователя</h4>
+                    <p className={classes.text}>
                         { user._id }
                     </p>
-                    <h4 className="profile__title">Группа</h4>
-                    <p className="">
+                    <h4 className={classes.title}>Группа</h4>
+                    <p className={classes.text}>
                         { user.group }
                     </p>
-                    <h4 className="profile__title">О себе</h4>
-                    <p className="">
+                </GlassBox>
+                <GlassBox>
+                    <h4 className={classes.title}>О себе</h4>
+                    <p className={classes.text}>
                         { user.about }
                     </p>
-                    <div className="">
-                        <Link 
-                            className=""
-                            to="/profile/edit-user"
-                        >
-                            Редактировать
-                        </Link>
-                        <button
-                            className=""
-                            onClick={ handleLogout }
-                        >
-                            Выйти
-                        </button>
-                    </div>
-                </div>
+                </GlassBox>
+                <GlassBox className={ classes.btnWrap}>
+                    <Link 
+                        className={classes.edit}
+                        to="/profile/edit-user"
+                    >
+                        Редактировать
+                    </Link>
+                    <Button
+                        className={classes.logout}
+                        onClick={ handleLogout }
+                    >
+                        Выйти
+                    </Button>
+                </GlassBox>
             </div>
         </section>
     );

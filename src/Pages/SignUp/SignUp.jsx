@@ -11,6 +11,7 @@ import * as Yup from 'yup';
 // my comps
 import { Form, FormControl, FormBox } from '../../components/Form/Form';
 import { Button } from '../../components/Button/Button';
+import { GlassBox } from '../../components/GlassBox/GlassBox';
 import { Api } from '../../components/Api/Api';
 import { BASE_SERVER_URL, SERVER_GROUP_NAME } from '../../components/consts/consts';
 
@@ -56,7 +57,7 @@ function SignUp() {
 
     return (
         <div className={classes.section}>
-            <div className={classes.container}>
+            <GlassBox>
                 <h1 className={classes.title}>DoogFood</h1>
                 <h2 className={classes.subtitle}>
                     Впервые у нас?
@@ -115,7 +116,7 @@ function SignUp() {
                         </NavLink>
                     </p>
                 </Form>
-            </div>
+            </GlassBox>
         </div>
     );
 }

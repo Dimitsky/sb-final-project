@@ -1,8 +1,11 @@
 import classes from './Container.module.css';
 
-function Container( { children, className } ) {
+function Container( { children, className, ...restProps } ) {
     return (
-        <div className={ className ? [ classes.container, className ].join( ' ' ) : classes.container }>
+        <div 
+            className={ className ? [ classes.container, className ].join( ' ' ) : classes.container }
+            {...restProps}
+        >
             { children }
         </div>
     );
