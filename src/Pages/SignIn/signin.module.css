@@ -1,11 +1,7 @@
 /* section */
 
 .section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
-    padding: 0.75em;
     background: no-repeat center / cover url('../../img/wolf-1.webp');
 }
 

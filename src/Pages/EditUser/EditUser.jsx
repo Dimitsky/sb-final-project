@@ -1,11 +1,21 @@
-import { useRef } from 'react';
+// react-router-dom
 import { useNavigate } from 'react-router-dom';
+
+// formik
 import { useFormik } from 'formik';
 
+// my comps
+import { Section } from '../../components/Section/Section';
+import { Form, FormControl, FormBox, FormTextarea } from '../../components/Form/Form';
+import { GlassBox } from '../../components/GlassBox/GlassBox';
+import { Button } from '../../components/Button/Button';
+
+// my hooks
 import { useUser } from '../../hooks/useUser';
 import { useUpdateUser } from '../../hooks/useUpdateUser';
 
-import './edituser.css';
+// css
+import classes from './edituser.module.css';
 
 function EditUser() {
     const { data: user, error, isLoading, isError } = useUser();
@@ -23,22 +33,18 @@ function EditUser() {
     );
 
     return (
-        <section className="edit-user">
-            <div className="container">
-                <div className="">
-                    <EditUserForm user={ user }/>
-                </div>
-            </div>
-        </section>
+        <Section className={classes.section}>
+            <GlassBox className={classes.glassBox}>
+                <h2 className={classes.title}>Отредактируйте ваши данные</h2>
+                <EditUserForm user={user}/>
+            </GlassBox>
+        </Section>
     );
 }
 
 function EditUserForm({ user }) {
-    const navigate = useNavigate();
-    const refSubmitBtn = useRef();
-    
+    const navigate = useNavigate();    
     const mutation = useUpdateUser();
-
     const formik = useFormik({
         initialValues: {
             avatar: user.avatar,
@@ -46,69 +52,59 @@ function EditUserForm({ user }) {
             about: user.about, 
         },
         onSubmit: variables => {
-            refSubmitBtn.current.setAttribute( 'disabled', '' );
-            mutation.mutate( variables, {
-                onSettled: () => {
-                    refSubmitBtn.current.removeAttribute( 'disabled' );
-                }
-            } )
+            mutation.mutate(variables)
         },
     });
 
     return (
-        <div className='container'>
-            <form 
-                className='form'
-                method="PATCH" 
-                onSubmit={ formik.handleSubmit }
-            >
-                <div className="form__box">
-                    <label>Ссылка на аватар</label>
-                    <input 
-                        name="avatar" 
-                        type="text" 
-                        placeholder="Введите url аватара"
-                        onChange={ formik.handleChange }
-                        value={ formik.values.avatar }
-                    />
-                </div>
-                <div className="form__box">
-                    <label>Ваше Имя</label>
-                    <input 
-                        name="name" 
-                        type="text" 
-                        placeholder="Введите ваше имя" 
-                        onChange={ formik.handleChange } 
-                        value={ formik.values.name } 
-                    />
-                </div>
-                <div className="form__box" >
-                    <label>О вас</label>
-                    <input 
-                        as="textarea" 
-                        name="about" 
-                        placeholder="Напишите о себе"
-                        onChange={ formik.handleChange }
-                        value={ formik.values.about }
-                    />
-                </div>
-                <div className="form__box">
-                    <button
-                        className="me-3"
-                        type="submit"
-                        ref={ refSubmitBtn }
-                    >
-                        Применить
-                    </button>
-                    <button
-                        variant="danger"
-                        type="button"
-                        onClick={ () => navigate( '/profile' ) }
-                    >
-                        Отменить</button>
-                </div>
-            </form>
-        </div>
+        <Form 
+            method="PATCH" 
+            onSubmit={ formik.handleSubmit }
+        >
+            <FormBox>
+                <label className={classes.label}>Ссылка на аватар</label>
+                <FormControl 
+                    variant="avatar"
+                    name="avatar" 
+                    type="text" 
+                    placeholder="Введите url аватара"
+                    onChange={ formik.handleChange }
+                    value={ formik.values.avatar }
+                />
+            </FormBox>
+            <FormBox>
+                <label className={classes.label}>Ваше Имя</label>
+                <FormControl 
+                    variant="name"
+                    name="name" 
+                    type="text" 
+                    placeholder="Введите ваше имя" 
+                    onChange={ formik.handleChange } 
+                    value={ formik.values.name } 
+                />
+            </FormBox>
+            <FormBox>
+                <label className={classes.label}>О вас</label>
+                <FormTextarea 
+                    name="about" 
+                    placeholder="Напишите о себе"
+                    onChange={ formik.handleChange }
+                    value={ formik.values.about }
+                />
+            </FormBox>
+            <FormBox className={classes.btnWrap}>
+                <Button 
+                    variant="outline"
+                    type="button"
+                    onClick={ () => navigate( '/profile' ) }
+                >
+                    Отменить
+                </Button>
+                <Button type="submit">
+                    Применить
+                </Button>
+            </FormBox>
+        </Form>
     );
 }
 

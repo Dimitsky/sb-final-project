@@ -1,7 +1,6 @@
 /* section */
 
 .section {
-    min-height: calc(100vh - 70px);
     background: no-repeat center / cover url('../../img/wolf-3.webp');
 }
 

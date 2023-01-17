@@ -1,0 +1,31 @@
+/* layout */
+
+.section {
+    background: no-repeat center / cover url('../../img/wolf-4.webp');
+}
+
+.glassBox {
+    flex: 1;
+    max-width: 576px;
+}
+
+.btnWrap {
+    gap: 1em;
+}
+
+/* text */
+
+.title {
+    composes: title from global;
+    margin-bottom: 1em;
+}
+
+.label {
+    margin-bottom: 0.3em;
+}
+
+@media screen and (min-width: 768px) {
+    .btnWrap {
+        flex-direction: row !important;
+    }
+}

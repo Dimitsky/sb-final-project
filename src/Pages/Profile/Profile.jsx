@@ -9,6 +9,7 @@ import { removeToken } from "../../RTK/slices/tokenSlice/tokenSlice";
 import { Link } from 'react-router-dom';
 
 // my comps
+import { Section } from "../../components/Section/Section";
 import { Avatar } from "../../components/Avatar/Avatar";
 import { Button } from '../../components/Button/Button';
 import { GlassBox, GlassBoxImg } from "../../components/GlassBox/GlassBox";
@@ -45,7 +46,7 @@ function Profile() {
     );
 
     return (
-        <section className={classes.section}>
+        <Section className={classes.section}>
             <div className={classes.layout}>
                 <GlassBox>
                     <GlassBoxImg>
@@ -90,7 +91,7 @@ function Profile() {
                     </Button>
                 </GlassBox>
             </div>
-        </section>
+        </Section>
     );
 }
 

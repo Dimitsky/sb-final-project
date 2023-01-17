@@ -9,17 +9,15 @@ import { Search } from '../Search/Search';
 function Layout() {
     return (
         <>
-            <div className="container">
-                <Header>
-                    <Search />
-                    <NavBar />
-                </Header>
-            </div>
+            <Header>
+                <Search />
+                <NavBar />
+            </Header>
             <Outlet />
         </>
     );
 }
 
 export {
-    Layout
+    Layout, 
 }

@@ -5,6 +5,21 @@
     flex-direction: column;
 }
 
+/* wrapper for controls and labels */
+
+.box {
+    display: flex;
+    flex-direction: column;
+}
+
+.box > * {
+    flex: 1;
+}
+
+.box:not(:last-of-type) {
+    margin-bottom: 1em;
+}
+
 /* input [text], [email], [password], eth */
 
 .control {
@@ -26,6 +41,13 @@
     background-color: #f8f9fa;
 }
 
+.textarea {
+    composes: control;
+    flex: unset;
+    height: 8em;
+    resize: none;
+}
+
 .email {
     background-image: url('./icons/envelope.svg');
 }
@@ -34,19 +56,17 @@
     background-image: url('./icons/eye-slash.svg');
 }
 
-/* wrapper for controls and labels */
-
-.box {
-    display: flex;
-    flex-direction: column;
+.avatar {
+    background-image: url('./icons/person-square.svg');
 }
 
-.box > * {
-    flex: 1;
+.name {
+    background-image: url('./icons/person-lines-fill.svg');
 }
 
-.box:not(:last-of-type) {
-    margin-bottom: 1em;
+.about {
+    background-image: url('./icons/person-vcard.svg');
+    background-position: left 0.7em top 0.7em;
 }
 
 /* error messages */

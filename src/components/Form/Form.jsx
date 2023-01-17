@@ -12,22 +12,49 @@ function Form({ children, className, ...restProps }) {
 }
 
 function FormControl({ variant = 'text', className, ...restProps }) {
+    const cnArr = [classes.control, className];
+
     switch (variant) {
         case 'email':
-            return (
-                <input 
-                    className={[classes.control, classes.email, className].join(' ')}    
-                    {...restProps} 
-                />
-            )
+            cnArr.push(classes.email);
+
+            break;
         case 'password':
-            return (
-                <input 
-                    className={[classes.control, classes.password, className].join(' ')}    
-                    {...restProps} 
-                />
-            )
+            cnArr.push(classes.password);
+            
+            break;
+        case 'avatar':
+            cnArr.push(classes.avatar);
+            
+            break;
+        case 'name':
+            cnArr.push(classes.name);
+            
+            break;
     }
+
+    const cnStr = cnArr.join(' ');
+
+    return (
+        <input 
+            className={cnStr}   
+            {...restProps} 
+        />
+    )
+}
+
+function FormTextarea({ children, className, ...restProps }) {
+    const cnArr = [classes.textarea, className, classes.about];
+    const cnStr = cnArr.join(' ');
+
+    return (
+        <textarea
+            className={cnStr}
+            {...restProps}
+        >
+            {children}
+        </textarea>
+    )
 }
 
 function FormBox({ children, className, ...restProps }) {
@@ -45,4 +72,5 @@ export {
     Form, 
     FormControl, 
     FormBox, 
+    FormTextarea, 
 }

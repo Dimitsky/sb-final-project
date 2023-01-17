@@ -13,6 +13,7 @@ import * as Yup from 'yup';
 import { useMutation } from '@tanstack/react-query';
 
 // my comps
+import { Section } from '../../components/Section/Section';
 import { Form, FormControl, FormBox } from '../../components/Form/Form';
 import { Button } from '../../components/Button/Button';
 import { GlassBox } from '../../components/GlassBox/GlassBox';
@@ -61,7 +62,7 @@ function SignIn() {
     } );
 
     return (
-        <div className={classes.section}>
+        <Section className={classes.section}>
             <GlassBox>
                 <h1 className={classes.title}>DoogFood</h1>
                 <h2 className={classes.subtitle}>
@@ -124,7 +125,7 @@ function SignIn() {
                     </p>
                 </Form>
             </GlassBox>
-        </div>
+        </Section>
     );
 }
 

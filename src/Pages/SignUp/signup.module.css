@@ -1,12 +1,8 @@
-/* container */
+/* layout */
 
 .section {
-    composes: section from '../SignIn/signin.module.css';
+    height: 100vh;
     background-image: url('../../img//wolf-2.webp');
-}
-
-.container {
-    composes: container from '../SignIn/signin.module.css';
 }
 
 /* form */
