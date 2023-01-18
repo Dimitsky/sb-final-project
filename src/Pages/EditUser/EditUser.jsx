@@ -5,7 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 
 // my comps
-import { Section } from '../../components/Section/Section';
+import { Wrapper } from '../../components/Wrapper/Wrapper';
+import { Header } from '../../components/Header/Header';
 import { Form, FormControl, FormBox, FormTextarea } from '../../components/Form/Form';
 import { GlassBox } from '../../components/GlassBox/GlassBox';
 import { Button } from '../../components/Button/Button';
@@ -33,12 +34,13 @@ function EditUser() {
     );
 
     return (
-        <Section className={classes.section}>
+        <Wrapper className={classes.wrapper}>
+            {/* <Header /> */}
             <GlassBox className={classes.glassBox}>
                 <h2 className={classes.title}>Отредактируйте ваши данные</h2>
                 <EditUserForm user={user}/>
             </GlassBox>
-        </Section>
+        </Wrapper>
     );
 }
 

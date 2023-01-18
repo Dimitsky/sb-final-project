@@ -1,6 +1,9 @@
 /* layout */
 
-.section {
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: no-repeat center / cover url('../../img/wolf-4.webp');
 }
 

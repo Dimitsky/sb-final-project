@@ -8,7 +8,7 @@
     font-weight: 600;
     line-height: 1.5;
     text-align: center;
-    background: var(--c-btn);
+    background: var(--c-main);
     cursor: pointer;
     transition: background-color 200ms ease, color 200ms ease;
 }
@@ -18,11 +18,11 @@
 }
 
 .button:focus-visible {
-    background-color: var(--c-btn-focus);
+    background-color: var(--c-main-alter);
 }
 
 .button:hover {
-    background-color: var(--c-btn-hover);
+    background-color: var(--c-main-alter);
 }
 
 .outline {
@@ -36,4 +36,27 @@
 
 .outline:hover {
     color: #fff;
+}
+
+.link {
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    color: #000;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    line-height: inherit;
+    text-align: left;
+    text-decoration: underline;
+    background: none;
+}
+
+.link:focus-visible {
+    outline: 2px solid #000;
+    background: none;
+}
+
+.link:hover {
+    color: var(--c-main-alter);
+    background: none;
 }

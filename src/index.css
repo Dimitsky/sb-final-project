@@ -4,9 +4,8 @@
 
     /* colors */
     --c-link-hover: #0066ff;
-    --c-btn: #212529;
-    --c-btn-focus: #343a40;
-    --c-btn-hover: #343a40;
+    --c-main: #212529;
+    --c-main-alter: #343a40;
 }
 
 *, 

@@ -1,0 +1,17 @@
+.wrapper {
+    min-height: 100vh;
+    padding: 0.75em;
+    background: no-repeat center / cover;
+}
+
+@media screen and (min-width: 768px) {
+    .wrapper {
+        padding: 1.5em;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .wrapper {
+        padding: 2em;
+    }
+}

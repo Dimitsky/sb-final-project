@@ -38,21 +38,6 @@ function App() {
 							<Home /> 
 						</RequireAuth>
 					} />
-					<Route path="/cart" element={
-						<RequireAuth>
-							<Cart />
-						</RequireAuth>
-					} />
-					<Route path="profile" element={ 
-						<RequireAuth>
-							<Profile />
-						</RequireAuth>
-					} />
-					<Route path="profile/edit-user" element={ 
-						<RequireAuth>
-							<EditUser />
-						</RequireAuth>
-					} />
 					<Route path="products/:id" element={ 
 						<RequireAuth>
 							<ProductPage />
@@ -60,6 +45,22 @@ function App() {
 					} />
 					<Route path="*" element={ <NotFound /> } />
 				</Route>
+
+				<Route path="/cart" element={
+						<RequireAuth>
+							<Cart />
+						</RequireAuth>
+				} />
+				<Route path="profile/edit-user" element={ 
+						<RequireAuth>
+							<EditUser />
+						</RequireAuth>
+				} />
+				<Route path="profile" element={ 
+						<RequireAuth>
+							<Profile />
+						</RequireAuth>
+				} />
 				<Route path="/signin" element={ 
 					<RequireUnauth>
 						<SignIn /> 

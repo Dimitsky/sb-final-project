@@ -7,6 +7,9 @@ function Button({ children, className, variant, ...restProps }) {
         case 'outline':
             cnArr.push(classes['outline']);
             break;
+        case 'link':
+            cnArr.push(classes['link']);
+            break;
     }
         
     const cnStr = cnArr.join(' ');

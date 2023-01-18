@@ -1,0 +1,9 @@
+.inner {
+    margin: auto;
+}
+
+@media screen and (min-width: 1200px) {
+    .inner {
+        max-width: 1200px;
+    }
+}

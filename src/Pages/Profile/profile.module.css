@@ -1,6 +1,6 @@
-/* section */
+/* layout */
 
-.section {
+.wrapper {
     background: no-repeat center / cover url('../../img/wolf-3.webp');
 }
 
@@ -10,7 +10,6 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 1em;
-    padding: 0.75em;
 }
 
 .btnWrap {

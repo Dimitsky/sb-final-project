@@ -1,7 +1,14 @@
+// react
+import { useEffect, useRef } from 'react';
+
 // css module
 import classes from './Counter.module.css';
 
 function Counter( { className, count, maxCount, handlerIncrement, handlerDecrement } ) {
+    const DecBtnRef = useRef();
+    const IncBtnRef = useRef();
+
+    // handlers
     const handleLess = () => {
         if ( count - 1 < 1 ) return
         if (handlerDecrement && typeof handlerDecrement === 'function') handlerDecrement();
@@ -12,10 +19,19 @@ function Counter( { className, count, maxCount, handlerIncrement, handlerDecreme
         if (handlerIncrement && typeof handlerIncrement === 'function') handlerIncrement();
     };
 
+    useEffect(() => {
+        if (count - 1 < 1) DecBtnRef.current.setAttribute('disabled', '');
+        else DecBtnRef.current.removeAttribute('disabled');
+
+        if (count + 1 > maxCount) IncBtnRef.current.setAttribute('disabled', '');
+        else IncBtnRef.current.removeAttribute('disabled');
+    })
+
     return (
         <div className={ className ? [ classes.counter, className ].join( ' ' ) : classes.counter }>
             <button 
                 className={ [ classes.button, classes.buttonLess ].join( ' ' ) }
+                ref={DecBtnRef}
                 onClick={ handleLess }
             >
                 <MinusIcon />
@@ -25,6 +41,7 @@ function Counter( { className, count, maxCount, handlerIncrement, handlerDecreme
             </span>
             <button 
                 className={ [ classes.button, classes.buttonMore ].join( ' ' ) }
+                ref={IncBtnRef}
                 onClick={ handleMore }
             >
                 <PlusIcon />

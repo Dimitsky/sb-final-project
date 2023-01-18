@@ -1,0 +1,6 @@
+.logo {
+    color: var(--c-main);
+    font-size: 1.1em;
+    font-weight: 600;
+    text-decoration: none;
+}
