@@ -1,0 +1,69 @@
+.wrap {
+    position: relative;
+}
+
+.like {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+}
+
+.like > svg {
+    width: 25px;
+}
+
+.img {
+    flex: 0 0 150px;
+    height: 175px;
+    margin: -0.75em 0 -0.75em -0.75em;
+}
+
+.title {
+    margin-bottom: 0.2em;
+}
+
+.rating {
+    margin-bottom: 1em;
+}
+
+.price {
+    background: var(--c-success);
+    border-radius: 0.5em;
+    padding: 0.3em 0.5em;
+    align-self: start;
+}
+
+.moreInfo {
+    composes: link from global;
+    margin-top: auto;
+    text-align: right;
+}
+
+.badgeWrap {
+    position: absolute;
+    left: 4px;
+    bottom: 4px;
+}
+
+@media screen and (min-width: 768px) {
+    .img {
+        flex-basis: 200px;
+        height: 200px;
+        margin: -1.5em 0 -1.5em -1.5em;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .img {
+        flex-basis: 200px;
+        height: 200px;
+        margin: -1.5em 0 -1.5em -1.5em;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .img {
+        height: 210px;
+        margin: -2em 0 -2em -2em;
+    }
+}

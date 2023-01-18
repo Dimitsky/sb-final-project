@@ -1,8 +1,10 @@
 /* section */
 
-.section {
-    min-height: 100vh;
-    background: no-repeat center / cover url('../../img/wolf-1.webp');
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../../img/signin.jpg');
 }
 
 /* form */

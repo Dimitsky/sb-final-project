@@ -6,7 +6,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 // pages
-import { Layout } from './components/Layout/Layout';
 import { Home } from './Pages/Home/Home';
 import { ProductPage } from './Pages/ProductPage/ProductPage';
 import { Profile } from './Pages/Profile/Profile';
@@ -20,9 +19,6 @@ import { NotFound } from './Pages/NotFound';
 import { RequireAuth } from './HOCs/RequireAuth';
 import { RequireUnauth } from './HOCs/RequireUnauth';
 
-// TEST PAGE
-import { Test } from './components/Test/Test';
-
 // TenStack Query
 const queryClient = new QueryClient();
 
@@ -32,20 +28,16 @@ function App() {
 		<QueryClientProvider client={ queryClient }>
 			<ReactQueryDevtools initialIsOpen={false} />
 			<Routes>
-				<Route path="/" element={ <Layout /> }>
-					<Route index element={ 
+				<Route path="/" element={ 
 						<RequireAuth>
 							<Home /> 
 						</RequireAuth>
-					} />
-					<Route path="products/:id" element={ 
+				} />
+				<Route path="products/:id" element={ 
 						<RequireAuth>
 							<ProductPage />
 						</RequireAuth>
-					} />
-					<Route path="*" element={ <NotFound /> } />
-				</Route>
-
+				} />
 				<Route path="/cart" element={
 						<RequireAuth>
 							<Cart />
@@ -71,9 +63,7 @@ function App() {
 						<SignUp /> 
 					</RequireUnauth>
 				} />
-				
-				{/* TEST ROUTE */}
-				<Route path="/test" element={ <Test ratings={[ 5, 3, 5, 1, 4, 1 ]} starColor="yellow" /> } />
+				<Route path="*" element={ <NotFound /> } />
 			</Routes>
 		</QueryClientProvider>
 	</>

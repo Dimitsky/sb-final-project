@@ -4,7 +4,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: no-repeat center / cover url('../../img/wolf-4.webp');
+    background-image: url('../../img/edit-user.jpg');
 }
 
 .glassBox {

@@ -1,8 +1,15 @@
+// my comps
+import { Wrapper } from '../../components/Wrapper/Wrapper';
+import { Inner } from '../../components/Inner/Inner';
 import { ProductPreview } from '../../components/ProductPreview/ProductPreview';
+
+// my hooks
 import { useProducts } from '../../hooks/useProducts';
 import { useUser } from '../../hooks/useUser';
 
-import './home.css';
+// css
+import classes from './home.module.css';
+import { Header } from '../../components/Header/Header';
 
 function Home() {
     const { data: products, error, status: productsStatus } = useProducts();
@@ -23,14 +30,15 @@ function Home() {
     ); 
     
     return ( 
-        <section className="home">
-            <div className="container">
-                <ul className="row list home__list">
+        <Wrapper className={classes.wrapper}>
+            <Inner className={classes.inner}>
+                <Header></Header>
+                <ul className={classes.list}>
                     {
                         products.map(product => {
                             return (
                                 <li 
-                                    className="col-6 col-md-4 col-lg-3 d-flex home__item"
+                                    className={classes.item}
                                     key={ product._id }
                                 >
                                     <ProductPreview data={product} user={user} />
@@ -39,8 +47,8 @@ function Home() {
                         })
                     }
                 </ul>
-            </div>
-        </section>
+            </Inner>
+        </Wrapper>
     );
 }
 

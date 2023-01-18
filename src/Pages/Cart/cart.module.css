@@ -1,7 +1,7 @@
 /* layout */
 
 .wrapper {
-    background-image: url('../../img/wolf-5.webp');
+    background-image: url('../../img/cart.jpg');
 }
 
 .layout {
@@ -76,36 +76,10 @@
     transform: scale(0);
 }
 
-/* .chooseProduct + .card {
-    height: 1em;
-}
-
-.chooseProduct:checked + .card {
-    height: unset;
-} */
-
-.card {
-    display: flex;
-    gap: 1em;
-}
-
-.imgWrap {
+.img {
     flex: 0 0 150px;
     height: 175px;
     margin: -0.75em 0 -0.75em -0.75em;
-}
-
-.img {
-    width: 100%;
-    max-width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.body {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
 }
 
 .cardWrap {
@@ -141,14 +115,6 @@
     composes: link from global;
 }
 
-.name {
-    composes: title from global;
-    max-height: 2.5em;
-    margin-bottom: 0.75em;
-    font-size: 1.2em;
-    overflow: hidden;
-}
-
 .price, 
 .discount, 
 .discountedPrice {
@@ -172,7 +138,7 @@
 }
 
 @media screen and (min-width: 768px) {
-    .imgWrap {
+    .img {
         flex-basis: 200px;
         height: 200px;
         margin: -1.5em 0 -1.5em -1.5em;
@@ -185,7 +151,7 @@
         align-items: start;    
     }
 
-    .imgWrap {
+    .img {
         flex-basis: 200px;
         height: 200px;
         margin: -1.5em 0 -1.5em -1.5em;
@@ -197,7 +163,7 @@
 }
 
 @media screen and (min-width: 992px) {
-    .imgWrap {
+    .img {
         height: 210px;
         margin: -2em 0 -2em -2em;
     }

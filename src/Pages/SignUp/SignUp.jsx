@@ -9,7 +9,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 // my comps
-import { Section } from '../../components/Section/Section';
+import { Wrapper } from '../../components/Wrapper/Wrapper';
 import { Form, FormControl, FormBox } from '../../components/Form/Form';
 import { Button } from '../../components/Button/Button';
 import { GlassBox } from '../../components/GlassBox/GlassBox';
@@ -57,7 +57,7 @@ function SignUp() {
     } );
 
     return (
-        <Section className={classes.section}>
+        <Wrapper className={classes.wrapper}>
             <GlassBox>
                 <h1 className={classes.title}>DoogFood</h1>
                 <h2 className={classes.subtitle}>
@@ -118,7 +118,7 @@ function SignUp() {
                     </p>
                 </Form>
             </GlassBox>
-        </Section>
+        </Wrapper>
     );
 }
 

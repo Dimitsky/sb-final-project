@@ -1,7 +1,7 @@
 /* layout */
 
 .wrapper {
-    background: no-repeat center / cover url('../../img/wolf-3.webp');
+    background-image: url('../../img/profile.jpg');
 }
 
 /* layout */
@@ -62,7 +62,6 @@
     }
 
     .layout {
-        max-width: 544px;
         margin: auto;
     }
 }

@@ -19,6 +19,7 @@ import { Header } from '../../components/Header/Header';
 import { GlassBox } from '../../components/GlassBox/GlassBox';
 import { Button } from '../../components/Button/Button';
 import { Price } from '../../components/Price/Price';
+import { Card, CardImg, CardBody, CardTitle } from '../../components/Card/Card';
 
 // my hooks
 import { useCartProducts } from '../../hooks/useCartProducts';
@@ -196,18 +197,16 @@ function CartItem({ children, className, data, cart, ...restProps }) {
                     onChange={handleChooseProduct} 
                 />
                 {/* карточка товара */}
-                <div className={classes.card}>
-                    <div className={classes.imgWrap}>
-                        <img 
-                            className={classes.img}
-                            src={data.pictures} 
-                            alt="Фотография продукта" 
+                <Card className={classes.card}>
+                    <CardImg 
+                        className={classes.img}
+                        src={data.pictures}
+                    />
+                    <CardBody>
+                        <CardTitle 
+                            className={classes.name}
+                            text={data.name} 
                         />
-                    </div>
-                    <div className={classes.body}>
-                        <h2 className={classes.name}>
-                            {data.name}
-                        </h2>
                         <Price
                             className={classes.priceWrap} 
                             price={data.price} 
@@ -234,8 +233,8 @@ function CartItem({ children, className, data, cart, ...restProps }) {
                                 Удалить
                             </Button>
                         </div>
-                    </div>
-                </div>
+                    </CardBody>
+                </Card>
             </GlassBox>
         </li>
     )
