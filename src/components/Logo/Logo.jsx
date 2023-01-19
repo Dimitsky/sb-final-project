@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 import { GlassBox } from '../GlassBox/GlassBox';
 
 // css module
-import './logo.css';
+import classes from './logo.module.css';
 
 function Logo( { className, children, ...restProps } ) {
-    const cn = (className ? ['logo', className] : ['logo']).join(' ');
+    const cn = className ? [classes.logo, className].join(' ') : classes.logo;
 
     return (
         <Link 

@@ -12,6 +12,10 @@
     list-style: none;
 }
 
+.search {
+    width: 230px;
+}
+
 @media  screen and (min-width: 992px) {
     .list {
         grid-template-columns: 1fr 1fr;

@@ -64,6 +64,10 @@
     background-image: url('./icons/person-lines-fill.svg');
 }
 
+.search {
+    background-image: url('./icons/search.svg');
+}
+
 .about {
     background-image: url('./icons/person-vcard.svg');
     background-position: left 0.7em top 0.7em;

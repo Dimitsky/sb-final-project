@@ -18,11 +18,21 @@
     color: var(--dark);
     font-size: inherit;
     background: none;
-    transition: border 150ms ease-in-out;
+    transition: border 150ms ease-in-out, 
+                background-color 150ms ease;
+    cursor: pointer;
+}
+
+.button:hover:not([disabled]) {
+    background-color: var(--c-success);
 }
 
 .button:disabled {
     opacity: 0.2;
+}
+
+.button:disabled:hover {
+    cursor: not-allowed;
 }
 
 .buttonLess {}
@@ -33,7 +43,7 @@
     background: #fff0ea;
 }
 
-.button:hover {
+.button:hover:not([disabled]) {
     color: var( --orange );
     border-color: var( --orange );
 }

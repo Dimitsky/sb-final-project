@@ -48,11 +48,12 @@
     margin: 0;
     background-color: #fff;
     box-shadow: 2px 4px 6px rgba(0,0,0,0.2);
-    transition: left 150ms ease;
+    transition: left 150ms ease, 
+                background-color 150ms ease;
 }
 
 .chooseProduct:checked {
-    background-color: var(--c-main);
+    background-color: #34c759;
 }
 
 .chooseProduct:checked::after {
@@ -74,6 +75,10 @@
 
 .chooseProduct:checked + .card::after {
     transform: scale(0);
+}
+
+.chooseProduct:hover::after {
+    background-color: #f2f2f7;
 }
 
 .img {
@@ -138,6 +143,11 @@
 }
 
 @media screen and (min-width: 768px) {
+    .chooseProduct {
+        top: 1.5em;
+        left: 1.5em;
+    }
+    
     .img {
         flex-basis: 200px;
         height: 200px;

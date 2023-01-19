@@ -1,6 +1,7 @@
 // my comps
 import { Wrapper } from '../../components/Wrapper/Wrapper';
 import { Inner } from '../../components/Inner/Inner';
+import { Search } from '../../components/Search/Search';
 import { ProductPreview } from '../../components/ProductPreview/ProductPreview';
 
 // my hooks
@@ -32,7 +33,11 @@ function Home() {
     return ( 
         <Wrapper className={classes.wrapper}>
             <Inner className={classes.inner}>
-                <Header></Header>
+                <Header>
+                    <Search 
+                        className={classes.Search}
+                    />
+                </Header>
                 <ul className={classes.list}>
                     {
                         products.map(product => {

@@ -1,6 +1,6 @@
 .like {
     border: none;
-    border-radius: 0;
+    border-radius: 0.75em;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,6 +9,11 @@
     padding: 0;
     background: none;
     cursor: pointer;
+    transition: background-color 150ms ease;
+}
+
+.like:hover {
+    background-color: var(--c-success);
 }
 
 .icon {

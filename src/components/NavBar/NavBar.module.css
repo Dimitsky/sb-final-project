@@ -118,7 +118,7 @@
 .burger {
     z-index: 9010;
     border: none;
-    border-radius: 0;
+    border-radius: 0.75em;
     display: grid;
     justify-content: center;
     align-items: center;
@@ -126,6 +126,8 @@
     height: 44px;
     margin-left: auto;
     background: none;
+    cursor: pointer;
+    transition: background-color 150ms ease;
 }
 
 .line {
@@ -138,7 +140,7 @@
 .line::after, 
 .line::before {
     border-radius: 3px;
-    background: #333;
+    background: var(--c-main);
     transition: transform 150ms ease-in-out, background-color 150ms ease-in-out;
 }
 
@@ -160,7 +162,7 @@
 }
 
 .burger[ aria-expanded='true' ] > .line {
-    background: #fff;
+    background: transparent;
 }
 
 .burger[ aria-expanded='true' ] > .line::after, 
@@ -175,6 +177,11 @@
 .burger[ aria-expanded='true' ] > .line::before {
     transform: translateY( 0 ) rotate( 45deg );
 }
+
+.burger:hover {
+    background-color: var(--c-success);
+}
+
 
 /* cartBadge */
 

@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 
 // me comps
+import { FormControl } from '../../components/Form/Form';
 import { Api } from '../../components/Api/Api';
 import { BASE_SERVER_URL, SERVER_GROUP_NAME } from '../../components/consts/consts';
 import { useDebounce } from '../../hooks/useDebounce';
@@ -34,7 +35,7 @@ function Search() {
     const handleChange = event => {
         // Если после первого результата поиска очистить текстовое поле, 
         // то бэкенд пришлет в ответ ВСЕ товары на сервере. 
-        // Чтобы исправить такое поведение, нужно очищать состояние при пустом поле ввода
+        // Чтобы исправить такое поведение, нужно очищать состояние при пустом поле ввода. 
         if (!event.target.value) {
             setSearch([]);
             setValue('');
@@ -58,8 +59,9 @@ function Search() {
 
     return (
         <>
-            <input
+            <FormControl
                 className={classes.search} 
+                variant="search"
                 type="text" 
                 value={value}
                 onChange={handleChange}
@@ -69,7 +71,10 @@ function Search() {
                     <ul className={classes.list}>
                         {
                             search.map(product => (
-                                <li key={product._id}>
+                                <li 
+                                    className={classes.item}
+                                    key={product._id}
+                                >
                                     <Link
                                         className={classes.link}
                                         to={`products/${product._id}`}

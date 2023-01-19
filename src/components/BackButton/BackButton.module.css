@@ -1,14 +1,22 @@
 .back {
     border: none;
-    border-radius: 0;
+    border-radius: 0.75em;
     display: grid;
     justify-content: center;
     align-items: center;
     padding: 0;
     width: 44px;
     height: 44px;
-    color: var( --dark, #303733);
+    color: var(--c-main);
     background: none;
+    cursor: pointer;
+    transition: background-color 150ms ease, 
+                color 150ms ease;
+}
+
+.back:hover {
+    color: var(--c-main-alter);
+    background-color: var(--c-success);
 }
 
 .icon {
