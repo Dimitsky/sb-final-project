@@ -14,7 +14,7 @@ function Card({ children, className, ...restProps }) {
     )
 }
 
-function CardImg({ className, src, alt = 'Фотография продукта', ...restProps }) {
+function CardImg({ children, className, src, alt = 'Фотография продукта', ...restProps }) {
     const cn = className ? [classes.img, className].join(' ') : classes.img;
 
     return (
@@ -22,6 +22,7 @@ function CardImg({ className, src, alt = 'Фотография продукта'
             className={cn}
             {...restProps}
         >
+            {children}
             <img 
                 src={src} 
                 alt={alt} 
@@ -56,9 +57,23 @@ function CardTitle({ className, text, ...restProps }) {
     )
 }
 
+function CardText({ className, text, ...restProps }) {
+    const cn = className ? [classes.text, className].join(' ') : classes.text;
+
+    return (
+        <p 
+            className={cn}
+            {...restProps}
+        >
+            {text}
+        </p>
+    )
+}
+
 export {
     Card, 
     CardImg, 
     CardBody, 
     CardTitle, 
+    CardText, 
 }

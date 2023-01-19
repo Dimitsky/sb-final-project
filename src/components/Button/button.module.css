@@ -60,3 +60,18 @@
     color: var(--c-main-alter);
     background: none;
 }
+
+.danger {
+    border-color: var(--c-danger);
+    background-color: var(--c-danger);
+}
+
+.danger:focus-visible {
+    border-color: var(--c-danger-alter);
+    background-color: var(--c-danger-alter);
+}
+
+.danger:hover {
+    border-color: var(--c-danger-alter);
+    background-color: var(--c-danger-alter);
+}

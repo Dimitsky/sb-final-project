@@ -7,6 +7,7 @@ function Wrapper({ children, className, ...restProps }) {
     return (
         <div
             className={cn}
+            data-wrapper 
             {...restProps}
         >
             {children}

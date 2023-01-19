@@ -10,6 +10,9 @@ function Button({ children, className, variant, ...restProps }) {
         case 'link':
             cnArr.push(classes['link']);
             break;
+        case 'danger':
+            cnArr.push(classes['danger']);
+            break;
     }
         
     const cnStr = cnArr.join(' ');

@@ -10,10 +10,6 @@ import { Card, CardBody, CardImg, CardTitle } from '../Card/Card';
 // css
 import classes from './productpreview.module.css';
 
-// Возвращает массив оценок 
-// На вход получает массив объектов, которые хранят оценки пользователей
-const getRatingsArr = (reviews) => reviews.map(review => review.rating);
-
 function ProductPreview( { data: product, user } ) {    
     return (
         <GlassBox className={classes.wrap}>
@@ -34,7 +30,7 @@ function ProductPreview( { data: product, user } ) {
                     />
                     <Rating
                         className={classes.rating} 
-                        likes={getRatingsArr(product.reviews)} 
+                        likes={product.reviews.map(review => review.rating)} 
                     />
                     <span className={classes.price}>
                         {product.price}₽

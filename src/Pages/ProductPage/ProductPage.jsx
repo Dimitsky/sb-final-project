@@ -3,15 +3,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addProduct, removeProduct } from '../../RTK/slices/cartSlice/cartSlice';
 
 // my comps
+import { Wrapper } from '../../components/Wrapper/Wrapper';
+import { Inner } from '../../components/Inner/Inner';
+import { Header } from '../../components/Header/Header';
+import { GlassBox } from '../../components/GlassBox/GlassBox';
+import { Card, CardBody, CardImg, CardTitle, CardText } from '../../components/Card/Card';
+import { Button } from '../../components/Button/Button';
 import { BackButton } from '../../components/BackButton/BackButton';
 import { LikeButton } from '../../components/LikeBotton/LikeButton';
+import { Rating } from '../../components/Rating/Rating';
+import { Badge } from '../../components/Badge/Badge';
+import { Price } from '../../components/Price/Price';
 
 // my hooks
 import { useProduct } from '../../hooks/useProduct';
 import { useUser } from '../../hooks/useUser';
 
 // css
-import './productpage.css';
+import classes from './productpage.module.css';
 
 function ProductPage() {
     const dispatch = useDispatch();
@@ -45,58 +54,92 @@ function ProductPage() {
     }
     
     return (
-        <div className="container">
-            <div className="">
-                <div className="detailed-card__header">
-                    <BackButton />
-                    <LikeButton 
-                        className="detailed-card__like-btn"
-                        productId={product._id}
-                        isLiked={product.likes.find( id => id === user._id ) ? true : false}
-                    />
+        <Wrapper className={classes.wrapper}>
+            <Inner className={classes.inner}>
+                <Header />
+                <div className={classes.layout}>
+                    <GlassBox>
+                        <Card className={classes.card}>
+                            <div className={classes.top}>
+                                <BackButton />
+                                <Rating 
+                                    className={classes.rating}
+                                    likes={product.reviews.map(review => review.rating)}
+                                />
+                                <LikeButton 
+                                    className={classes.like}
+                                    productId={product._id}
+                                    isLiked={product.likes.find( id => id === user._id ) ? true : false}
+                                />
+                            </div>
+                            <CardImg 
+                                className={classes.img}
+                                src={product.pictures}
+                            >
+                                <div className={classes.badgeWrap}>
+                                    {
+                                        product.discount ? <Badge text={`-${product.discount}%`} /> : undefined
+                                    }
+                                </div>
+                            </CardImg>
+                            <CardBody className={classes.body}>
+                                <CardTitle 
+                                    className={classes.title}
+                                    text={product.name}
+                                />
+                                <div className={classes.priceWrap}>
+                                    <Price 
+                                        className={classes.price}
+                                        price={product.price}
+                                        discount={product.discount}
+                                    />
+                                    <CardText 
+                                        className={classes.weight} 
+                                        text={`за ${product.wight}`}
+                                    />
+                                </div>
+                                <CardText 
+                                    className={classes.description} 
+                                    text={product.description}
+                                />
+                            </CardBody>
+                        </Card>
+                    </GlassBox>
+                    <GlassBox className={classes.btnWrap}>
+                        {
+                            cart.find(cartProduct => cartProduct.id === product._id) ? 
+                                <RemoveProductFromCartButton handler={handleRemoveFromCart} /> : 
+                                <AddProductToCartButton handler={handleAddToCart} />
+                        }
+                    </GlassBox>
                 </div>
-                <div>
-                    <img
-                        className="detailed-card__img"
-                        src={product.pictures}
-                    />
-                </div>
-                <div className="">
-                    <h2 className="">
-                        {product.name}
-                    </h2>
-                    {
-                        cart.find(cartProduct => cartProduct.id === product._id) ? 
-                            <RemoveProductFromCartButton handler={handleRemoveFromCart} /> : 
-                            <AddProductToCartButton handler={handleAddToCart} />
-                    }
-                </div>
-            </div>
-        </div>
+            </Inner>
+        </Wrapper>
     );
 }
 
 function AddProductToCartButton({handler}) {
     return (
-        <button 
-            className=""
+        <Button 
+            className={classes.addBtn}
             type="button"
             onClick={handler}
         >
             Добавить в корзину
-        </button>
+        </Button>
     )
 }
 
 function RemoveProductFromCartButton({handler}) {
     return (
-        <button 
-            className=""
+        <Button 
+            className={classes.removeBtn}
+            variant="danger"
             type="button"
             onClick={handler}
         >
             Удалить из корзины
-        </button>
+        </Button>
     )
 }
 
