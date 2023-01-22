@@ -5,6 +5,7 @@ import { LikeButton } from '../LikeBotton/LikeButton';
 import { Rating } from '../../components/Rating/Rating';
 import { Price } from '../../components/Price/Price';
 import { Badge } from '../Badge/Badge';
+import { Stock } from '../Stock/Stock';
 import { Card, CardBody, CardImg, CardTitle } from '../Card/Card';
 
 // css
@@ -32,12 +33,23 @@ function ProductPreview( { data: product, user } ) {
                         className={classes.rating} 
                         likes={product.reviews.map(review => review.rating)} 
                     />
-                    <span className={classes.price}>
-                        {product.price}₽
-                    </span>
+                    <div className={classes.priceWrap}>
+                        <Price 
+                            className={classes.price}
+                            price={product.price}
+                            discount={product.discount}
+                        />
+                        <Stock 
+                            className={classes.stock}
+                            stock={product.stock}
+                        />
+                    </div>
                     <div className={classes.badgeWrap}>
                         {
                             product.discount ? <Badge text={`-${product.discount}%`} /> : undefined
+                        }
+                        {
+                            product.tags.includes('new') ? <Badge text={`New`} style={{backgroundColor: 'var(--c-primary)'}} /> : undefined
                         }
                     </div>
                     <Link 
