@@ -1,4 +1,7 @@
 .inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
     margin: auto;
 }
 

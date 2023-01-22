@@ -3,12 +3,6 @@
     background-attachment: fixed;
 }
 
-.inner {
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
-}
-
 .list {
     display: grid;
     gap: 1em;
