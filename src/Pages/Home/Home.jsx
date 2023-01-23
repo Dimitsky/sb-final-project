@@ -8,6 +8,7 @@ import { Header } from '../../components/Header/Header';
 import { Categories, CategoriesLink, getFilteredProducts } from '../../components/Categories/Categories';
 import { Search } from '../../components/Search/Search';
 import { ProductPreview } from '../../components/ProductPreview/ProductPreview';
+import { Placeholder } from '../../components/Placeholder/Placeholder';
 import { FILTERS } from '../../RTK/slices/visibilityFilterSlice/visibilityFilterSlice';
 
 // my hooks
@@ -18,12 +19,19 @@ import { useUser } from '../../hooks/useUser';
 import classes from './home.module.css';
 import { GlassBox } from '../../components/GlassBox/GlassBox';
 
+const placeholderTitle = 'Товары не найдены';
+const placeholderContent = 'Попробуйте изменить фильтр, либо перезагрузите страницу!';
+
 function Home() {
     const filter = useSelector(state => state.visibilityFilter);
-    const { data: products, error, status: productsStatus } = useProducts();
+    const { data: products, error, status } = useProducts();
     const { data: user } = useUser();
+
+    if (status === 'success') {
+        var filteredProducts = getFilteredProducts(products, filter, user._id);
+    }
     
-    if (productsStatus === 'loading') return (
+    if (status === 'loading') return (
         <div className='container'>
             <p>
                 Идет загрузка...
@@ -31,7 +39,7 @@ function Home() {
         </div>
     ); 
 
-    if (productsStatus === 'error') return (
+    if (status === 'error') return (
         <div className='container'>
             {error.message}
         </div>
@@ -71,7 +79,16 @@ function Home() {
                 </GlassBox>
                 <ul className={classes.list}>
                     {
-                        getFilteredProducts(products, filter, user._id).map(product => {
+                        // Если продуктов не найдено (сервер вернул пустой массив, либо нет продуктов подходящих под текущий фильтр), 
+                        // то отобразить заглушку.
+                        !filteredProducts.length ? 
+                            <GlassBox className={classes.placeholderWrap}>
+                                <Placeholder 
+                                    title={placeholderTitle} 
+                                    text={placeholderContent} 
+                                />
+                            </GlassBox> :
+                        filteredProducts.map(product => {
                             return (
                                 <li 
                                     className={classes.item}

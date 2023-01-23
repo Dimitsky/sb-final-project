@@ -1,0 +1,9 @@
+.title {
+    composes: title from global;
+    margin-bottom: 0.5em;
+    font-size: 1.2em;
+}
+
+.text {
+    composes: text from global;
+}

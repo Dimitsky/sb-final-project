@@ -16,6 +16,10 @@
     width: 230px;
 }
 
+.placeholderWrap {
+    grid-column: 1 / -1;
+}
+
 @media  screen and (min-width: 992px) {
     .list {
         grid-template-columns: 1fr 1fr;
