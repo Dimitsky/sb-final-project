@@ -1,6 +1,6 @@
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { addProduct, removeProduct } from '../../RTK/slices/cartSlice/cartSlice';
+import { add, remove } from '../../RTK/slices/cartSlice/cartSlice';
 
 // my comps
 import { Wrapper } from '../../components/Wrapper/Wrapper';
@@ -31,10 +31,10 @@ function ProductPage() {
 
     // handlers
     const handleAddToCart = () => {
-        dispatch(addProduct(product._id));
+        dispatch(add(product._id));
     }
     const handleRemoveFromCart = () => {
-        dispatch(removeProduct(product._id));
+        dispatch(remove(product._id));
     }
 
     if ( status === 'loading') {

@@ -1,25 +1,23 @@
-// react
-import { useEffect, useState } from 'react';
+// react 
+import { useState } from 'react';
+
+// redux
+import { useDispatch, useSelector } from 'react-redux';
+import { clearCart } from '../../RTK/slices/cartSlice/cartSlice';
 
 // react-router-dom
 import { Link } from 'react-router-dom';
 
-// redux
-import { useDispatch, useSelector } from 'react-redux';
-import { chooseProduct, decrementProduct, incrementProduct, removeProduct, clearCart } from '../../RTK/slices/cartSlice/cartSlice';
-
-// react query
-import { useQueryClient } from '@tanstack/react-query';
-
 // my comps
 import { Wrapper } from '../../components/Wrapper/Wrapper';
 import { Inner } from '../../components/Inner/Inner';
-import { Counter } from '../../components/Counter/Counter';
 import { Header } from '../../components/Header/Header';
 import { GlassBox } from '../../components/GlassBox/GlassBox';
-import { Button } from '../../components/Button/Button';
-import { Price } from '../../components/Price/Price';
-import { Card, CardImg, CardBody, CardTitle } from '../../components/Card/Card';
+import { Placeholder } from '../../components/Placeholder/Placeholder';
+import { CartList } from '../../components/CartList/CartList';
+import { Total } from '../../components/Total/Total';
+import { Order } from '../../components/Order/Order';
+import { Check } from '../../components/Check/Check';
 
 // my hooks
 import { useCartProducts } from '../../hooks/useCartProducts';
@@ -27,77 +25,36 @@ import { useCartProducts } from '../../hooks/useCartProducts';
 // css module
 import classes from './cart.module.css';
 
-// считает полную цену
-function getFullPrice(cart, data) {
-    return cart.reduce((acc, cartProduct) => {
-        // считает только выбранные товары
-        if (!cartProduct.isChoosed) return acc;
-    
-        // найти данные для товара в корзине
-        const dataProduct = data.find(product => product._id === cartProduct.id);
-        const price = dataProduct.price;
-    
-        // цена * на количество
-        acc += price * cartProduct.count
-        
-        return acc;
-    }, 0)
-}
-
-// считает цену с учетом скидки
-function getDiscountedPrice(cart, data) {
-    return cart.reduce((acc, cartProduct) => {
-        // считает только выбранные товары
-        if (!cartProduct.isChoosed) return acc;
-
-        // найти данные для товара в корзине
-        const dataProduct = data.find(product => product._id === cartProduct.id);
-        // цена
-        const price = dataProduct.price;
-        // скидка (если есть)
-        const discount = dataProduct.discount || null;
-
-        // если скидка есть, то от цены отнять скидку и умножить на количество товаров
-        // либо просто цена * на количество
-        acc += discount ? (price - (price / 100 * discount)) * cartProduct.count : price * cartProduct.count;
-
-        return acc;
-    }, 0)
-}
+// Заголовок и текст для плейсхолдера, если корзина будет пуста
+const placeholderTitle = 'Ваша корзина пуста';
+const placeholderText = <>Ознакомьтесь с ассортиментом товаров в нашем <Link className={classes.link} to="/">Каталоге!</Link></>
 
 function Cart() {
-    const cart = useSelector(state => state.cart);
-    const dispatch = useDispatch();
-    const {data, error, status} = useCartProducts();
-    // полная цена / с учетом скидки
-    const [price, setPrice] = useState({
-        full: 0, 
-        discounted: 0, 
+    // Состояние я использовал для вывода чека после оформление заказа. 
+    // Processed означает, что заказ оформлен. Not placed значит еще нет. 
+    // В зависимости от этого статуса компонент рендерит разные части интерфейса, 
+    // а так же использует данные из состояния для вывода чека после покупки 
+    const [order, setOrder] = useState({
+        status: 'not placed', 
     });
+    const dispatch = useDispatch();
+    const cart = useSelector(state => state.cart);
+    const { data, error, status } = useCartProducts();
 
     // handlers
-    
-    // кнопка-пустышка оформления заказа
-    const handleOrder = () => {
-        // отправляем заказ только выбранных товаров
-        console.log(cart.filter(cartProduct => cartProduct.isChoosed));
-        console.log(price);
+    // 
+
+    // После оформления обновить состояние (чтобы вывести чек) и очистить корзину
+    const handleOrder = (price, products) => {
+        setOrder({
+            status: 'processed', 
+            price, 
+            products, 
+        });
+
         dispatch(clearCart());
     }
-
-    useEffect(() => {
-        // если пришли данные с бэка
-        if (!data) return;
-
-        // обновить итоговые цены
-        setPrice({
-            full: getFullPrice(cart, data), 
-            discounted: getDiscountedPrice(cart, data), 
-        })
-        // cart в зависимости нужен, чтобы пересчитывать итоговую цену, 
-        // когда пользователь изменяет количество товаров
-    }, [data, cart]);
-
+    
     if (status === 'loading') return (
         <div className="container">
             Загрузка...
@@ -116,171 +73,46 @@ function Cart() {
                 <Header />
                 <div className={classes.layout}>
                     {
-                        !cart.length ? <CartPlaceholder /> : 
-                            <>
-                                <CartList>
+                        // Если корзина пуста и заказ не оформлен, то вывести плейсхолдер, иначе список товаров
+                        // Второе условие нужно, чтобы при пустой корзине и оформленном заказе вывести чек
+                        !cart.length && order.status === 'not placed' ? 
+                            <GlassBox className={classes.placeholderWrap}>
+                                <Placeholder 
+                                    title={placeholderTitle}
+                                    text={placeholderText}
+                                />
+                            </GlassBox> :
+                            // если заказ оформлен, то вывести чек, иначе вывести корзину и виджет оформления заказа
+                            order.status === 'processed' ? 
+                                <GlassBox className={classes.check}>
+                                    <Check 
+                                        products={order.products}
+                                        price={order.price}
+                                    />
+                                </GlassBox> : 
+                                <>
+                                    <CartList 
+                                        data={data}
+
+                                    />
                                     {
-                                        data.map(product => (
-                                            <CartItem
-                                                key={product._id} 
-                                                data={product} 
-                                                cart={cart}
-                                            />
-                                        ))
+                                        // все товары в корзине отмечены «не выбрано», то спрятать виджет оформления заказа
+                                        cart.every(cartProduct => !cartProduct.isChoosed) ? 
+                                            null : 
+                                            <GlassBox className={classes.totalWrap}>
+                                                <Total data={data} />
+                                                <Order 
+                                                    data={data} 
+                                                    onClick={handleOrder}
+                                                />
+                                            </GlassBox>
                                     }
-                                </CartList>
-                                {
-                                    // если выбранных товаров нет, то скрыть итоговую цену и кнопку "оформить заказ"
-                                    !cart.filter(cartProduct => cartProduct.isChoosed).length ? null : 
-                                        <TotalBox 
-                                            price={price.full}
-                                            discountedPrice={price.discounted}
-                                        >
-                                            <OrderBtn handler={handleOrder} />
-                                        </TotalBox>
-                                }       
-                            </>
+                                </>
                     }
                 </div>
             </Inner>
         </Wrapper>
     );
-}
-
-function CartList({ children, className, ...restProps }) {
-    const cn = className ? [classes.list, className].join(' ') : classes.list;
-
-    return(
-        <ul 
-            className={cn}
-            {...restProps}
-        >
-            {children}
-        </ul>
-    )
-}
-
-function CartItem({ children, className, data, cart, ...restProps }) {
-    const dispatch = useDispatch();
-    const queryClient = useQueryClient();
-
-    const cn = className ? [classes.item, className].join(' ') : classes.item;
-
-    // handlers
-    // Отметить товар или снять отметку
-    const handleChooseProduct = event => {
-        const target = event.target;
-        const id = target.id;
-
-        dispatch(chooseProduct(id));
-    }
-    const handleRemove = (id) => {
-        // Удаляем продукт из состояния редакса
-        dispatch(removeProduct(id));
-        // Обновляем кэш tanStack query, чтобы изменения сразу отобразились у клиента
-        queryClient.setQueryData(['cart'], data => data.filter(product => product._id !== id));
-    };
-
-    return (
-        <li 
-            className={cn}
-            {...restProps}
-        >
-            <GlassBox className={classes.cardWrap}>
-                {/* тут можем отметить товар */}
-                <input 
-                    className={classes.chooseProduct} 
-                    type="checkbox"
-                    name={data._id}
-                    id={data._id}
-                    checked={cart.find(cartProduct => cartProduct.id === data._id).isChoosed}
-                    onChange={handleChooseProduct} 
-                />
-                {/* карточка товара */}
-                <Card className={classes.card}>
-                    <CardImg 
-                        className={classes.img}
-                        src={data.pictures}
-                    />
-                    <CardBody>
-                        <CardTitle 
-                            className={classes.name}
-                            text={data.name} 
-                        />
-                        <Price
-                            className={classes.priceWrap} 
-                            price={data.price} 
-                            discount={data.discount} 
-                        />
-                        {/* с помощью Counter клиент может изменять количество конкретного товара */}
-                        <Counter 
-                            // т.к. клиентский ui зависит от данных в tanStack, а количество, которое пользователь хочет купить,
-                            // хранится в redux, то приходится для каждого товара из tanStack искать его количество в состоянии redux'а
-                            className={classes.counterWrap}
-                            count={cart.find(cartProduct => cartProduct.id === data._id).count}
-                            maxCount={data.stock}
-                            handlerDecrement={() => dispatch(decrementProduct(data._id))}
-                            handlerIncrement={() => dispatch(incrementProduct(data._id))}
-                        />
-                        <div className={classes.removeBtnWrap}>
-                            {/* эта кнопка удаляет товар из корзины (так же товар можно удалить из корзины на странице этого товара) */}
-                            <Button
-                                className={classes.removeBtn}
-                                variant="link"
-                                type="button"
-                                onClick={() => handleRemove(data._id)}
-                            >
-                                Удалить
-                            </Button>
-                        </div>
-                    </CardBody>
-                </Card>
-            </GlassBox>
-        </li>
-    )
-}
-
-
-// выводит итоговую цену без скидки, скидку и цену с учетом скидки
-function TotalBox({ children, className, price, discountedPrice }) {
-    return (
-        <GlassBox className={ className ? [classes.total, className].join(' ') : classes.total}>
-            <h3 className={classes.price}>
-                Цена: <span className={classes.totalInner}>{price}₽</span>
-            </h3>
-            <h3 className={classes.discount}>
-                Скидка: <span className={classes.totalInner}>-{price - discountedPrice}₽</span>
-            </h3>
-            <h3 className={classes.discountedPrice}>
-                Цена со скидкой: <span className={classes.totalInner}>{discountedPrice}₽</span>
-            </h3>
-            {children}
-        </GlassBox>
-    )
-}
-
-// кнопка-пустышка для офрмления товара
-function OrderBtn({handler}) {
-    return (
-        <Button
-            className={classes.orderBtn}
-            onClick={handler}
-        >
-            Оформить заказ
-        </Button>
-    )
-}
-
-// placeholder для корзины если она пуста
-function CartPlaceholder() {
-    return (
-        <GlassBox className={classes.emptyCart}>
-            <h2>Ваша корзина пуста</h2>
-            <p>
-                Ознакомьтесь с ассортиментом товаров в нашем <Link className={classes.link} to="/">Каталоге</Link>!
-            </p>
-        </GlassBox>
-    )
 }
 
 export {

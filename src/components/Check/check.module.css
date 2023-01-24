@@ -1,0 +1,71 @@
+.check {
+    display: grid;
+}
+
+.list {
+    composes: list from global;
+    display: grid;
+    gap: 1em;
+    margin-bottom: 1em;
+}
+
+.item {
+    border-radius: 0.5em;
+    box-shadow: 0px 0px 10px 0px rgba(0 0 0 / 0.2);
+    overflow: hidden;
+}
+
+.thx, 
+.title, 
+.priceWrap {
+    composes: title from global;
+}
+
+.thx {
+    margin-bottom: 1em;
+    text-align: center;
+}
+
+.priceWrap {
+    justify-self: end;
+    font-size: 1em;
+    font-weight: 500;
+}
+
+.price {
+    font-size: 0.9em;
+}
+
+.img {
+    flex: 0 0 50px;
+    height: 50px;
+}
+
+.body {
+    padding: 0.5em 0.5em 0.5em 0;
+}
+
+.title {
+    font-size: 0.8em;
+    font-weight: 500;
+}
+
+@media screen and (min-width: 768px) {
+    .check {
+        max-width: 576px;
+        margin: auto;
+    }
+
+    .img {
+        flex-basis: 80px;
+        height: 80px;
+    }
+
+    .title {
+        font-size: 1em;
+    }
+
+    .priceWrap {
+        font-size: 1.2em;
+    }
+}

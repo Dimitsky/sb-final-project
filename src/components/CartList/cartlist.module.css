@@ -1,0 +1,5 @@
+.list {
+    composes: list from global;
+    display: grid;
+    gap: 1em;
+}

@@ -1,0 +1,26 @@
+.total {
+    display: flex;
+    flex-direction: column;
+}
+
+.price, 
+.discount, 
+.discountedPrice {
+    composes: title from global;
+}
+
+.price, 
+.discount {
+    margin-bottom: 0.3em;
+}
+
+.discountedPrice {
+    border-bottom: 1px solid rgba(0 0 0 / 0.2);
+    padding-bottom: 0.75em;
+    margin-bottom: 0.75em;
+}
+
+.totalInner {
+    font-size: 0.9em;
+    font-weight: 400;
+}
