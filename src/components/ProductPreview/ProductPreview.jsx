@@ -54,7 +54,7 @@ function ProductPreview( { data: product, user } ) {
                     </div>
                     <Link 
                         className={classes.moreInfo}
-                        to={`products/${product._id}`}
+                        to={`/${product._id}`}
                     >
                         Подробнее
                     </Link>

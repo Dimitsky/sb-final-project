@@ -11,6 +11,7 @@ import { Card, CardBody, CardImg, CardTitle, CardText } from '../../components/C
 import { Button } from '../../components/Button/Button';
 import { BackButton } from '../../components/BackButton/BackButton';
 import { LikeButton } from '../../components/LikeBotton/LikeButton';
+import { FavoriteButton } from '../../components/FavoriteButton/FavoriteButton';
 import { Rating } from '../../components/Rating/Rating';
 import { Badge } from '../../components/Badge/Badge';
 import { Price } from '../../components/Price/Price';
@@ -20,11 +21,12 @@ import { useProduct } from '../../hooks/useProduct';
 import { useUser } from '../../hooks/useUser';
 
 // css
-import classes from './productpage.module.css';
+import classes from './DetailProductPage.module.css';
 
-function ProductPage() {
+function DetailProductPage() {
     const dispatch = useDispatch();
     const cart = useSelector(state => state.cart);
+    const favorites = useSelector(state => state.favorites);
     
     const { data: product, error, status } = useProduct();
     const { data: user } = useUser();
@@ -71,6 +73,11 @@ function ProductPage() {
                                     productId={product._id}
                                     isLiked={product.likes.find( id => id === user._id ) ? true : false}
                                 />
+                                <FavoriteButton 
+                                    className={classes.favorites}
+                                    isFavorite={favorites.includes(product._id)} 
+                                    productId={product._id}
+                                />
                             </div>
                             <CardImg 
                                 className={classes.img}
@@ -108,8 +115,21 @@ function ProductPage() {
                     <GlassBox className={classes.btnWrap}>
                         {
                             cart.find(cartProduct => cartProduct.id === product._id) ? 
-                                <RemoveProductFromCartButton handler={handleRemoveFromCart} /> : 
-                                <AddProductToCartButton handler={handleAddToCart} />
+                                <Button 
+                                    className={classes.removeBtn}
+                                    variant="danger"
+                                    type="button"
+                                    onClick={handleRemoveFromCart}
+                                >
+                                    Удалить из корзины
+                                </Button> :
+                                <Button 
+                                    className={classes.addBtn}
+                                    type="button"
+                                    onClick={handleAddToCart}
+                                >
+                                    Добавить в корзину
+                                </Button>
                         }
                     </GlassBox>
                 </div>
@@ -118,31 +138,6 @@ function ProductPage() {
     );
 }
 
-function AddProductToCartButton({handler}) {
-    return (
-        <Button 
-            className={classes.addBtn}
-            type="button"
-            onClick={handler}
-        >
-            Добавить в корзину
-        </Button>
-    )
-}
-
-function RemoveProductFromCartButton({handler}) {
-    return (
-        <Button 
-            className={classes.removeBtn}
-            variant="danger"
-            type="button"
-            onClick={handler}
-        >
-            Удалить из корзины
-        </Button>
-    )
-}
-
 export {
-    ProductPage, 
+    DetailProductPage, 
 }

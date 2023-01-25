@@ -1,0 +1,27 @@
+.favorite {
+    border: none;
+    border-radius: 0.75em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+    background: none;
+    cursor: pointer;
+    transition: background-color 150ms ease;
+}
+
+.favorite:hover {
+    background-color: var(--c-success);
+}
+
+.icon {
+    width: 19px;
+    transition: color 150ms ease-in-out;
+    color: #8E9293;
+}
+
+.active {
+    color: gold;
+}
