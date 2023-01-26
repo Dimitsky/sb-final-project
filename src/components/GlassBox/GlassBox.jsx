@@ -1,21 +1,12 @@
 // css 
-import classes from './glassbox.module.css';
+import classes from './GlassBox.module.css';
 
 function GlassBox({ children, className, ...restProps }) {
+    const cn = className ? [classes.box, className].join(' ') : classes.box;
+
     return (
         <div 
-            className={[classes.box, className].join(' ')}
-            {...restProps}
-        >
-            {children}
-        </div>
-    )
-}
-
-function GlassBoxImg({ children, className, ...restProps }) {
-    return (
-        <div
-            className={[classes.img, className].join(' ')}
+            className={cn}
             {...restProps}
         >
             {children}
@@ -25,5 +16,4 @@ function GlassBoxImg({ children, className, ...restProps }) {
 
 export {
     GlassBox, 
-    GlassBoxImg, 
 }

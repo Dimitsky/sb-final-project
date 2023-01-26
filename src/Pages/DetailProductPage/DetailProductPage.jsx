@@ -1,6 +1,8 @@
+// react
+import { useState } from 'react';
+
 // redux
-import { useDispatch, useSelector } from 'react-redux';
-import { add, remove } from '../../RTK/slices/cartSlice/cartSlice';
+import { useSelector } from 'react-redux';
 
 // my comps
 import { Wrapper } from '../../components/Wrapper/Wrapper';
@@ -8,35 +10,67 @@ import { Inner } from '../../components/Inner/Inner';
 import { Header } from '../../components/Header/Header';
 import { GlassBox } from '../../components/GlassBox/GlassBox';
 import { Card, CardBody, CardImg, CardTitle, CardText } from '../../components/Card/Card';
-import { Button } from '../../components/Button/Button';
 import { BackButton } from '../../components/BackButton/BackButton';
 import { LikeButton } from '../../components/LikeBotton/LikeButton';
 import { FavoriteButton } from '../../components/FavoriteButton/FavoriteButton';
 import { Rating } from '../../components/Rating/Rating';
 import { Badge } from '../../components/Badge/Badge';
 import { Price } from '../../components/Price/Price';
+import { CartButton } from '../../components/CartButton/CartButton';
+import { Comments } from '../../components/Comments/Comments';
+import { Button } from '../../components/Button/Button';
 
 // my hooks
 import { useProduct } from '../../hooks/useProduct';
 import { useUser } from '../../hooks/useUser';
+import { useProductComments } from '../../hooks/useProductComments';
 
 // css
 import classes from './DetailProductPage.module.css';
 
 function DetailProductPage() {
-    const dispatch = useDispatch();
-    const cart = useSelector(state => state.cart);
+    const [ commentsIsVisible, setCommentsIsVisible ] = useState(false);
     const favorites = useSelector(state => state.favorites);
+    const commentsMutation = useProductComments();
     
     const { data: product, error, status } = useProduct();
     const { data: user } = useUser();
 
     // handlers
-    const handleAddToCart = () => {
-        dispatch(add(product._id));
+    // 
+
+    // Загрузить и показать комментарии для текущего продукта 
+    const handleShowComments = () => {
+        setCommentsIsVisible(true);
+        commentsMutation.mutate();
     }
-    const handleRemoveFromCart = () => {
-        dispatch(remove(product._id));
+
+    // render functions
+    // 
+
+    // 
+    const renderComments = () => {
+        if (commentsMutation.isLoading) {
+            return (
+                <GlassBox>
+                    Идет загрузка комментариев...
+                </GlassBox>
+            )
+        }
+
+        if (commentsMutation.error) {
+            return (
+                <GlassBox>
+                    {commentsMutation.error.message}
+                </GlassBox>
+            )
+        }
+
+        if (commentsMutation.isSuccess) {
+            return (
+                <Comments data={commentsMutation.data} />
+            )
+        }
     }
 
     if ( status === 'loading') {
@@ -113,23 +147,20 @@ function DetailProductPage() {
                         </Card>
                     </GlassBox>
                     <GlassBox className={classes.btnWrap}>
+                        <CartButton productId={product._id} />
+                    </GlassBox>
+                    <GlassBox>
                         {
-                            cart.find(cartProduct => cartProduct.id === product._id) ? 
-                                <Button 
-                                    className={classes.removeBtn}
-                                    variant="danger"
-                                    type="button"
-                                    onClick={handleRemoveFromCart}
+                            // Загрузить и показать комментарии в зависимости от состояния переменной 
+                            commentsIsVisible ? (
+                                renderComments()
+                            ) : (
+                                <Button
+                                    onClick={handleShowComments}
                                 >
-                                    Удалить из корзины
-                                </Button> :
-                                <Button 
-                                    className={classes.addBtn}
-                                    type="button"
-                                    onClick={handleAddToCart}
-                                >
-                                    Добавить в корзину
+                                    Показать комментарии
                                 </Button>
+                            )
                         }
                     </GlassBox>
                 </div>

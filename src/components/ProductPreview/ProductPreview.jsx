@@ -6,10 +6,11 @@ import { Rating } from '../../components/Rating/Rating';
 import { Price } from '../../components/Price/Price';
 import { Badge } from '../Badge/Badge';
 import { Stock } from '../Stock/Stock';
-import { Card, CardBody, CardImg, CardTitle } from '../Card/Card';
+import { Card, CardBody, CardBodyFooter, CardImg, CardTitle } from '../Card/Card';
+import { CartButton } from '../CartButton/CartButton';
 
 // css
-import classes from './productpreview.module.css';
+import classes from './ProductPreview.module.css';
 
 function ProductPreview( { data: product, user } ) {    
     return (
@@ -52,12 +53,18 @@ function ProductPreview( { data: product, user } ) {
                             product.tags.includes('new') ? <Badge text={`New`} style={{backgroundColor: 'var(--c-primary)'}} /> : undefined
                         }
                     </div>
-                    <Link 
-                        className={classes.moreInfo}
-                        to={`/${product._id}`}
-                    >
-                        Подробнее
-                    </Link>
+                    <CardBodyFooter className={classes.linkWrap}>
+                        <CartButton 
+                            className={classes.cartButton}
+                            productId={product._id} 
+                        />
+                        <Link 
+                            className={classes.moreInfo}
+                            to={`/${product._id}`}
+                        >
+                            Подробнее
+                        </Link>
+                    </CardBodyFooter>
                 </CardBody>
             </Card>
         </GlassBox>

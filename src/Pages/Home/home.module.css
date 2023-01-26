@@ -16,6 +16,9 @@
     width: 230px;
 }
 
+.categoriesWrap {
+    composes: box from global;
+}
 
 @media  screen and (min-width: 768px) {
     .placeholderWrap {

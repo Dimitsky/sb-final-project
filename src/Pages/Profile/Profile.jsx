@@ -14,7 +14,7 @@ import { Inner } from '../../components/Inner/Inner';
 import { Header } from '../../components/Header/Header';
 import { Avatar } from '../../components/Avatar/Avatar';
 import { Button } from '../../components/Button/Button';
-import { GlassBox, GlassBoxImg } from '../../components/GlassBox/GlassBox';
+import { GlassBox } from '../../components/GlassBox/GlassBox';
 
 // my hooks
 import { useUser } from '../../hooks/useUser';
@@ -53,12 +53,10 @@ function Profile() {
                 <Header />
                 <div className={classes.layout}>
                     <GlassBox>
-                        <GlassBoxImg>
-                            <Avatar 
-                                className={classes.avatar}
-                                link={ user.avatar }
-                            />
-                        </GlassBoxImg>
+                        <Avatar 
+                            className={classes.avatar}
+                            link={ user.avatar }
+                        />
                         <h4 className={classes.title}>
                             { user.name }
                         </h4>

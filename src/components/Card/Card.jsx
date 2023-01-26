@@ -1,5 +1,5 @@
 // css
-import classes from './card.module.css';
+import classes from './Card.module.css';
 
 function Card({ children, className, ...restProps }) {
     const cn = className ? [classes.card, className].join(' ') : classes.card;
@@ -44,6 +44,32 @@ function CardBody({ children, className, ...restProps }) {
     )
 }
 
+function CardBodyHeader({ children, className, ...restProps }) {
+    const cn = className ? [classes.bodyHeader, className].join(' ') : classes.bodyHeader;
+
+    return (
+        <div 
+            className={cn}
+            {...restProps}
+        >
+            {children}
+        </div>
+    )
+}
+
+function CardBodyFooter({ children, className, ...restProps }) {
+    const cn = className ? [classes.bodyFooter, className].join(' ') : classes.bodyFooter;
+
+    return (
+        <div 
+            className={cn}
+            {...restProps}
+        >
+            {children}
+        </div>
+    )
+}
+
 function CardTitle({ className, text, ...restProps }) {
     const cn = className ? [classes.title, className].join(' ') : classes.title;
 
@@ -74,6 +100,8 @@ export {
     Card, 
     CardImg, 
     CardBody, 
+    CardBodyHeader, 
+    CardBodyFooter, 
     CardTitle, 
     CardText, 
 }

@@ -21,20 +21,12 @@
     background-color: var(--c-main-alter);
 }
 
-.button:hover {
-    background-color: var(--c-main-alter);
-}
-
 .outline {
     color: #000;
     background: none;
 }
 
 .outline:focus-visible {
-    color: #fff;
-}
-
-.outline:hover {
     color: #fff;
 }
 
@@ -56,11 +48,6 @@
     background: none;
 }
 
-.link:hover {
-    color: var(--c-main-alter);
-    background: none;
-}
-
 .danger {
     border-color: var(--c-danger);
     background-color: var(--c-danger);
@@ -71,7 +58,23 @@
     background-color: var(--c-danger-alter);
 }
 
-.danger:hover {
-    border-color: var(--c-danger-alter);
-    background-color: var(--c-danger-alter);
+
+@media screen and (min-width: 992px) {
+    .button:hover {
+        background-color: var(--c-main-alter);
+    }
+
+    .outline:hover {
+        color: #fff;
+    }
+
+    .link:hover {
+        color: var(--c-main-alter);
+        background: none;
+    }
+    
+    .danger:hover {
+        border-color: var(--c-danger-alter);
+        background-color: var(--c-danger-alter);
+    }
 }

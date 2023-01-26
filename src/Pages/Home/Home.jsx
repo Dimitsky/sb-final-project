@@ -9,6 +9,7 @@ import { Categories, CategoriesLink, getFilteredProducts } from '../../component
 import { Search } from '../../components/Search/Search';
 import { ProductPreview } from '../../components/ProductPreview/ProductPreview';
 import { Placeholder } from '../../components/Placeholder/Placeholder';
+import { GlassBox } from '../../components/GlassBox/GlassBox';
 import { FILTERS } from '../../RTK/slices/visibilityFilterSlice/visibilityFilterSlice';
 
 // my hooks
@@ -16,8 +17,7 @@ import { useProducts } from '../../hooks/useProducts';
 import { useUser } from '../../hooks/useUser';
 
 // css
-import classes from './home.module.css';
-import { GlassBox } from '../../components/GlassBox/GlassBox';
+import classes from './Home.module.css';
 
 const placeholderTitle = 'Товары не найдены';
 const placeholderContent = 'Попробуйте изменить фильтр, либо перезагрузите страницу!';

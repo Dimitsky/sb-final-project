@@ -1,6 +1,6 @@
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { decrement, increment, toggle, remove } from '../../RTK/slices/cartSlice/cartSlice';
+import { decrement, increment, toggle, removeFromCart } from '../../RTK/slices/cartSlice/cartSlice';
 
 // tanstack
 import { useQueryClient } from '@tanstack/react-query';
@@ -42,7 +42,7 @@ function CartItem({ className, data, ...restProps }) {
     // Удалить товар из корзины
     const handleRemove = () => {
         // Удаляем продукт из состояния редакса
-        dispatch(remove(data._id));
+        dispatch(removeFromCart(data._id));
         // Обновляем кэш tanStack query, чтобы изменения сразу отобразились у клиента
         queryClient.setQueryData(['cart'], queryData => queryData.filter(product => product._id !== data._id));
     }

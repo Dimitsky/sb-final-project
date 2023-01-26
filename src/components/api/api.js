@@ -353,6 +353,22 @@ class Api {
 
         return result;
     }
+
+    async getComment(productId) {
+        const init = {
+            headers: this.headers, 
+        }
+
+        const response = await fetch(`${this.baseUrl}/products/review/${productId}`, init);
+
+        if (!response.ok) {
+            throw new Error(`Error! Status code is ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        return result;
+    }
 }
 
 export {

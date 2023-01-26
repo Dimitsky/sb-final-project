@@ -8,9 +8,9 @@
 }
 
 .top {
+    composes: box from global;
     display: flex;
     align-items: center;
-    margin-bottom: 0.75em;
 }
 
 .card {
@@ -18,10 +18,8 @@
     gap: 0;
 }
 
-.img {
-    position: relative;
-    height: 270px;
-    margin: 0 -0.75em 1em;
+.body {
+    composes: box from global;
 }
 
 .btnWrap {
@@ -73,7 +71,6 @@
 
     .top {
         gap: 0.5em;
-        margin-bottom: 1.5em;
     }
 
     .rating {
@@ -84,9 +81,5 @@
     .like > svg, 
     .favorites > svg {
         width: 29px;
-    }
-
-    .img {
-        margin: 0 -1.5em 1em;
     }
 }
