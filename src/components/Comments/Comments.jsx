@@ -35,19 +35,18 @@ function Comments({ data, placeholder, ...restProps }) {
                                                 className={classes.avatar}
                                                 link={comment.author.avatar}
                                             />
-                                            <span className={classes.name}>
-                                                {comment.author.name}
-                                            </span>
-                                            <span className={classes.data}>
-                                                {comment.created_at}
-                                            </span>
-                                            <span className={classes.data}>
-                                                {comment.updated_at}
-                                            </span>
+                                            <div className={classes.infoWrap}>
+                                                <span className={classes.name}>
+                                                    {comment.author.name}
+                                                </span>
+                                                <span className={classes.data}>
+                                                    {comment.updated_at}
+                                                </span>
+                                            </div>
                                         </div>
-                                        <span className={classes.rating}>
+                                        {/* <span className={classes.rating}>
                                             рейтинг {comment.rating}
-                                        </span>
+                                        </span> */}
                                         <p className={classes.text}>
                                             {comment.text}
                                         </p>
