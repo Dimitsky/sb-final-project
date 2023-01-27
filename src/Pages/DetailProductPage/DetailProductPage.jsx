@@ -149,13 +149,14 @@ function DetailProductPage() {
                     <GlassBox className={classes.btnWrap}>
                         <CartButton productId={product._id} />
                     </GlassBox>
-                    <GlassBox>
+                    <GlassBox className={classes.commentsWrap}>
                         {
                             // Загрузить и показать комментарии в зависимости от состояния переменной 
                             commentsIsVisible ? (
                                 renderComments()
                             ) : (
                                 <Button
+                                    className={classes.showCommentsBtn}
                                     onClick={handleShowComments}
                                 >
                                     Показать комментарии

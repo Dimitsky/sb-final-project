@@ -1,5 +1,6 @@
 // my comps
 import { Avatar } from '../Avatar/Avatar';
+import { FiveStarRating } from '../../components/FiveStarRating/FiveStarRating';
 
 // css 
 import classes from './Comments.module.css';
@@ -44,9 +45,7 @@ function Comments({ data, placeholder, ...restProps }) {
                                                 </span>
                                             </div>
                                         </div>
-                                        {/* <span className={classes.rating}>
-                                            рейтинг {comment.rating}
-                                        </span> */}
+                                        <FiveStarRating rating={comment.rating} />
                                         <p className={classes.text}>
                                             {comment.text}
                                         </p>

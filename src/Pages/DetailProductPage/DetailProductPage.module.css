@@ -7,8 +7,15 @@
     gap: 1em;
 }
 
-.top {
+.top, 
+.body, 
+.btnWrap, 
+.showCommentsBtn, 
+.commentsWrap {
     composes: box from global;
+}
+
+.top {
     display: flex;
     align-items: center;
 }
@@ -16,10 +23,6 @@
 .card {
     flex-direction: column;
     gap: 0;
-}
-
-.body {
-    composes: box from global;
 }
 
 .btnWrap {
@@ -61,6 +64,14 @@
 
 .description {
     margin-bottom: 0;
+}
+
+.commentsWrap {
+    display: grid;
+}
+
+.showCommentsBtn {
+    flex: 1;
 }
 
 @media screen and (min-width: 768px) {

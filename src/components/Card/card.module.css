@@ -3,6 +3,7 @@
 }
 
 .img {
+    position: relative;
     flex: 0 0 130px;
     height: 210px;
     display: flex;

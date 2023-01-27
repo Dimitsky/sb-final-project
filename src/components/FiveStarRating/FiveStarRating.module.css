@@ -1,0 +1,14 @@
+.wrap {
+    display: flex;
+    gap: 0.3em;
+    margin-bottom: 1em;
+}
+
+.icon {
+    width: 16px;
+    color: #8E9293;
+}
+
+.active {
+    color: gold;
+}
