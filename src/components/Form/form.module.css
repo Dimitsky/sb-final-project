@@ -17,7 +17,7 @@
 }
 
 .box:not(:last-of-type) {
-    margin-bottom: 1em;
+    margin-bottom: 0.75em;
 }
 
 /* input [text], [email], [password], eth */
@@ -71,6 +71,41 @@
 .about {
     background-image: url('./icons/person-vcard.svg');
     background-position: left 0.7em top 0.7em;
+}
+
+/* rating component */
+
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 0.2em;
+}
+
+.rating > input {
+    display: none;
+}
+
+.rating > label {
+    cursor: pointer;
+}
+
+.rating > input:checked ~ label > svg {
+    color: gold;
+}
+.rating:hover > input ~ label > svg {
+    color: #8E9293;
+}
+
+
+.rating > input:hover ~ label > svg {
+    color: var(--c-success);
+} 
+
+.starIcon {
+    width: 16px;
+    color: #8E9293;
+    transition: color 150ms ease;
 }
 
 /* error messages */

@@ -369,6 +369,25 @@ class Api {
 
         return result;
     }
+
+    // Добавить отзыв
+    async addRewiev(data, productId) {
+        const init = {
+            method: 'POST', 
+            headers: this.headers, 
+            body: JSON.stringify(data), 
+        }
+
+        const response = await fetch(`${this.baseUrl}/products/review/${productId}`, init);
+
+        if (!response.ok) {
+            throw new Error(`Error! Status code is ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        return result;
+    }
 }
 
 export {

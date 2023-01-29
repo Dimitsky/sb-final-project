@@ -94,3 +94,9 @@
         width: 29px;
     }
 }
+
+@media screen and (min-width: 992px) {
+    .commentsWrap {
+        grid-column: 1 / - 1;
+    }
+}

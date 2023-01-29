@@ -17,7 +17,7 @@ import { Rating } from '../../components/Rating/Rating';
 import { Badge } from '../../components/Badge/Badge';
 import { Price } from '../../components/Price/Price';
 import { CartButton } from '../../components/CartButton/CartButton';
-import { Comments } from '../../components/Comments/Comments';
+import { Comments, CommentsForm } from '../../components/Comments/Comments';
 import { Button } from '../../components/Button/Button';
 
 // my hooks
@@ -68,7 +68,14 @@ function DetailProductPage() {
 
         if (commentsMutation.isSuccess) {
             return (
-                <Comments data={commentsMutation.data} />
+                <>
+                    <GlassBox>
+                        <CommentsForm productId={product._id}/>
+                    </GlassBox>
+                    <GlassBox>
+                        <Comments data={commentsMutation.data} />
+                    </GlassBox>
+                </>
             )
         }
     }
@@ -149,21 +156,21 @@ function DetailProductPage() {
                     <GlassBox className={classes.btnWrap}>
                         <CartButton productId={product._id} />
                     </GlassBox>
-                    <GlassBox className={classes.commentsWrap}>
-                        {
-                            // Загрузить и показать комментарии в зависимости от состояния переменной 
-                            commentsIsVisible ? (
-                                renderComments()
-                            ) : (
+                    {
+                        // Загрузить и показать комментарии в зависимости от состояния переменной 
+                        commentsIsVisible ? (
+                            renderComments()
+                        ) : (
+                            <GlassBox>
                                 <Button
                                     className={classes.showCommentsBtn}
                                     onClick={handleShowComments}
                                 >
                                     Показать комментарии
                                 </Button>
-                            )
-                        }
-                    </GlassBox>
+                            </GlassBox>
+                        )
+                    }
                 </div>
             </Inner>
         </Wrapper>

@@ -1,9 +1,10 @@
 .list {
-    composes: box from global;
+    /* composes: box from global; */
     display: grid;
     gap: 1em;
     margin-top: 0;
     margin-bottom: 0;
+    padding-left: 0;
     list-style: none;
 }
 
@@ -48,4 +49,32 @@
 .text {
     composes: text from global;
     font-size: 0.9em;
+}
+
+.ratingWrap > * {
+    flex: 0 !important;
+}
+
+.ratingWrap {
+    flex-direction: row !important;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.ratingText {
+    font-weight: 500;
+}
+
+.submit {
+    margin-left: auto;
+}
+
+/* error messages */
+
+.error {
+    composes: error from '../Form/form.module.css';
+}
+
+@media screen and (min-width: 992px) {
+
 }
