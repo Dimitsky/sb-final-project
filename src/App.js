@@ -8,12 +8,13 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 // pages
 import { Home } from './Pages/Home/Home';
 import { DetailProductPage } from './Pages/DetailProductPage/DetailProductPage';
-import { Profile } from './Pages/Profile/Profile';
+import { ProfilePage } from './Pages/ProfilePage/ProfilePage';
 import { EditUser } from './Pages/EditUser/EditUser';
 import { SignIn } from './Pages/SignIn/SignIn';
 import { SignUp } from './Pages/SignUp/SignUp';
 import { Cart } from './Pages/Cart/Cart';
 import { FavoritesPage } from './Pages/FavoritesPage/FavoritesPage';
+import { AddProductPage } from './Pages/AddProductPage/AddProductPage';
 import { NotFound } from './Pages/NotFound';
 
 // HOCs
@@ -51,7 +52,7 @@ function App() {
 				} />
 				<Route path="/profile" element={ 
 						<RequireAuth>
-							<Profile />
+							<ProfilePage />
 						</RequireAuth>
 				} />
 				<Route path="/signin" element={ 
@@ -68,6 +69,9 @@ function App() {
 					<RequireAuth>
 						<FavoritesPage />
 					</RequireAuth>
+				} />
+				<Route path="/add_product" element={
+					<AddProductPage />
 				} />
 				<Route path="*" element={ <NotFound /> } />
 			</Routes>

@@ -77,7 +77,7 @@ function Search() {
                                 >
                                     <Link
                                         className={classes.link}
-                                        to={`products/${product._id}`}
+                                        to={`${product._id}`}
                                         onClick={handleCloseSearchResult}
                                     >
                                         {product.name}

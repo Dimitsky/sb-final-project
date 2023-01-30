@@ -20,9 +20,9 @@ import { GlassBox } from '../../components/GlassBox/GlassBox';
 import { useUser } from '../../hooks/useUser';
 
 // css
-import classes from './profile.module.css';
+import classes from './ProfilePage.module.css';
 
-function Profile() {
+function ProfilePage() {
     const dispatch = useDispatch();
     const { data: user, error, isLoading, isError } = useUser();
 
@@ -78,6 +78,14 @@ function Profile() {
                             { user.about }
                         </p>
                     </GlassBox>
+                    <GlassBox>
+                        <Link 
+                            className={classes.edit}
+                            to="/add_product"
+                        >
+                            Добавить новый товар
+                        </Link>
+                    </GlassBox>
                     <GlassBox className={ classes.btnWrap}>
                         <Link 
                             className={classes.edit}
@@ -99,5 +107,5 @@ function Profile() {
 }
 
 export {
-    Profile, 
+    ProfilePage, 
 }

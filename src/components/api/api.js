@@ -411,7 +411,26 @@ class Api {
         return result;
     }
 
+    // Добавить новый товар на сервер 
+    async addProduct(data) {
+        const init = {
+            method: 'POST', 
+            headers: this.headers, 
+            body: JSON.stringify(data), 
+        };
 
+        const response = await fetch(`${this.baseUrl}/products`, init);
+
+        if (!response.ok) {
+            throw new Error(`Error! Status code is ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        console.log(result);
+
+        return result;
+    }
 }
 
 export {
