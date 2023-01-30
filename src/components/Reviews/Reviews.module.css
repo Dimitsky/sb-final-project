@@ -8,10 +8,6 @@
     list-style: none;
 }
 
-.item {
-    
-}
-
 .header {
     display: flex;
     gap: 1em;
@@ -19,10 +15,31 @@
 }
 
 .body {
+    grid-template-areas: 'avatar name rating'
+        'text text text'
+        'footer footer footer';
+    grid-template-columns: min-content auto min-content;
+    align-items: center;
+    gap: 1em;
     border-radius: 0.75em;
     padding: 0.75em;
     background: rgba(0 0 0 /0.1);
     overflow: hidden;
+    display: grid;
+}
+
+.footer {
+    grid-area: footer;
+    grid-area: footer;
+    display: flex;
+    align-items: center;
+}
+
+.delete {
+    composes: link from global;
+    margin-left: auto;
+    font-size: 0.9em;
+    text-decoration: none;
 }
 
 .avatar {
@@ -48,6 +65,7 @@
 
 .text {
     composes: text from global;
+    grid-area: text;
     font-size: 0.9em;
 }
 

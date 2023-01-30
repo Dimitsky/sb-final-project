@@ -371,7 +371,7 @@ class Api {
     }
 
     // Добавить отзыв
-    async addRewiev(data, productId) {
+    async addReview(data, productId) {
         const init = {
             method: 'POST', 
             headers: this.headers, 
@@ -379,6 +379,24 @@ class Api {
         }
 
         const response = await fetch(`${this.baseUrl}/products/review/${productId}`, init);
+
+        if (!response.ok) {
+            throw new Error(`Error! Status code is ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        return result;
+    }
+
+    // Удалить отзыв
+    async deleteReview(productId, reviewId) {
+        const init = {
+            method: 'DELETE', 
+            headers: this.headers, 
+        }
+
+        const response = await fetch(`${this.baseUrl}/products/review/${productId}/${reviewId}`, init);
 
         if (!response.ok) {
             throw new Error(`Error! Status code is ${response.status}`);

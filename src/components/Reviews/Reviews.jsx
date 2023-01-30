@@ -7,14 +7,17 @@ import * as Yup from 'yup';
 
 // my comps
 import { Avatar } from '../Avatar/Avatar';
-import { FiveStarRating } from '../../components/FiveStarRating/FiveStarRating';
-import { Form, FormBox, FormTextarea, FormFiveStarRating } from '../../components/Form/Form';
-import { Button } from '../../components/Button/Button';
-import { Api } from '../Api/Api';
-import { BASE_SERVER_URL, SERVER_GROUP_NAME } from '../consts/consts';
+import { FiveStarRating } from '../FiveStarRating/FiveStarRating';
+import { Form, FormBox, FormTextarea, FormFiveStarRating } from '../Form/Form';
+import { Button } from '../Button/Button';
+
+// my hooks
+import { useUser } from '../../hooks/useUser';
 
 // css 
-import classes from './Comments.module.css';
+import classes from './Reviews.module.css';
+import { useAddReview } from '../../hooks/useAddReview';
+import { useDeleteReview } from '../../hooks/useDeleteReview';
 
 // 
 const placeholderTemplate = (
@@ -23,8 +26,30 @@ const placeholderTemplate = (
     </div>
 );
 
-function Comments({ data, placeholder, ...restProps }) {
+function Reviews({ data, placeholder, ...restProps }) {
     const ph = placeholder ? placeholder : placeholderTemplate;
+    const { data: userData, status: userStatus } = useUser();
+    const deleteReviewMutation = useDeleteReview();
+
+    // render functions
+    // 
+
+    // 
+    const renderDeleteButton = (productId, reviewId, authorId) => {
+        if (userStatus === 'success') {
+            if (userData._id === authorId) {
+                return (
+                    <Button 
+                        className={classes.delete}
+                        variant="link"
+                        onClick={() => deleteReviewMutation.mutate({productId, reviewId})}
+                    >
+                        Удалить
+                    </Button>
+                )
+            } else return null
+        } else return null
+    }
 
     return (
         <>
@@ -36,30 +61,31 @@ function Comments({ data, placeholder, ...restProps }) {
                         {...restProps}
                     >
                         {
-                            data.map(comment => (
+                            data.map(review => (
                                 <li
                                     className={classes.item}
-                                    key={comment._id}
+                                    key={review._id}
                                 >
                                     <div className={classes.body}>
-                                        <div className={classes.header}>
-                                            <Avatar 
-                                                className={classes.avatar}
-                                                link={comment.author.avatar}
-                                            />
-                                            <div className={classes.infoWrap}>
-                                                <span className={classes.name}>
-                                                    {comment.author.name}
-                                                </span>
-                                                <span className={classes.data}>
-                                                    {comment.updated_at}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <FiveStarRating rating={comment.rating} />
+                                        <Avatar 
+                                            className={classes.avatar}
+                                            link={review.author.avatar}
+                                        />
+                                        <span className={classes.name}>
+                                            {review.author.name}
+                                        </span>
+                                        <FiveStarRating rating={review.rating} />
                                         <p className={classes.text}>
-                                            {comment.text}
+                                            {review.text}
                                         </p>
+                                        <div className={classes.footer}>
+                                            <span className={classes.data}>
+                                                {review.updated_at}
+                                            </span>
+                                            {
+                                                renderDeleteButton(review.product, review._id, review.author._id)
+                                            }
+                                        </div>
                                     </div>
                                 </li>
                             ))
@@ -70,32 +96,9 @@ function Comments({ data, placeholder, ...restProps }) {
     )
 }
 
-function CommentsForm({ className, handler, productId, ...restProps }) {
+function ReviewsForm({ className, handler, productId, ...restProps }) {
     const cn = className ? [classes.form, className].join(' ') : classes.form;
-
-    const token = useSelector(state => state.token);
-    // handlers
-    // 
-
-    // 
-    const handleSubmit = (values) => {
-        const api = new Api({
-            baseUrl: BASE_SERVER_URL, 
-            groupId: SERVER_GROUP_NAME, 
-            headers: {
-                'Content-Type': 'application/json', 
-                'authorization': `Bearer ${token}`, 
-            }
-        }); 
-        const body = {
-            text: values.msg, 
-            rating: values.rating, 
-        }
-
-        api.addRewiev(body, productId)
-            .then((result) => console.log(result))
-            .catch((error) => alert(error.message))
-    }
+    const mutation = useAddReview();
 
     const formik = useFormik({
         initialValues: { 
@@ -105,7 +108,7 @@ function CommentsForm({ className, handler, productId, ...restProps }) {
         validationSchema: Yup.object().shape({
             msg: Yup.string().required('Необходимо заполнить'), 
         }), 
-        onSubmit: handleSubmit, 
+        onSubmit: mutation.mutate, 
     });
 
     return (
@@ -143,6 +146,6 @@ function CommentsForm({ className, handler, productId, ...restProps }) {
 }
 
 export {
-    Comments, 
-    CommentsForm, 
+    Reviews, 
+    ReviewsForm, 
 }

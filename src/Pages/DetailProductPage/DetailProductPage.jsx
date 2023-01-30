@@ -17,40 +17,44 @@ import { Rating } from '../../components/Rating/Rating';
 import { Badge } from '../../components/Badge/Badge';
 import { Price } from '../../components/Price/Price';
 import { CartButton } from '../../components/CartButton/CartButton';
-import { Comments, CommentsForm } from '../../components/Comments/Comments';
+import { Reviews, ReviewsForm } from '../../components/Reviews/Reviews';
 import { Button } from '../../components/Button/Button';
 
 // my hooks
 import { useProduct } from '../../hooks/useProduct';
 import { useUser } from '../../hooks/useUser';
-import { useProductComments } from '../../hooks/useProductComments';
+import { useProductReviews } from '../../hooks/useProductReviews';
 
 // css
 import classes from './DetailProductPage.module.css';
 
 function DetailProductPage() {
-    const [ commentsIsVisible, setCommentsIsVisible ] = useState(false);
     const favorites = useSelector(state => state.favorites);
-    const commentsMutation = useProductComments();
+    const { data: reviews, status: reviewsStatus, reviewsError } = useProductReviews();
     
     const { data: product, error, status } = useProduct();
-    const { data: user } = useUser();
-
-    // handlers
-    // 
-
-    // Загрузить и показать комментарии для текущего продукта 
-    const handleShowComments = () => {
-        setCommentsIsVisible(true);
-        commentsMutation.mutate();
-    }
+    const { data: user, status: userStatus } = useUser();
 
     // render functions
     // 
 
-    // 
-    const renderComments = () => {
-        if (commentsMutation.isLoading) {
+    // Иногда данные пользователя не успевают загрузиться из-за этого возникает TypeError ошибка, 
+    // поэтому нужно отследить статус загрузки данных пользователя. 
+    const renderLikeButton = (product) => {
+        if (userStatus === 'success') {
+            return (
+                <LikeButton 
+                    className={classes.like}
+                    productId={product._id}
+                    isLiked={product.likes.find( id => id === user._id ) ? true : false}
+                />
+            )
+        }
+    }
+
+    // Рендер отзывов  
+    const renderReviews = () => {
+        if (reviewsStatus === 'loading') {
             return (
                 <GlassBox>
                     Идет загрузка комментариев...
@@ -58,22 +62,24 @@ function DetailProductPage() {
             )
         }
 
-        if (commentsMutation.error) {
+        if (reviewsStatus === 'error') {
             return (
                 <GlassBox>
-                    {commentsMutation.error.message}
+                    {reviewsError.message}
                 </GlassBox>
             )
         }
 
-        if (commentsMutation.isSuccess) {
+        if (reviewsStatus === 'success') {
             return (
                 <>
                     <GlassBox>
-                        <CommentsForm productId={product._id}/>
+                        <ReviewsForm 
+                            productId={product._id} 
+                        />
                     </GlassBox>
                     <GlassBox>
-                        <Comments data={commentsMutation.data} />
+                        <Reviews data={reviews} />
                     </GlassBox>
                 </>
             )
@@ -109,11 +115,9 @@ function DetailProductPage() {
                                     className={classes.rating}
                                     likes={product.reviews.map(review => review.rating)}
                                 />
-                                <LikeButton 
-                                    className={classes.like}
-                                    productId={product._id}
-                                    isLiked={product.likes.find( id => id === user._id ) ? true : false}
-                                />
+                                {
+                                    renderLikeButton(product)
+                                }
                                 <FavoriteButton 
                                     className={classes.favorites}
                                     isFavorite={favorites.includes(product._id)} 
@@ -157,19 +161,7 @@ function DetailProductPage() {
                         <CartButton productId={product._id} />
                     </GlassBox>
                     {
-                        // Загрузить и показать комментарии в зависимости от состояния переменной 
-                        commentsIsVisible ? (
-                            renderComments()
-                        ) : (
-                            <GlassBox>
-                                <Button
-                                    className={classes.showCommentsBtn}
-                                    onClick={handleShowComments}
-                                >
-                                    Показать комментарии
-                                </Button>
-                            </GlassBox>
-                        )
+                        renderReviews()
                     }
                 </div>
             </Inner>
