@@ -35,6 +35,9 @@ function FormControl({ variant = 'text', className, ...restProps }) {
             cnArr.push(classes.search);
             
             break;
+
+        default:
+            break;
     }
 
     const cnStr = cnArr.join(' ');

@@ -71,9 +71,9 @@ function Home() {
                             Новые
                         </CategoriesLink>
                         <CategoriesLink 
-                            filter={FILTERS.FAVOURITES}
+                            filter={FILTERS.LIKED}
                         >
-                            Избранное
+                            Понравились
                         </CategoriesLink>
                     </Categories>
                 </GlassBox>

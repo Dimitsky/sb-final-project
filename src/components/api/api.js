@@ -196,10 +196,12 @@ class Api {
         return result;
     }
 
+    // Загружает товары по массиву id
     async getProductsByIds(ids) {
         return Promise.all(ids.map(id => this.getProduct(id)));
     }
 
+    // Загружает товар по id 
     async getProduct( id ) {
         const init = {
             headers: this.headers, 
@@ -331,6 +333,7 @@ class Api {
         }
     }
 
+    // Поиск товаров 
     async search(param) {
         const init = {
             headers: this.headers, 
@@ -354,7 +357,8 @@ class Api {
         return result;
     }
 
-    async getComment(productId) {
+    // Загружает все отзывы для конкретного товара 
+    async getProductReviews(productId) {
         const init = {
             headers: this.headers, 
         }
@@ -406,6 +410,8 @@ class Api {
 
         return result;
     }
+
+
 }
 
 export {

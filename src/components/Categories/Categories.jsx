@@ -3,6 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setVisivibilyFilter } from '../../RTK/slices/visibilityFilterSlice/visibilityFilterSlice';
 import { FILTERS } from '../../RTK/slices/visibilityFilterSlice/visibilityFilterSlice';
 
+// my comps
+import { Button } from '../Button/Button';
+
 // css
 import classes from './categories.module.css';
 
@@ -14,7 +17,7 @@ const getFilteredProducts = (data, filter, userId) => {
             return data.filter(product => product.discount);
         case FILTERS.NEW: 
             return data.filter(product => product.tags.includes('new'));
-        case FILTERS.FAVOURITES:
+        case FILTERS.LIKED:
             return data.filter(product => product.likes.includes(userId));
         default:
             return data;
@@ -49,15 +52,15 @@ function CategoriesLink({ children, className, filter, ...restProps }) {
 
     return (
         <li className={cn}>
-            <a 
+            <Button 
                 // Выделить ссылку, которая отвечает за текущий (тот, что в состоянии) фильтр
                 className={filter === stateFilter ? [classes.link, classes.active].join(' ') : classes.link}
-                href="#"
+                variant="link"
                 onClick={handleOnClick}
                 {...restProps}
             >
                 {children}
-            </a>
+            </Button>
         </li>
     )
 }

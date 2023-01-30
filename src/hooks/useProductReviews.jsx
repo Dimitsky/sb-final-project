@@ -29,7 +29,7 @@ function useProductReviews() {
             },
         });
 
-        return api.getComment(productId);
+        return api.getProductReviews(productId);
     }
 
     return useQuery({

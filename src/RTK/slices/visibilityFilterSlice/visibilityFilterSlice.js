@@ -4,7 +4,7 @@ const FILTERS = {
     ALL: 'ALL', 
     DISCOUNT: 'DISCOUNT', 
     NEW: 'NEW', 
-    FAVOURITES: 'FAVOURITES', 
+    LIKED: 'LIKED', 
 }
 const initialState = FILTERS.ALL;
 

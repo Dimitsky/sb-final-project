@@ -78,6 +78,16 @@ function NavBar() {
                     <li className={ classes.item }>
                         <NavLink 
                             className={isActiveLinkHandler}
+                            to="/favorites"
+                            onClick={ handleCloseMenu }
+                        >
+                            <PersonIcon />
+                            Избранное
+                        </NavLink>
+                    </li>
+                    <li className={ classes.item }>
+                        <NavLink 
+                            className={isActiveLinkHandler}
                             to="/cart"
                             onClick={ handleCloseMenu }
                         >

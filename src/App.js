@@ -13,6 +13,7 @@ import { EditUser } from './Pages/EditUser/EditUser';
 import { SignIn } from './Pages/SignIn/SignIn';
 import { SignUp } from './Pages/SignUp/SignUp';
 import { Cart } from './Pages/Cart/Cart';
+import { FavoritesPage } from './Pages/FavoritesPage/FavoritesPage';
 import { NotFound } from './Pages/NotFound';
 
 // HOCs
@@ -62,6 +63,11 @@ function App() {
 					<RequireUnauth>
 						<SignUp /> 
 					</RequireUnauth>
+				} />
+				<Route path="/favorites" element={
+					<RequireAuth>
+						<FavoritesPage />
+					</RequireAuth>
 				} />
 				<Route path="*" element={ <NotFound /> } />
 			</Routes>

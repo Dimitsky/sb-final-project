@@ -1,14 +1,15 @@
-// redux
-import classes from './FavoritesPage.module.css';
-
 // react router dom
 import { Link } from 'react-router-dom';
 
 // my comps
 import { Placeholder } from '../../components/Placeholder/Placeholder';
+import { Card, CardBody, CardImg, CardTitle } from '../../components/Card/Card';
+
+// my hooks 
+import { useFavorites } from '../../hooks/useFavorites';
 
 // css 
-import { useSelector } from 'react-redux';
+import classes from './FavoritesPage.module.css';
 
 // Данные для плейсхолдера на случай, если список избранного пуст 
 const placeholderTitle = "Ваш список избранного пуст";
@@ -29,8 +30,7 @@ const placeholderText = (
 function FavoritesPage({ className, ...restProps }) {
     const cn = className ? [classes.favorites, className].join(' ') : classes.favorites;
 
-    const favoritesIds = useSelector(state => state.favorites);
-    const { data: favorites, status, error } = useFavorites(favoritesIds);
+    const { data: favorites, status, error } = useFavorites();
 
     // Идет загрузка 
     if (status === 'loading') {
@@ -68,7 +68,20 @@ function FavoritesPage({ className, ...restProps }) {
                             {
                                 favorites.map((product) => {
                                     return (
-                                        <Card></Card>
+                                        <li 
+                                            key={product._id}
+                                        >
+                                            <Card>
+                                                <CardImg 
+                                                    src={product.pictures}
+                                                />
+                                                <CardBody>
+                                                    <CardTitle 
+                                                        text={product.name}
+                                                    />
+                                                </CardBody>
+                                            </Card>
+                                        </li>
                                     )
                                 })
                             }

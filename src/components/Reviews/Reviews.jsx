@@ -1,6 +1,3 @@
-// redux
-import { useSelector } from 'react-redux';
-
 // formik
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
