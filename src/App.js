@@ -6,13 +6,14 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 // pages
-import { Home } from './Pages/Home/Home';
+import { Template } from './components/Template/Template';
+import { HomePage } from './Pages/HomePage/HomePage';
 import { DetailProductPage } from './Pages/DetailProductPage/DetailProductPage';
 import { ProfilePage } from './Pages/ProfilePage/ProfilePage';
-import { EditUser } from './Pages/EditUser/EditUser';
+import { EditUserPage } from './Pages/EditUserPage/EditUserPage';
 import { SignIn } from './Pages/SignIn/SignIn';
 import { SignUp } from './Pages/SignUp/SignUp';
-import { Cart } from './Pages/Cart/Cart';
+import { CartPage } from './Pages/CartPage/CartPage';
 import { FavoritesPage } from './Pages/FavoritesPage/FavoritesPage';
 import { AddProductPage } from './Pages/AddProductPage/AddProductPage';
 import { NotFound } from './Pages/NotFound';
@@ -25,36 +26,52 @@ import { RequireUnauth } from './HOCs/RequireUnauth';
 const queryClient = new QueryClient();
 
 function App() {
+	
 	return (
 	<>
 		<QueryClientProvider client={ queryClient }>
 			<ReactQueryDevtools initialIsOpen={false} />
 			<Routes>
-				<Route path="/" element={ 
+				<Route path="/" element={
+					<Template />
+				}>
+					<Route path="/" element={ 
 						<RequireAuth>
-							<Home /> 
+							<HomePage /> 
 						</RequireAuth>
-				} />
-				<Route path="/:id" element={ 
+					} />
+					<Route path="/favorites" element={
 						<RequireAuth>
-							<DetailProductPage />
+							<FavoritesPage />
 						</RequireAuth>
-				} />
-				<Route path="/cart" element={
+					} />
+					<Route path="/profile" element={ 
+							<RequireAuth>
+								<ProfilePage />
+							</RequireAuth>
+					} />
+					<Route path="/profile/edit-user" element={ 
 						<RequireAuth>
-							<Cart />
+							<EditUserPage />
 						</RequireAuth>
-				} />
-				<Route path="/profile/edit-user" element={ 
+					} />
+					<Route path="/cart" element={
 						<RequireAuth>
-							<EditUser />
-						</RequireAuth>
-				} />
-				<Route path="/profile" element={ 
+								<CartPage />
+							</RequireAuth>
+					} />
+					<Route path="/:id" element={ 
 						<RequireAuth>
-							<ProfilePage />
+								<DetailProductPage />
+							</RequireAuth>
+					} />
+					<Route path="/add_product" element={
+						<RequireAuth>
+							<AddProductPage />
 						</RequireAuth>
-				} />
+					} />
+				</Route>
+				
 				<Route path="/signin" element={ 
 					<RequireUnauth>
 						<SignIn /> 
@@ -64,14 +81,6 @@ function App() {
 					<RequireUnauth>
 						<SignUp /> 
 					</RequireUnauth>
-				} />
-				<Route path="/favorites" element={
-					<RequireAuth>
-						<FavoritesPage />
-					</RequireAuth>
-				} />
-				<Route path="/add_product" element={
-					<AddProductPage />
 				} />
 				<Route path="*" element={ <NotFound /> } />
 			</Routes>

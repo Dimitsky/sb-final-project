@@ -1,0 +1,27 @@
+.overlay {
+    composes: overlay from '../ModalEditProduct/ModalEditProduct.module.css';
+}
+
+.modal {
+    composes: modal from '../ModalEditProduct/ModalEditProduct.module.css';
+}
+
+.header {
+    composes: header from '../ModalEditProduct/ModalEditProduct.module.css';
+}
+
+.header {
+    composes: header from '../ModalEditProduct/ModalEditProduct.module.css';
+}
+
+.close {
+    composes: close from '../ModalEditProduct/ModalEditProduct.module.css';
+}
+
+.danger {
+    composes: danger from '../ModalEditProduct/ModalEditProduct.module.css';
+}
+
+.title {
+    composes: title from global;
+}

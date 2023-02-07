@@ -1,0 +1,109 @@
+.info {
+    border-radius: 8px;
+    margin-bottom: 0.75em;
+    padding: 0.75em;
+    background: #fff;
+    overflow: hidden;
+}
+
+.title {
+    composes: title from global;
+    margin-bottom: 1em;
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+.total {
+    display: inline-block;
+    margin-right: 0.5em;
+    margin-bottom: 0.5em;
+    font-size: 2em;
+    font-weight: 500;
+}
+
+.stars {
+    display: inline-flex;
+    gap: 0.3em;
+    margin-right: 0.5em;
+}
+
+.based {
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+.list {
+    display: grid;
+    gap: 0.5em;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.rating {
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+.box {
+    border-radius: 4px;
+    width: 100%;
+    height: 1em;
+    background: var(--c-grey-2);
+}
+
+.boxInner {
+    border-radius: inherit;
+    display: block;
+    height: 100%;
+}
+
+.percent {
+    flex: 1 0 2.5em;
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+.count {
+    flex: 1 0 2.5em;
+    font-size: 0.8em;
+    opacity: 0.8;
+}
+
+.five {
+    background: var(--c-success-alter);
+}
+
+.four {
+    background: var(--c-success);
+}
+.three {
+    background: var(--c-warning-alter);
+}
+.two {
+    background: var(--c-warning);
+}
+.one {
+    background: var(--c-danger);
+}
+
+@media screen and (min-width: 768px) {
+    .info {
+        padding: 1em;
+        margin-bottom: 1em;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .info {
+        padding: 2em;
+        margin-bottom: 2em;
+    }
+}

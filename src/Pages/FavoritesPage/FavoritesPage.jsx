@@ -2,8 +2,13 @@
 import { Link } from 'react-router-dom';
 
 // my comps
+import { Header } from '../../components/Header/Header';
+import { Logo } from '../../components/Logo/Logo';
+import { NavBar } from '../../components/NavBar/NavBar';
+import { CartLink } from '../../components/CartLink/CartLink';
+import { Search } from '../../components/Search/Search';
 import { Placeholder } from '../../components/Placeholder/Placeholder';
-import { Card, CardBody, CardImg, CardTitle } from '../../components/Card/Card';
+import { ProductPreview } from '../../components/ProductPreview/ProductPreview';
 
 // my hooks 
 import { useFavorites } from '../../hooks/useFavorites';
@@ -16,7 +21,7 @@ const placeholderTitle = "Ваш список избранного пуст";
 const placeholderText = (
     <>
         <span>
-            Добавьте товар в избранное в нашем    
+            {"Добавьте товар в избранное в нашем "}    
             <Link 
                 className={classes.link}
                 to="/" 
@@ -54,6 +59,14 @@ function FavoritesPage({ className, ...restProps }) {
     if (status === 'success') {
         return (
             <>
+                <Header>
+                    <NavBar />
+                    <Logo className={classes.logo} />
+                    <div className={classes.box}>
+                        <Search />
+                        <CartLink className={classes.cart} />
+                    </div>
+                </Header>
                 {
                     !favorites.length ? (
                         <Placeholder 
@@ -71,16 +84,7 @@ function FavoritesPage({ className, ...restProps }) {
                                         <li 
                                             key={product._id}
                                         >
-                                            <Card>
-                                                <CardImg 
-                                                    src={product.pictures}
-                                                />
-                                                <CardBody>
-                                                    <CardTitle 
-                                                        text={product.name}
-                                                    />
-                                                </CardBody>
-                                            </Card>
+                                            <ProductPreview data={product} />
                                         </li>
                                     )
                                 })

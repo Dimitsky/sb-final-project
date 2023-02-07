@@ -1,27 +1,11 @@
 .list {
-    composes: list from global;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1.5em;
+    composes: list from '../SortMenu/SortMenu.module.css';
 }
 
-.link {
-    composes: link from global;
-    position: relative;
-    display: block;
-    padding: 0.5em 0;
-    line-height: 1;
-    text-decoration: none;
+.label {
+    composes: label from '../SortMenu/SortMenu.module.css';
 }
 
-.active::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    height: 0.1em;
-    background-color: currentColor;
+.title {
+    composes: title from '../SortMenu/SortMenu.module.css';
 }

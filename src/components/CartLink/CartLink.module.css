@@ -1,0 +1,8 @@
+.link {
+    composes: link from global;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    color: var(--c-grey-5);
+}

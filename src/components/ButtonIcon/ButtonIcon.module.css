@@ -1,0 +1,30 @@
+.button {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 8px;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+    color: var(--c-grey-5);
+    background: none;
+    cursor: pointer;
+    transition: background-color var(--transition-duration) var(--transition-timing-function), 
+                transform var(--transition-duration) var(--transition-timing-function);
+    overflow: hidden;
+}
+
+.button:active {
+    transform: translateY(3px);
+}
+
+@media screen and (min-width: 992px) {
+    .button:hover {
+        background-color: var(--c-grey-2);
+    }
+
+    .button > svg {
+        width: 20px;
+    }
+}

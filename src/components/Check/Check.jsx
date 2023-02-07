@@ -1,5 +1,4 @@
 // css
-import { Card, CardImg, CardBody, CardTitle } from '../Card/Card';
 import classes from './check.module.css';
 
 function Check({ className, products, price, ...restProps }) {
@@ -20,18 +19,19 @@ function Check({ className, products, price, ...restProps }) {
                             className={classes.item}
                             key={product._id}
                         >
-                            <Card>
-                                <CardImg 
-                                    className={classes.img}
-                                    src={product.pictures} 
-                                />
-                                <CardBody className={classes.body}>
-                                    <CardTitle
-                                        className={classes.title} 
-                                        text={product.name} 
+                            <div className={classes.card}>
+                                <div className={classes.img}>
+                                    <img 
+                                        src={product.pictures} 
+                                        alt="Фотография товара" 
                                     />
-                                </CardBody>
-                            </Card>
+                                </div>
+                                <div className={classes.body}>
+                                    <h2 className={classes.name}>
+                                        {product.name}
+                                    </h2>
+                                </div>
+                            </div>
                         </li>
                     ))
                 }

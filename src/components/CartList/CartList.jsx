@@ -1,9 +1,8 @@
 // my comps
-import { GlassBox } from '../../components/GlassBox/GlassBox';
 import { CartItem } from '../../components/CartItem/CartItem';
 
 // css
-import classes from './cartlist.module.css';
+import classes from './CartList.module.css';
 
 function CartList({ className, data, ...restProps }) {
     const cn = className ? [classes.list, className].join(' ') : classes.list;
@@ -19,12 +18,10 @@ function CartList({ className, data, ...restProps }) {
                         key={product._id}
                         className={classes.item}
                     >
-                        <GlassBox>
-                            <CartItem
-                                key={product._id} 
-                                data={product} 
-                            />
-                        </GlassBox>
+                        <CartItem
+                            key={product._id} 
+                            data={product} 
+                        />
                     </li>
                 ))
             }

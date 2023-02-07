@@ -6,13 +6,14 @@ import { decrement, increment, toggle, removeFromCart } from '../../RTK/slices/c
 import { useQueryClient } from '@tanstack/react-query';
 
 // my comps
-import { Card, CardImg, CardBody, CardTitle } from '../Card/Card';
 import { Price } from '../Price/Price';
 import { Counter } from '../Counter/Counter';
-import { Button } from '../Button/Button';
+import { ButtonIcon } from '../ButtonIcon/ButtonIcon';
+import { Badge } from '../Badge/Badge';
 
 // css
 import classes from './cartitem.module.css';
+import { IconTrash } from '../Icon/Icon';
 
 function CartItem({ className, data, ...restProps }) {
     const cn = className ? [classes.card, className].join(' ') : classes.card;
@@ -48,37 +49,54 @@ function CartItem({ className, data, ...restProps }) {
     }
 
     return (
-            <Card 
+            <div 
                 className={cn}
                 {...restProps}
             >
-                {/* тут можем отметить товар */}
-                <input 
-                    className={classes.chooseProduct} 
-                    type="checkbox"
-                    name={data._id}
-                    id={data._id}
-                    checked={cart.find(cartProduct => cartProduct.id === data._id).isChoosed}
-                    onChange={handleToggle} 
-                />
+                <div className={classes.badgeWrap}>
+                    {
+                        data.discount ? <Badge text={`-${data.discount}%`} /> : null
+                    }
+                    {
+                        data.tags.includes('new') ? <Badge text={`New`} style={{backgroundColor: 'var(--c-primary)'}} /> : null
+                    }
+                </div>
                 {/* Изображение товара */}
-                <CardImg 
-                    className={classes.img}
-                    src={data.pictures}
-                />
-                <CardBody>
+                <div className={classes.img}>
+                    <img
+                        src={data.pictures} 
+                        alt="Фотография продукта" 
+                    />
+                </div>
+                <div className={classes.body}>
                     {/* Заголовок товара */}
-                    <CardTitle 
-                        className={classes.name}
-                        text={data.name} 
+                    <h2 className={classes.name}>
+                        {data.name}
+                    </h2>
+                    <p className={classes.description}>
+                        {data.description}
+                    </p>
+                    {/* эта кнопка удаляет товар из корзины (так же товар можно удалить из корзины на странице этого товара) */}
+                    <ButtonIcon
+                        className={classes.remove}
+                        variant="link"
+                        type="button"
+                        aria-label="Удалить"
+                        onClick={handleRemove}
+                    >
+                        <IconTrash />
+                    </ButtonIcon>
+                </div>
+                <div className={classes.footer}>
+                    {/* тут можем отметить товар */}
+                    <input 
+                        className={classes.chooseProduct} 
+                        type="checkbox"
+                        name={data._id}
+                        id={data._id}
+                        checked={cart.find(cartProduct => cartProduct.id === data._id).isChoosed}
+                        onChange={handleToggle} 
                     />
-                    {/* Выводит цену товара (если есть скидка, то выводится две цены – со скидкой и без) */}
-                    <Price
-                        className={classes.price} 
-                        price={data.price} 
-                        discount={data.discount} 
-                    />
-                    {/* с помощью Counter клиент может изменять количество конкретного товара */}
                     <Counter 
                         // т.к. клиентский ui зависит от данных в tanStack, а количество, которое пользователь хочет купить,
                         // хранится в redux, то приходится для каждого товара из tanStack искать его количество в состоянии redux'а
@@ -88,19 +106,15 @@ function CartItem({ className, data, ...restProps }) {
                         handlerDecrement={handleDecrement}
                         handlerIncrement={handleIncrement}
                     />
-                    <div className={classes.removeBtnWrap}>
-                        {/* эта кнопка удаляет товар из корзины (так же товар можно удалить из корзины на странице этого товара) */}
-                        <Button
-                            className={classes.removeBtn}
-                            variant="link"
-                            type="button"
-                            onClick={handleRemove}
-                        >
-                            Удалить
-                        </Button>
-                    </div>
-                </CardBody>
-            </Card>
+                    {/* Выводит цену товара (если есть скидка, то выводится две цены – со скидкой и без) */}
+                    <Price
+                        className={classes.price} 
+                        price={data.price * cart.find(cartProduct => cartProduct.id === data._id).count} 
+                        discount={data.discount} 
+                        singlPrice={true}
+                    />
+                </div>
+            </div>
     )
 }
 

@@ -1,4 +1,8 @@
-import classes from './form.module.css';
+// react 
+import { forwardRef } from 'react';
+
+// css
+import classes from './Form.module.css';
 
 function Form({ children, className, ...restProps }) {
     return (
@@ -11,7 +15,8 @@ function Form({ children, className, ...restProps }) {
     )
 }
 
-function FormControl({ variant = 'text', className, ...restProps }) {
+// Эту функцию надо передать в forwarRef, чтобы пробросить ref к элементу input 
+function FormControlForwardRef({ variant = 'text', className, ...restProps }, ref) {
     const cnArr = [classes.control, className];
 
     switch (variant) {
@@ -44,11 +49,15 @@ function FormControl({ variant = 'text', className, ...restProps }) {
 
     return (
         <input 
-            className={cnStr}   
+            className={cnStr} 
+            ref={ref}  
             {...restProps} 
         />
     )
 }
+
+// Нужна чтобы можно было ссылаться на элемент input внутри компонента 
+const FormControl = forwardRef(FormControlForwardRef);
 
 function FormTextarea({ children, className, ...restProps }) {
     const cnArr = [classes.textarea, className, classes.about];

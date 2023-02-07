@@ -2,12 +2,15 @@
 import { useDispatch } from 'react-redux';
 import { addFavorites, removeFavorites } from '../../RTK/slices/favoritesSlice/favoritesSlice';
 
+// my comps
+import { ButtonIcon } from '../ButtonIcon/ButtonIcon';
+import { IconStar } from '../Icon/Icon';
+
 // css 
 import classes from './FavoriteButton.module.css';
 
-function FavoriteButton({ className, isFavorite, productId, ...restProps }) {
-    const cn = className ? [classes.favorite, className].join(' ') : classes.favorite;
-
+function FavoriteButton({ className, isFavorite, productId, showText = false, ...restProps }) {
+    const cn = className ? [classes.button, className] : [classes.button];
     const dispatch = useDispatch();
 
     // handlers
@@ -22,29 +25,24 @@ function FavoriteButton({ className, isFavorite, productId, ...restProps }) {
     }
 
     return (
-        <button
-            className={cn}
+        <ButtonIcon
+            className={isFavorite ? [...cn, classes.active].join(' ') : [...cn].join(' ')}
             {...restProps}
             onClick={handleOnClick}
         >
-            <Icon 
-                className={classes.icon} 
-                isFavorite={isFavorite}
-            />
-        </button>
-    )
-}
-
-function Icon({ isFavorite }) {
-    return (
-        <svg 
-            className={isFavorite ? [classes.icon, classes.active].join(' ') : classes.icon} 
-            xmlns="http://www.w3.org/2000/svg" 
-            fill="currentColor" 
-            viewBox="0 0 16 16"
-        >
-            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-        </svg>
+            <IconStar />
+            {
+                showText ? (
+                    isFavorite ? (
+                        <span className={classes.text}>Из избранного</span>
+                    ) : (
+                        <span className={classes.text}>В избранное</span>
+                    )
+                ) : (
+                    null
+                )
+            }
+        </ButtonIcon>
     )
 }
 

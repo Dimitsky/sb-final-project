@@ -1,5 +1,6 @@
 // react
 import { useEffect, useState } from 'react';
+import { useRef } from 'react';
 
 // redux
 import { useSelector } from "react-redux";
@@ -9,6 +10,8 @@ import { Link } from 'react-router-dom';
 
 // me comps
 import { FormControl } from '../../components/Form/Form';
+import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon';
+import { IconSearch } from '../Icon/Icon';
 import { Api } from '../../components/Api/Api';
 import { BASE_SERVER_URL, SERVER_GROUP_NAME } from '../../components/consts/consts';
 import { useDebounce } from '../../hooks/useDebounce';
@@ -17,21 +20,27 @@ import { useDebounce } from '../../hooks/useDebounce';
 import classes from './search.module.css';
 
 function Search() {
+    // Хранит состояние панели поиска (открыто / закрыто) 
+    const [isOpen, setIsOpen] = useState(false);
+
+    // Хранит состояние текстового поля поиска 
     const [value, setValue] = useState('');
+
+    // Хранит состояние ответа сервера 
     const [search, setSearch] = useState([]);
-    const token = useSelector(state => state.token);
+    
+    // Задержка отправки запросов на сервер 
     const debounceValue = useDebounce(value, 500);
 
-    const api = new Api({
-        baseUrl: BASE_SERVER_URL, 
-        groupId: SERVER_GROUP_NAME, 
-        headers: {
-            'Content-Type': 'application/json', 
-            'authorization': `Bearer ${token}`, 
-        }
-    });
+    // 
+    const searchInputRef = useRef();
+
+    const token = useSelector(state => state.token);
 
     // handlers
+    // 
+
+    // Обновляет состояние поля поиска 
     const handleChange = event => {
         // Если после первого результата поиска очистить текстовое поле, 
         // то бэкенд пришлет в ответ ВСЕ товары на сервере. 
@@ -44,48 +53,115 @@ function Search() {
 
         setValue(event.target.value);
     }
-    const handleCloseSearchResult = () => {
+
+    // Очищает состояния результатов поиска и поля поиска 
+    const handleClear = () => {
         setSearch([]);
         setValue('');
+        setIsOpen(false);
     }
 
+    // Управляет открытием и закрытием панели поиска 
+    const handleToggleSearch = (e) => {
+        e.stopPropagation();
+        setIsOpen(state => !state);
+    }
+
+    // 
     useEffect(() => {
         if (!debounceValue) return
+
+        const api = new Api({
+            baseUrl: BASE_SERVER_URL, 
+            groupId: SERVER_GROUP_NAME, 
+            headers: {
+                'Content-Type': 'application/json', 
+                'authorization': `Bearer ${token}`, 
+            }
+        });
 
         api.search(debounceValue)
             .then(result => setSearch(result))
             .catch(error => alert(error.message))
-    }, [debounceValue])
+    }, [debounceValue, token, ])
+
+    // 
+    useEffect(() => {
+        if (!isOpen) return;
+
+        // Закрывает элемент поиска при нажатии за его границы 
+        const handleClose = (e) => {
+            if (!e.target.closest('[data-wrapper-search]')) {
+                handleClear();
+            }
+        }
+
+        // При открытии панели поиска, ставим фокус на текстовом поле поиска 
+        searchInputRef.current.focus();
+
+        // 
+        document.documentElement.addEventListener('click', handleClose);
+
+        // 
+        return () => {
+            document.documentElement.removeEventListener('click', handleClose);
+        }
+    }, [isOpen])
 
     return (
         <>
-            <FormControl
-                className={classes.search} 
-                variant="search"
-                type="text" 
-                value={value}
-                onChange={handleChange}
-            />
+            <ButtonIcon
+                className={classes.buttonSearch}
+                aria-label="Открыть меню поиска товаров"
+                aria-expanded={isOpen}
+                onClick={handleToggleSearch}
+                data-button-search
+            >
+                <IconSearch />
+            </ButtonIcon>
             {
-                !search.length ? null :
-                    <ul className={classes.list}>
+                isOpen ? (
+                    <div
+                        className={classes.wrapper}
+                        data-wrapper-search
+                    >
+                        <FormControl
+                            className={classes.search} 
+                            variant="search"
+                            type="text" 
+                            value={value}
+                            ref={searchInputRef}
+                            onChange={handleChange}
+                        />
                         {
-                            search.map(product => (
-                                <li 
-                                    className={classes.item}
-                                    key={product._id}
-                                >
-                                    <Link
-                                        className={classes.link}
-                                        to={`${product._id}`}
-                                        onClick={handleCloseSearchResult}
-                                    >
-                                        {product.name}
-                                    </Link>
-                                </li>
-                            ))
+                            // Если ответ сервера не пустой, то вывести список найденных товаров 
+                            search.length ? (
+                                <ul className={classes.list}>
+                                    {
+                                        search.map(product => (
+                                            <li 
+                                                className={classes.item}
+                                                key={product._id}
+                                            >
+                                                <Link
+                                                    className={classes.link}
+                                                    to={`${product._id}`}
+                                                    onClick={handleClear}
+                                                >
+                                                    {product.name}
+                                                </Link>
+                                            </li>
+                                        ))
+                                    }
+                                </ul>
+                            ) : (
+                                null
+                            )
                         }
-                    </ul>
+                    </div>
+                ) : (
+                    null
+                )
             }
         </>
     )

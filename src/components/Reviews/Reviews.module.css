@@ -1,5 +1,4 @@
 .list {
-    /* composes: box from global; */
     display: grid;
     gap: 1em;
     margin-top: 0;
@@ -15,15 +14,16 @@
 }
 
 .body {
-    grid-template-areas: 'avatar name rating'
+    grid-template-areas: 
+        'avatar name rating'
         'text text text'
         'footer footer footer';
-    grid-template-columns: min-content auto min-content;
+    grid-template-columns: min-content 1fr min-content;
     align-items: center;
     gap: 1em;
     border-radius: 0.75em;
     padding: 0.75em;
-    background: rgba(0 0 0 /0.1);
+    background: #fff;
     overflow: hidden;
     display: grid;
 }
@@ -55,6 +55,17 @@
 
 .name {
     font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.check {
+    color: var(--c-link-hover);
+}
+
+.rating {
+    justify-content: end;
 }
 
 .data {
@@ -75,8 +86,8 @@
 
 .ratingWrap {
     flex-direction: row !important;
-    align-items: center;
     gap: 0.5em;
+    align-items: flex-start;
 }
 
 .ratingText {
@@ -90,9 +101,17 @@
 /* error messages */
 
 .error {
-    composes: error from '../Form/form.module.css';
+    composes: error from '../Form/Form.module.css';
+}
+
+@media screen and (min-width: 768px) {
+    .body {
+        padding: 1em;
+    }
 }
 
 @media screen and (min-width: 992px) {
-
+    .body {
+        padding: 2em;
+    }
 }

@@ -1,5 +1,5 @@
 // formik
-import { useFormik } from 'formik';
+import { Formik, useFormik } from 'formik';
 import * as Yup from 'yup';
 
 // my comps
@@ -7,6 +7,7 @@ import { Avatar } from '../Avatar/Avatar';
 import { FiveStarRating } from '../FiveStarRating/FiveStarRating';
 import { Form, FormBox, FormTextarea, FormFiveStarRating } from '../Form/Form';
 import { Button } from '../Button/Button';
+import { IconCheckCircle } from '../Icon/Icon';
 
 // my hooks
 import { useUser } from '../../hooks/useUser';
@@ -49,47 +50,52 @@ function Reviews({ data, placeholder, ...restProps }) {
     }
 
     return (
-        <>
+        <ul 
+            className={classes.list}
+            {...restProps}
+        >
             {
-                !data.length ? 
-                    ph : 
-                    <ul 
-                        className={classes.list}
-                        {...restProps}
+                data.map(review => (
+                    <li
+                        className={classes.item}
+                        key={review._id}
                     >
-                        {
-                            data.map(review => (
-                                <li
-                                    className={classes.item}
-                                    key={review._id}
-                                >
-                                    <div className={classes.body}>
-                                        <Avatar 
-                                            className={classes.avatar}
-                                            link={review.author.avatar}
-                                        />
-                                        <span className={classes.name}>
-                                            {review.author.name}
-                                        </span>
-                                        <FiveStarRating rating={review.rating} />
-                                        <p className={classes.text}>
-                                            {review.text}
-                                        </p>
-                                        <div className={classes.footer}>
-                                            <span className={classes.data}>
-                                                {review.updated_at}
-                                            </span>
-                                            {
-                                                renderDeleteButton(review.product, review._id, review.author._id)
-                                            }
-                                        </div>
-                                    </div>
-                                </li>
-                            ))
-                        }
-                    </ul>          
+                        <div className={classes.body}>
+                            <Avatar 
+                                className={classes.avatar}
+                                link={review.author.avatar}
+                            />
+                            <span className={classes.name}>
+                                {review.author.name}
+                                {/*  */}
+                                {
+                                    userData._id === review.author._id ? (
+                                        <IconCheckCircle className={classes.check} />
+                                    ) : (
+                                        null
+                                    )
+                                }
+                            </span>
+                            <FiveStarRating 
+                                className={classes.rating}
+                                rating={review.rating} 
+                            />
+                            <p className={classes.text}>
+                                {review.text}
+                            </p>
+                            <div className={classes.footer}>
+                                <span className={classes.data}>
+                                    {review.updated_at}
+                                </span>
+                                {
+                                    renderDeleteButton(review.product, review._id, review.author._id)
+                                }
+                            </div>
+                        </div>
+                    </li>
+                ))
             }
-        </>
+        </ul>          
     )
 }
 
@@ -105,7 +111,11 @@ function ReviewsForm({ className, handler, productId, ...restProps }) {
         validationSchema: Yup.object().shape({
             msg: Yup.string().required('Необходимо заполнить'), 
         }), 
-        onSubmit: mutation.mutate, 
+        onSubmit: (values, { resetForm }) => {
+            mutation.mutate(values);
+            // Очистить форму после отправки данных 
+            resetForm();
+        }, 
     });
 
     return (

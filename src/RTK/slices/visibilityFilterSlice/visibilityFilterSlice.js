@@ -6,7 +6,11 @@ const FILTERS = {
     NEW: 'NEW', 
     LIKED: 'LIKED', 
 }
-const initialState = FILTERS.ALL;
+
+const params = (new URL(window.location)).searchParams;
+const filter = params.get('filter') || FILTERS.ALL;
+
+const initialState = filter;
 
 export const visibilityFilterSlice = createSlice({
     name: 'visibilityFilter', 

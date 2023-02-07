@@ -1,0 +1,4 @@
+.icon {
+    width: 16px;
+    transition: color var(--transition-duration) var(--transition-timing-function);
+}

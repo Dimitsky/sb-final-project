@@ -1,74 +1,174 @@
+// react
+import { useState } from 'react';
+
 // my comps
-import { GlassBox } from '../GlassBox/GlassBox';
 import { Link } from 'react-router-dom';
 import { LikeButton } from '../LikeBotton/LikeButton';
-import { Rating } from '../../components/Rating/Rating';
 import { Price } from '../../components/Price/Price';
 import { Badge } from '../Badge/Badge';
-import { Stock } from '../Stock/Stock';
-import { Card, CardBody, CardBodyFooter, CardImg, CardTitle } from '../Card/Card';
 import { CartButton } from '../CartButton/CartButton';
+import { Kebab, KebabItem } from '../Kebab/Kebab';
+import { ModalEditProduct } from '../ModalEditProduct/ModalEditProduct';
+import { ModalDeleteProduct } from '../ModalDeleteProduct/ModalDeleteProduct';
+
+// my hooks
+import { useUser } from '../../hooks/useUser';
 
 // css
 import classes from './ProductPreview.module.css';
 
-function ProductPreview( { data: product, user } ) {    
-    return (
-        <GlassBox className={classes.wrap}>
-            <LikeButton 
-                className={classes.like}
-                productId={product._id}
-                isLiked= {product.likes.find( id => id === user._id ) ? true : false}
-            />
-            <Card className={classes.card}>
-                <CardImg 
-                    className={classes.img}
-                    src={product.pictures}
-                />
-                <CardBody className={classes.body}>
-                    <CardTitle 
-                        className={classes.title}
-                        text={product.name}
-                    />
-                    <Rating
-                        className={classes.rating} 
-                        likes={product.reviews.map(review => review.rating)} 
-                    />
-                    <div className={classes.priceWrap}>
+function ProductPreview( { data: product } ) {
+    const [ isOpenKebab, setIsOpenKebab ] = useState(false);
+    const [ isOpenEditProductModal, setIsOpenEditProductModal ] = useState(false);
+    const [ isOpenDeleteProductModal, setIsOpenDeleteProductModal ] = useState(false);
+    const { data: user, error, status } = useUser();
+
+    // handlers
+    // 
+
+    // Открыть модальное окно редактирования товара
+    const handleOpenEditProductModal = () => {
+        handleCloseKebab();
+        setIsOpenEditProductModal(true);
+    }
+
+    // Закрыть модальное окно редактирования товара
+    const handleCloseEditProductModal = () => {
+        setIsOpenEditProductModal(false);
+    }
+
+    // Открыть модальное окно редактирования товара
+    const handleOpenDeleteProductModal = () => {
+        handleCloseKebab();
+        setIsOpenDeleteProductModal(true);
+    }
+
+    // Закрыть модальное окно редактирования товара
+    const handleCloseDeleteProductModal = () => {
+        setIsOpenDeleteProductModal(false);
+    }
+
+    // Открывает кебаб
+    const handleOpenKebab = () => {
+        setIsOpenKebab(true);
+    }
+
+    // Закрывает кебаб
+    const handleCloseKebab = () => {
+        setIsOpenKebab(false);
+    }
+
+    // Если идет загрузка 
+    if (status === 'loading') {
+        return (
+            <p>
+                Идет загрузка комментариев...
+            </p>
+        )
+    }
+
+    // Если возникла ошибка 
+    if (status === 'error') {
+        return (
+            <p>
+                {error.message}
+            </p>
+        )
+    }
+
+    // Если ответ успешно получен 
+    if (status === 'success') {
+        return (
+            <>
+                <div className={classes.card}>
+                    {/* {product.created_at} */}
+                    <div className={classes.badgeWrap}>
+                        {
+                            product.discount ? <Badge text={`-${product.discount}%`} /> : null
+                        }
+                        {
+                            product.tags.includes('new') ? <Badge text={`New`} style={{backgroundColor: 'var(--c-primary)'}} /> : null
+                        }
+                    </div>
+                    <Link 
+                        className={classes.img}
+                        to={`/${product._id}`}
+                    >
+                        <img 
+                            src={product.pictures} 
+                            alt="Фотография товара" 
+                        />
+                    </Link>
+                    <div className={classes.body}>
+                        <Link
+                            className={classes.linkWrap}
+                            to={`/${product._id}`}
+                        >
+                            <h4 className={classes.name}>
+                                {product.name}
+                            </h4>
+                        </Link>
+                        {
+                            product.author._id === user._id ? (
+                                <Kebab 
+                                    className={classes.kebab}
+                                    onClick={handleOpenKebab}
+                                >
+                                    <KebabItem>
+                                        <button
+                                            onClick={handleOpenEditProductModal}
+                                        >
+                                            Редактировать
+                                        </button>
+                                    </KebabItem>
+                                    <KebabItem>
+                                        <button
+                                            onClick={handleOpenDeleteProductModal}
+                                        >
+                                            Удалить
+                                        </button>
+                                    </KebabItem>
+                                </Kebab>
+                            ) : (
+                                null
+                            )
+                        }
+                        <p className={classes.description}>
+                            {product.description}
+                        </p>
+                    </div>
+                    <footer className={classes.footer}>
                         <Price 
                             className={classes.price}
                             price={product.price}
                             discount={product.discount}
                         />
-                        <Stock 
-                            className={classes.stock}
-                            stock={product.stock}
+                        <LikeButton 
+                            className={classes.like}
+                            productId={product._id}
+                            isLiked={product.likes.find( id => id === user._id ) ? true : false}
                         />
-                    </div>
-                    <div className={classes.badgeWrap}>
-                        {
-                            product.discount ? <Badge text={`-${product.discount}%`} /> : undefined
-                        }
-                        {
-                            product.tags.includes('new') ? <Badge text={`New`} style={{backgroundColor: 'var(--c-primary)'}} /> : undefined
-                        }
-                    </div>
-                    <CardBodyFooter className={classes.linkWrap}>
                         <CartButton 
-                            className={classes.cartButton}
-                            productId={product._id} 
+                            className={classes.cart}
+                            productId={product._id}
                         />
-                        <Link 
-                            className={classes.moreInfo}
-                            to={`/${product._id}`}
-                        >
-                            Подробнее
-                        </Link>
-                    </CardBodyFooter>
-                </CardBody>
-            </Card>
-        </GlassBox>
-    );
+                    </footer>
+                </div>
+                <ModalEditProduct 
+                    isOpen={isOpenEditProductModal} 
+                    data={product}
+                    closeHandler={handleCloseEditProductModal}
+                    submitHandler={handleCloseEditProductModal}
+                />
+                <ModalDeleteProduct 
+                    isOpen={isOpenDeleteProductModal}
+                    closeHandler={handleCloseDeleteProductModal}
+                    cancelHandler={handleCloseDeleteProductModal}
+                    productId={product._id}
+                />
+            </>
+        );
+    }
 }
 
 export {

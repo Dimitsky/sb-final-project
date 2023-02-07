@@ -1,22 +1,29 @@
 .search {
-    width: 180px;
+    width: 94% !important;
+    max-width: 500px !important;
+    margin: auto;
     padding: 0.5em 0.7em 0.5em 2.4em !important;
 }
 
-.list {
-    composes: list from global;
+.wrapper {
     position: absolute;
     z-index: 9000;
-    top: 59px;
-    left: 0;
-    border-bottom-right-radius: 0.75em;
-    border-bottom-left-radius: 0.75em;
-    width: 100%;
+    top: 71px;
+    left: 50%;
+    border-radius: 8px;
+    display: grid;
+    gap: 1em;
+    width: calc(100% - 1.5em);
     max-height: calc(100vh - 150px);
     padding: 1em 0;
     background: #fff;
     box-shadow: 0 10px 15px 5px rgba(0 0 0 / 0.2);
+    transform: translateX(-50%);
     overflow: auto;
+}
+
+.list {
+    composes: list from global;
 }
 
 .item:not(:last-child) {
@@ -35,6 +42,29 @@
     background-color: rgba(165 255 214 / 0.2);
 }
 
+.buttonSearch {
+    margin-left: auto;
+    overflow: visible;
+    transition: background-color var(--transition-duration) var(--transition-timing-function);
+}
+
+.buttonSearch[aria-expanded="true"] {
+    position: relative;
+    background-color: #fff;
+}
+
+.buttonSearch[aria-expanded="true"]::after {
+    content: '';
+    position: absolute;
+    bottom: -7px;
+    left: 50%;
+    width: 15px;
+    height: 15px;
+    background-color: #fff;
+    transform: translateX(-50%) rotate(45deg);
+    transition: background-color var(--transition-duration) var(--transition-timing-function);
+}
+
 @media screen and (min-width: 576px) {
     .search {
         flex: 1;
@@ -44,6 +74,10 @@
 }
 
 @media screen and (min-width: 768px) {
+    .wrapper {
+        width: calc(100% - 2em);
+    }
+
     .link {
         padding: 1em 1.5em;
 
@@ -51,12 +85,26 @@
 }
 
 @media screen and (min-width: 992px) {
+    .wrapper {
+        top: 86px;
+        width: calc(100% - 4em);
+    }
+
     .list {
         top: 85px;
     }
     
     .search {
         max-width: 250px;
+    }
+
+    .buttonSearch:hover, 
+    .buttonSearch:hover::after {
+        background-color: var(--c-grey-5);
+    }
+    
+    .buttonSearch:hover > svg {
+        color: white;
     }
 }
 

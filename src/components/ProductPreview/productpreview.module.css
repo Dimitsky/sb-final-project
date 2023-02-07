@@ -1,81 +1,122 @@
-.wrap {
-    position: relative;
+.badgeWrap {
+    position: absolute;
+    top: 0.75rem;
+    left: 0;
+    display: grid;
+    gap: 0.5rem;
 }
 
-.img {
-    height: 210px;
+.card {
+    position: relative;
+    display: grid;
+    grid-template-areas: 
+        'img body'
+        'img footer';
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr min-content;
+    border-radius: 8px;
+    height: 100%;
+    background: #fff;
+    box-shadow: 0 0 7px -3px rgba(0 0 0 / 0.2);
+    overflow: hidden;
 }
 
 .body {
-    composes: box from global;
+    position: relative;
+    grid-area: body;
+    display: grid;
+    grid-template-areas:
+        'name kebab'
+        'desc desc';
+    grid-template-columns: 1fr min-content;
+    grid-auto-rows: min-content;
+    gap: 1rem;
+    padding: 0.75rem;
 }
 
-.like {
-    position: absolute;
-    top: 4px;
-    left: 4px;
-}
-
-.like > svg {
-    width: 25px;
-}
-
-.title {
-    margin-bottom: 0.2em;
-}
-
-.rating {
-    margin-bottom: 1em;
-}
-
-.priceWrap {
+.footer {
+    grid-area: footer;
     display: flex;
     align-items: center;
-    gap: 0.5em;
-    margin-bottom: 1em;
+    padding: 0 0 0 0.75rem;
 }
 
-.price {
-    align-self: start;
-}
-
-.stock {
-    display: none;
-}
-
-.moreInfo {
-    composes: link from global;
-    text-align: right;
-}
-
-.badgeWrap {
-    position: absolute;
-    left: 4px;
-    bottom: 4px;
+.img {
+    grid-area: img;
+    align-self: center;
     display: flex;
-    gap: 0.3em;
+    justify-content: center;
+    align-items: center;
+    height: 170px;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.img > img {
+    width: 100%;
+    max-width: 100%;
+    max-height: 200px;
 }
 
 .linkWrap {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 1em;
+    composes: link from global;
+    grid-area: name;
+    text-decoration: none;
 }
 
-.cartButton {
-    padding: 0.5em 0.7em;
-    font-size: 0.875em;
-    font-weight: 400;
+.kebab {
+    grid-area: kebab;
+}
+
+.name, 
+.description {
+    composes: text from global;
+}
+
+.name {
+    composes: ellipsis from global;
+    -webkit-line-clamp: 2;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.description {
+    composes: ellipsis from global;
+    grid-area: desc;
+    color: rgba(0 0 0 / 0.7);
+    font-size: 0.9em;
+}
+
+.price {
+    margin-right: auto;
+}
+
+.modal {
+    flex: 1;
+    max-width: 700px;
 }
 
 @media screen and (min-width: 768px) {
-    .stock {
-        display: unset;
+    .body {
+        padding: 1em;
     }
-    .badgeWrap {
-        bottom: 1em;
-        left: 1em;
-        gap: 0.5em;
+
+    .footer {
+        padding: 0 0.5em 0.5em 1em;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .card {
+        grid-template-areas: 
+            'img img'
+            'body body'
+            'footer footer';
+        grid-template-rows: min-content 1fr min-content;
+    }
+
+    .img > img {
+        width: unset;
+        height: 100%;
     }
 }

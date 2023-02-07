@@ -1,50 +1,36 @@
+// react router dom
 import { useNavigate} from 'react-router-dom';
 
+// my comps
+import { ButtonIcon } from '../ButtonIcon/ButtonIcon';
+import { IconArrowLeft } from '../Icon/Icon';
+
+// css
 import classes from './BackButton.module.css';
 
-function BackButton( { className, handler } ) {
+function BackButton( { className, handler, text, to = -1 } ) {
     const navigate = useNavigate();
 
     const cn = className ? [ classes.back, className ].join( ' ' ) : classes.back;
 
-    const goBack = () => navigate( -1 );
+    const go = () => navigate(to);
     const handleClick = () => {
-        goBack();
-        if ( handler && typeof handle === 'function' ) handler();
+        go();
+
+        if ( handler && typeof handler === 'function' ) handler();
     }
 
     return (
-        <button 
+        <ButtonIcon 
             className={ cn }
             onClick={ handleClick }
         >
-            <Icon />
-        </button>
+            <IconArrowLeft className={classes.icon}/>
+            {text ? text : null}
+        </ButtonIcon>
     );
 }
 
-function Icon() {
-    return (
-        <svg 
-            className={ classes.icon }
-            viewBox="0 0 24 24" 
-            fill="none" 
-            xmlns="http://www.w3.org/2000/svg"
-        >
-            <g clipPath="url(#clip0_24_700)">
-                <path d="M19 11H7.82998L12.71 6.12C13.1 5.73 13.1 5.09 12.71 4.7C12.32 4.31 11.69 4.31 11.3 4.7L4.70998 11.29C4.31998 11.68 4.31998 12.31 4.70998 12.7L11.3 19.29C11.69 19.68 12.32 19.68 12.71 19.29C13.1 18.9 13.1 18.27 12.71 17.88L7.82998 13H19C19.55 13 20 12.55 20 12C20 11.45 19.55 11 19 11Z" fill="currentColor"/>
-            </g>
-            <defs>
-                <clipPath id="clip0_24_700">
-                    <rect 
-                        width="24" 
-                        height="24" 
-                        fill="white"/>
-                </clipPath>
-            </defs>
-        </svg>
-    );
-}
 
 export {
     BackButton, 

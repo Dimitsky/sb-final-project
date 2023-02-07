@@ -5,25 +5,24 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 // my comps
-import { Wrapper } from '../../components/Wrapper/Wrapper';
-import { Inner } from '../../components/Inner/Inner';
 import { Header } from '../../components/Header/Header';
-import { GlassBox } from '../../components/GlassBox/GlassBox';
-import { Card, CardBody, CardImg, CardTitle, CardText } from '../../components/Card/Card';
 import { BackButton } from '../../components/BackButton/BackButton';
 import { LikeButton } from '../../components/LikeBotton/LikeButton';
 import { FavoriteButton } from '../../components/FavoriteButton/FavoriteButton';
-import { Rating } from '../../components/Rating/Rating';
 import { Badge } from '../../components/Badge/Badge';
 import { Price } from '../../components/Price/Price';
 import { CartButton } from '../../components/CartButton/CartButton';
 import { Reviews, ReviewsForm } from '../../components/Reviews/Reviews';
-import { Button } from '../../components/Button/Button';
+import { ReviewsInfo } from '../../components/ReviewsInfo/ReviewsInfo';
+import { Avatar } from '../../components/Avatar/Avatar';
 
 // my hooks
 import { useProduct } from '../../hooks/useProduct';
 import { useUser } from '../../hooks/useUser';
 import { useProductReviews } from '../../hooks/useProductReviews';
+import { Kebab, KebabItem } from '../../components/Kebab/Kebab';
+import { ModalEditProduct } from '../../components/ModalEditProduct/ModalEditProduct';
+import { ModalDeleteProduct } from '../../components/ModalDeleteProduct/ModalDeleteProduct';
 
 // css
 import classes from './DetailProductPage.module.css';
@@ -32,8 +31,11 @@ function DetailProductPage() {
     const favorites = useSelector(state => state.favorites);
     const { data: reviews, status: reviewsStatus, reviewsError } = useProductReviews();
     
-    const { data: product, error, status } = useProduct();
+    const { data: product, error, status: productStatus } = useProduct();
     const { data: user, status: userStatus } = useUser();
+
+    const [ isOpenEditProductModal, setIsOpenEditProductModal ] = useState(false);
+    const [ isOpenDeleteProductModal, setIsOpenDeleteProductModal ] = useState(false);
 
     // render functions
     // 
@@ -41,52 +43,88 @@ function DetailProductPage() {
     // Иногда данные пользователя не успевают загрузиться из-за этого возникает TypeError ошибка, 
     // поэтому нужно отследить статус загрузки данных пользователя. 
     const renderLikeButton = (product) => {
-        if (userStatus === 'success') {
+        if (userStatus === 'success' && productStatus === 'success') {
             return (
-                <LikeButton 
-                    className={classes.like}
-                    productId={product._id}
-                    isLiked={product.likes.find( id => id === user._id ) ? true : false}
-                />
+                <div className={classes.likeWrap}>
+                    <LikeButton 
+                        className={classes.like}
+                        productId={product._id}
+                        isLiked={product.likes.find( id => id === user._id ) ? true : false}
+                    />
+                    <span className={classes.likeText}>
+                        {product.likes.length ? product.likes.length : 0}
+                    </span>
+                </div>
             )
         }
     }
 
-    // Рендер отзывов  
+    // handlers
+    // 
+
+    // Открыть модальное окно редактирования товара
+    const handleOpenEditProductModal = () => {
+        setIsOpenEditProductModal(true);
+    }
+
+    // Закрыть модальное окно редактирования товара
+    const handleCloseEditProductModal = () => {
+        setIsOpenEditProductModal(false);
+    }
+
+    // Открыть модальное окно редактирования товара
+    const handleOpenDeleteProductModal = () => {
+        setIsOpenDeleteProductModal(true);
+    }
+
+    // Закрыть модальное окно редактирования товара
+    const handleCloseDeleteProductModal = () => {
+        setIsOpenDeleteProductModal(false);
+    }
+    
+    // Рендер отзывов 
     const renderReviews = () => {
+        // Если идет загрузка 
         if (reviewsStatus === 'loading') {
             return (
-                <GlassBox>
+                <p>
                     Идет загрузка комментариев...
-                </GlassBox>
+                </p>
             )
         }
 
+        // Если возникла ошибка 
         if (reviewsStatus === 'error') {
             return (
-                <GlassBox>
+                <p>
                     {reviewsError.message}
-                </GlassBox>
+                </p>
             )
         }
 
+        // Если ответ успешно получен 
         if (reviewsStatus === 'success') {
             return (
                 <>
-                    <GlassBox>
+                    <ReviewsInfo reviews={reviews} />
+                    <div className={classes.reviewsWrap}>
+                        <Avatar 
+                            className={classes.avatar}
+                            link={user.avatar}
+                        />
                         <ReviewsForm 
+                            className={classes.reviewsForm}
                             productId={product._id} 
                         />
-                    </GlassBox>
-                    <GlassBox>
-                        <Reviews data={reviews} />
-                    </GlassBox>
+                    </div>
+                    <Reviews data={reviews} />
                 </>
             )
         }
     }
 
-    if ( status === 'loading') {
+    // Если идет загрузка 
+    if ( productStatus === 'loading') {
         return (
             <div className="container">
                 Загрузка...
@@ -94,7 +132,8 @@ function DetailProductPage() {
         );
     }
 
-    if ( status === 'error' ) {
+    // Если возникла ошибка 
+    if ( productStatus === 'error' ) {
         return (
             <div className="container">
                 { error.message }
@@ -102,71 +141,119 @@ function DetailProductPage() {
         );
     }
     
-    return (
-        <Wrapper className={classes.wrapper}>
-            <Inner className={classes.inner}>
-                <Header />
-                <div className={classes.layout}>
-                    <GlassBox>
-                        <Card className={classes.card}>
-                            <div className={classes.top}>
-                                <BackButton />
-                                <Rating 
-                                    className={classes.rating}
-                                    likes={product.reviews.map(review => review.rating)}
-                                />
-                                {
-                                    renderLikeButton(product)
-                                }
-                                <FavoriteButton 
-                                    className={classes.favorites}
-                                    isFavorite={favorites.includes(product._id)} 
-                                    productId={product._id}
-                                />
-                            </div>
-                            <CardImg 
-                                className={classes.img}
-                                src={product.pictures}
-                            >
-                                <div className={classes.badgeWrap}>
-                                    {
-                                        product.discount ? <Badge text={`-${product.discount}%`} /> : undefined
-                                    }
-                                </div>
-                            </CardImg>
-                            <CardBody className={classes.body}>
-                                <CardTitle 
-                                    className={classes.title}
-                                    text={product.name}
-                                />
-                                <div className={classes.priceWrap}>
-                                    <Price 
-                                        className={classes.price}
-                                        price={product.price}
-                                        discount={product.discount}
-                                    />
-                                    <CardText 
-                                        className={classes.weight} 
-                                        text={`за ${product.wight}`}
-                                    />
-                                </div>
-                                <CardText 
-                                    className={classes.description} 
-                                    text={product.description}
-                                />
-                            </CardBody>
-                        </Card>
-                    </GlassBox>
-                    <GlassBox className={classes.btnWrap}>
-                        <CartButton productId={product._id} />
-                    </GlassBox>
+    // Если ответ успешно получен 
+    if (productStatus === 'success' && userStatus === 'success') {
+        return (
+            <>
+                <Header>
+                    <BackButton 
+                        text="Назад"
+                    />
+                    <CartButton />
+                </Header>
+                <div className={classes.card}>
+                    <div className={classes.top}>
+                        {
+                            product.author._id === user._id ? (
+                                <Kebab 
+                                    className={classes.kebab}
+                                >
+                                    <KebabItem>
+                                        <button
+                                            onClick={handleOpenEditProductModal}
+                                        >
+                                            Редактировать
+                                        </button>
+                                    </KebabItem>
+                                    <KebabItem>
+                                        <button
+                                            onClick={handleOpenDeleteProductModal}
+                                        >
+                                            Удалить
+                                        </button>
+                                    </KebabItem>
+                                </Kebab>
+                            ) : (
+                                null
+                            )
+                        }
+                        {/* Кнопка нравится */}
+                        {
+                            renderLikeButton(product)
+                        }
+                    </div>
+                    <div className={classes.img}>
+                        <img 
+                            src={product.pictures} 
+                            alt="Фотография товара" 
+                        />
+                        <div className={classes.badgeWrap}>
+                            {
+                                product.discount ? <Badge text={`-${product.discount}%`} /> : null
+                            }
+                            {
+                                product.tags.includes('new') ? <Badge text={`New`} style={{backgroundColor: 'var(--c-primary)'}} /> : null
+                            }
+                        </div>
+                    </div>
+                    <div className={classes.body}>
+                        <h2 className={classes.name}>
+                            {product.name}
+                        </h2>
+                        <div className={classes.priceWrap}>
+                            <Price 
+                                className={classes.price}
+                                price={product.price}
+                                discount={product.discount}
+                            />
+                            <span className={classes.wight}>
+                                {`за ${product.wight}`}
+                            </span>
+                            {/* Проверяет наличие товара в магазине */}
+                            {
+                                product.stock && product.available ? (
+                                    <span className={classes.available}>(В наличии)</span>
+                                ) : (
+                                    <span className={classes.unavailable}>(Закончился)</span>
+                                )
+                            }
+                        </div>
+                        <p className={classes.description}>
+                            {product.description}
+                        </p>
+                    </div>
+                    <div className={classes.footer}>
+                        <FavoriteButton 
+                            className={classes.favorites}
+                            isFavorite={favorites.includes(product._id)} 
+                            productId={product._id}
+                            showText={true}
+                        />
+                        <CartButton 
+                            className={classes.cart}
+                            productId={product._id} 
+                            showText={true}
+                        />
+                    </div>
+                </div>
                     {
                         renderReviews()
                     }
-                </div>
-            </Inner>
-        </Wrapper>
-    );
+                <ModalEditProduct 
+                    isOpen={isOpenEditProductModal} 
+                    data={product}
+                    closeHandler={handleCloseEditProductModal}
+                    submitHandler={handleCloseEditProductModal}
+                />
+                <ModalDeleteProduct 
+                    isOpen={isOpenDeleteProductModal}
+                    closeHandler={handleCloseDeleteProductModal}
+                    cancelHandler={handleCloseDeleteProductModal}
+                    productId={product._id}
+                />
+            </>
+        );
+    }
 }
 
 export {

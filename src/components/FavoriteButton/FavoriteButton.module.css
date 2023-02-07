@@ -1,27 +1,23 @@
-.favorite {
-    border: none;
-    border-radius: 0.75em;
+.button {
     display: flex;
-    justify-content: center;
     align-items: center;
-    min-width: 44px;
-    min-height: 44px;
-    padding: 0;
-    background: none;
-    cursor: pointer;
-    transition: background-color 150ms ease;
-}
-
-.favorite:hover {
-    background-color: var(--c-success);
-}
-
-.icon {
-    width: 19px;
-    transition: color 150ms ease-in-out;
-    color: #8E9293;
 }
 
 .active {
     color: gold;
+}
+
+.text {
+    display: none;
+    min-width: 7.5em;
+}
+
+@media screen and (min-width: 768px) {
+    .button {
+        padding: 0 0.5em;
+    }
+    
+    .text {
+        display: unset;
+    }
 }

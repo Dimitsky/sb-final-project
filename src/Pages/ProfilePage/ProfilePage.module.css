@@ -1,94 +1,122 @@
-/* layout */
-
-.wrapper {
-    background-image: url('../../img/profile.jpg');
-}
-
-/* layout */
-
-.layout {
+.profile {
+    border-radius: 8px;
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 1em;
+    gap: 2em;
+    padding: 0.75em;
+    background: #fff;
+    overflow: hidden;
 }
 
-.btnWrap {
+.box {
+    composes: box from '../HomePage/HomePage.module.css';
+}
+
+.top {
     display: flex;
-    justify-content: center;
     align-items: center;
     gap: 1em;
 }
 
-.btnWrap > * {
-    flex: 1;
-}
-
-/* avatar */
-
 .avatar {
-    border-radius: 0;
-    width: unset;
-    height: 300px;
+    flex: 0 0 100px;
+    width: 100px;
+    height: 100px;
 }
 
-/* text */
+.name {
+    margin-bottom: 0.3em;
+    font-weight: 600;
+}
+
+.email {
+    margin-bottom: 1em;
+    color: var(--c-grey-6);
+    font-size: 0.8em;
+    word-break: break-word;
+}
 
 .edit {
     composes: link from global;
 }
 
-.title {
-    composes: title from global;
-    margin-bottom: 0.5em;
+.info {
+    flex: 1;
+    display: grid;
+    justify-content: start;
 }
 
-.text:not(:last-of-type) {
-    border-bottom: 1px solid #888;
-    margin-bottom: 1em;
-    padding-bottom: 1em;
+.list {
+    composes: list from global;
 }
 
-.text {
-    composes: text from global;
+.item {}
+
+.br {
+    border-bottom: 2px solid var(--c-grey-2);
+    margin-bottom: 0.4em;
+    padding-bottom: 0.4em;
 }
 
-.edit {
-    text-align: center;
+.link {
+    composes: link from global;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    padding: 0.8em 0;
+    color: var(--c-grey-6);
+    text-decoration: none;
 }
 
-@media screen and (min-width: 576px) {
-    .section {
-        padding: 1em;
-    }
+.icon {
+    width: 1em;
+}
 
-    .layout {
-        margin: auto;
-    }
+.chevron {
+    margin-left: auto;
+}
+
+.logout {
+    color: var(--c-danger);
 }
 
 @media screen and (min-width: 768px) {
-    .layout {
-        grid-template-columns: 1fr 1fr;
-        max-width: unset;
+    .profile {
+        padding: 1em;
     }
 }
 
 @media screen and (min-width: 992px) {
-    .section {
-        min-height: calc(100vh - 100px);
+    .profile {
+        grid-template-columns: 1fr 1fr;
+        padding: 2em;
     }
 
-    .layout {
-        grid-template-columns: 1fr 1fr 1fr;
+    .top {
+        flex-direction: column;
+        gap: 2em;
     }
 
-    .btnWrap {
-        align-self: start;
+    .avatar {
+        flex: 0 0 350px;
+        width: 350px;
+        height: 350px;
     }
-}
 
-@media screen and (min-width: 1200px) {
-    .layout {
-        max-width: 1200px;
+    .name, 
+    .email, 
+    .edit {
+        text-align: center;
+    }
+
+    .name {
+        margin-bottom: 0.5em;
+    }
+    
+    .email {
+        margin-bottom: 1.5em;
+    }
+
+    .logo {
+        composes: logo from '../HomePage/HomePage.module.css';
     }
 }

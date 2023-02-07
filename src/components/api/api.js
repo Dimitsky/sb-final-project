@@ -209,11 +209,8 @@ class Api {
 
         const response = await fetch( `${ this.baseUrl }/products/${ id }`, init );
 
-        if ( !response.ok ) {
-            switch ( response.status ) {
-                default: 
-                    throw new Error( `Error ${ response.status }: ${ response.statusText }` );
-            }
+        if ( !response.ok || response.status === 404 || response.status === 500 ) {
+            throw new Error( `Error ${ response.status }: ${ response.statusText }` );
         }
 
         const result = await response.json();
@@ -421,15 +418,48 @@ class Api {
 
         const response = await fetch(`${this.baseUrl}/products`, init);
 
-        if (!response.ok) {
+        if (!response.ok || response.status === 404 || response.status === 500) {
+            alert(`Error ${response.status}`);
             throw new Error(`Error! Status code is ${response.status}`);
         }
 
         const result = await response.json();
 
-        console.log(result);
+        return result;
+    }
+
+    // Редактировать товар
+    async editProduct(data, productId) {
+        const init = {
+            method: 'PATCH', 
+            headers: this.headers, 
+            body: JSON.stringify(data), 
+        };
+
+        const response = await fetch(`${this.baseUrl}/products/${productId}`, init);
+
+        if (!response.ok || response.status === 404 || response.status === 500) {
+            throw new Error(`Error! Status code is ${response.status}`);
+        }
+
+        const result = await response.json();
 
         return result;
+    }
+
+    // Удалить товар
+    async deleteProduct(productId) {
+        const init = {
+            method: 'DELETE', 
+            headers: this.headers, 
+        };
+
+        const response = await fetch(`${this.baseUrl}/products/${productId}`, init);
+
+        if (!response.ok || response.status === 404 || response.status === 500) {
+            alert(`Error ${response.status}`);
+            throw new Error(`Error! Status code is ${response.status}`);
+        }
     }
 }
 

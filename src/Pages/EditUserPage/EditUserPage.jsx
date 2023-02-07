@@ -3,45 +3,59 @@ import { useNavigate } from 'react-router-dom';
 
 // formik
 import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 // my comps
-import { Wrapper } from '../../components/Wrapper/Wrapper';
 import { Header } from '../../components/Header/Header';
+import { CartLink } from '../../components/CartLink/CartLink';
+import { Logo } from '../../components/Logo/Logo';
 import { Form, FormControl, FormBox, FormTextarea } from '../../components/Form/Form';
-import { GlassBox } from '../../components/GlassBox/GlassBox';
 import { Button } from '../../components/Button/Button';
+import { BackButton } from '../../components/BackButton/BackButton';
 
 // my hooks
 import { useUser } from '../../hooks/useUser';
 import { useUpdateUser } from '../../hooks/useUpdateUser';
 
 // css
-import classes from './edituser.module.css';
+import classes from './EditUserPage.module.css';
 
-function EditUser() {
-    const { data: user, error, isLoading, isError } = useUser();
+function EditUserPage() {
+    const { data: user, error, status } = useUser();
 
-     if ( isLoading ) return (
-        <div className="container">
+    // // Идет загрузка
+     if ( status === 'loading' ) return (
+        <p>
             Загрузка...
-        </div>
+        </p>
     );
 
-    if ( isError ) return (
-        <div className="container">
+    // Возникла ошибка
+    if ( status === error ) return (
+        <p>
             { error.message }
-        </div>
+        </p>
     );
 
-    return (
-        <Wrapper className={classes.wrapper}>
-            {/* <Header /> */}
-            <GlassBox className={classes.glassBox}>
-                <h2 className={classes.title}>Отредактируйте ваши данные</h2>
-                <EditUserForm user={user}/>
-            </GlassBox>
-        </Wrapper>
-    );
+    // Данные успешно получены
+    if (status === 'success') {
+        return (
+            <>
+                <Header>
+                    <BackButton text="Назад" />
+                    <Logo />
+                    <CartLink />
+                </Header>
+                <div className={classes.edit}>
+                    <h2 className={classes.title}>
+                        Отредактируйте ваши данные
+                    </h2>
+                    <EditUserForm user={user}/>
+                </div>
+            </>
+        );
+    }
+
 }
 
 function EditUserForm({ user }) {
@@ -53,6 +67,11 @@ function EditUserForm({ user }) {
             name: user.name, 
             about: user.about, 
         },
+        validationSchema: Yup.object().shape({
+            avatar: Yup.string().required('Необходимо заполнить'),
+            name: Yup.string().required('Необходимо заполнить'),
+            about: Yup.string().required('Необходимо заполнить'),
+        }),
         onSubmit: variables => {
             mutation.mutate(variables)
         },
@@ -73,6 +92,7 @@ function EditUserForm({ user }) {
                     onChange={ formik.handleChange }
                     value={ formik.values.avatar }
                 />
+                {formik.errors.avatar ? <div className={classes.error}>{ formik.errors.avatar }</div> : null}
             </FormBox>
             <FormBox>
                 <label className={classes.label}>Ваше Имя</label>
@@ -84,8 +104,9 @@ function EditUserForm({ user }) {
                     onChange={ formik.handleChange } 
                     value={ formik.values.name } 
                 />
+                {formik.errors.name ? <div className={classes.error}>{ formik.errors.name }</div> : null}
             </FormBox>
-            <FormBox>
+            <FormBox className={classes.boxMb}>
                 <label className={classes.label}>О вас</label>
                 <FormTextarea 
                     name="about" 
@@ -93,6 +114,7 @@ function EditUserForm({ user }) {
                     onChange={ formik.handleChange }
                     value={ formik.values.about }
                 />
+                {formik.errors.about ? <div className={classes.error}>{ formik.errors.about }</div> : null}
             </FormBox>
             <FormBox className={classes.btnWrap}>
                 <Button 
@@ -111,5 +133,5 @@ function EditUserForm({ user }) {
 }
 
 export {
-    EditUser, 
+    EditUserPage, 
 }

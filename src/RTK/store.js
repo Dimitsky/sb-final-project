@@ -4,6 +4,7 @@ import cartSlice from "./slices/cartSlice/cartSlice";
 import tokenSlice from "./slices/tokenSlice/tokenSlice";
 import visibilityFilterSlice from "./slices/visibilityFilterSlice/visibilityFilterSlice";
 import favoritesSlice from "./slices/favoritesSlice/favoritesSlice";
+import sortSlice from "./slices/sortSlice/sortSlice";
 
 export const store = configureStore({
     reducer: {
@@ -11,10 +12,13 @@ export const store = configureStore({
         cart: cartSlice, 
         visibilityFilter: visibilityFilterSlice, 
         favorites: favoritesSlice, 
+        sort: sortSlice, 
     }
 });
 
+// Нужна для первой синхронизации (например, если страница загружена с фильтром в URL)
+localStorage.setItem(REDUX_LS_KEY, JSON.stringify(store.getState()));
+
 store.subscribe(() => {
-    // console.log(store.getState());
     localStorage.setItem(REDUX_LS_KEY, JSON.stringify(store.getState()));
 })

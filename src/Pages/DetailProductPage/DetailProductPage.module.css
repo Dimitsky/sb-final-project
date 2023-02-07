@@ -1,102 +1,228 @@
-.wrapper {
-    background-image: url('../../img/product.jpg');
-}
-
-.layout {
-    display: grid;
-    gap: 1em;
-}
-
-.top, 
-.body, 
-.btnWrap, 
-.showCommentsBtn, 
-.commentsWrap {
-    composes: box from global;
+.card {
+    border-radius: 8px;
+    background: #fff;
+    overflow: hidden;
+    margin-bottom: 0.75em;
 }
 
 .top {
     display: flex;
+    justify-content: flex-end;
     align-items: center;
+    padding: 0 0.75em;
 }
 
-.card {
-    flex-direction: column;
-    gap: 0;
-}
-
-.btnWrap {
+.img {
+    position: relative;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    margin-bottom: 1em;
+    overflow: hidden;
 }
 
-.btnWrap > * {
-    flex: 1;
+.img > img {
+    max-width: 100%;
+    height: 100%;
 }
 
-.rating {
-    margin-right: 1em;
-    margin-left: auto;
+.body {
+    display: grid;
+    gap: 0.5em;
+    padding: 0.75em;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0.75em;
 }
 
 .badgeWrap {
     position: absolute;
-    top: 12px;
-    left: 12px;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.likeWrap {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.likeText {
+    min-width: 1.5em;
+    color: var(--c-grey-5);
+    font-size: 0.9em;
+    line-height: 1;
+    text-align: center;
+}
+
+.name {
+    composes: title from global;
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+.description {
+    composes: text from global;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+.cart {
+    justify-self: end;
 }
 
 .priceWrap {
     display: flex;
     align-items: center;
-    gap: 0.5em;
+    gap: 0.7em;
     margin-bottom: 1em;
 }
 
-.price {
-    align-self: start;
-    border-radius: 0.5em;
-    padding: 0.3em 0.5em;
-    background: var(--c-success);
+.wight {
+    font-size: 0.9em;
+    font-weight: 500;
 }
 
-.weight {
-    margin-bottom: 0;
+.available, 
+.unavailable {
+    font-size: 0.9em;
+    font-weight: 500;
 }
 
-.description {
-    margin-bottom: 0;
+.available {
+    color: var(--c-success-alter);
 }
 
-.commentsWrap {
-    display: grid;
+.unavailable {
+    color: var(--c-danger);
 }
 
-.showCommentsBtn {
+.reviewsWrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 1em;
+    border-radius: 8px;
+    margin-bottom: 0.75em;
+    padding: 0.75em;
+    background: #fff;
+    overflow: hidden;
+}
+
+.reviewsForm {
     flex: 1;
 }
 
+.avatar {
+    display: none;
+}
+
+.kebab > ul {
+    right: unset;
+    left: 0;
+}
+
 @media screen and (min-width: 768px) {
-    .layout {
-        grid-template-columns: 1fr 1fr;
-        align-items: start;
+    .card {
+        margin-bottom: 1em;
     }
 
-    .top {
-        gap: 0.5em;
+    .body {
+        padding: 1em;
     }
 
-    .rating {
-        margin-right: 0.5em;
-        font-size: 1.5em;
+    .img {
+        margin-bottom: 0;
+    }
+
+    .top, 
+    .footer {
+        padding: 0.5em 1em;
+    }
+
+    .footer {
+        gap: 1em;
+    }
+
+    .likeText, 
+    .cart {
+        font-size: 1em;
     }
 
     .like > svg, 
-    .favorites > svg {
-        width: 29px;
+    .favorites > svg, 
+    .cart > svg {
+        width: 20px;
+    }
+
+    .avatar {
+        display: unset;
+    }
+
+    .reviewsWrap {
+        padding: 1em;
     }
 }
 
 @media screen and (min-width: 992px) {
-    .commentsWrap {
-        grid-column: 1 / - 1;
+    .card {
+        display: grid;
+        grid-template-areas: 
+            'img top'
+            'img body'
+            'img footer';
+        grid-template-columns: 1fr 2fr;
+        margin-bottom: 2em;
+    }
+
+    .top {
+        grid-area: top;
+    }
+
+    .img {
+        grid-area: img;
+    }
+
+    .img > img {
+        width: 100%;
+        height: unset;
+    }
+
+    .body {
+        grid-area: body;
+    }
+
+    .footer {
+        grid-area: footer;
+    }
+
+    .body {
+        padding: 0 2em;
+    }
+
+    .top, 
+    .footer {
+        padding: 1.2em 2em;
+    }
+
+    .img {
+        height: 100%;
+    }
+
+    .badgeWrap {
+        top: 1.5em;
+        bottom: unset;
+        display: grid;
+    }
+
+    .reviewsWrap {
+        padding: 2em;
     }
 }

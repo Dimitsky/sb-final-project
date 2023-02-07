@@ -20,6 +20,11 @@
     margin-bottom: 0.75em;
 }
 
+.box > label {
+    margin-bottom: 0.3em;
+    color: var(--c-grey-6);
+}
+
 /* input [text], [email], [password], eth */
 
 .control {
@@ -31,6 +36,10 @@
     line-height: 1;
     background: no-repeat left 0.7em center #fff;
     transition: background-color 200ms ease;
+}
+
+.control[type="checkbox"] {
+    flex: 0;
 }
 
 .control:focus {
@@ -45,6 +54,7 @@
     composes: control;
     flex: unset;
     height: 8em;
+    line-height: 1.5;
     resize: none;
 }
 
@@ -93,14 +103,6 @@
 .rating > input:checked ~ label > svg {
     color: gold;
 }
-.rating:hover > input ~ label > svg {
-    color: #8E9293;
-}
-
-
-.rating > input:hover ~ label > svg {
-    color: var(--c-success);
-} 
 
 .starIcon {
     width: 16px;
@@ -114,4 +116,24 @@
     margin-top: 0.3em;
     color: red;
     font-size: 0.8em;
+}
+
+@media screen and (min-width: 768px) {
+    .box:not(:last-of-type) {
+        margin-bottom: 1em;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .box:not(:last-of-type) {
+        margin-bottom: 2em;
+    }
+    
+    .rating:hover > input ~ label > svg {
+        color: #8E9293;
+    }
+
+    .rating > input:hover ~ label > svg {
+        color: var(--c-success);
+    } 
 }

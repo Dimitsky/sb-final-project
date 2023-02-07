@@ -1,7 +1,5 @@
-/* link icon */
-
-.linkIcon {
-    width: 1em;
+.icon {
+    color: var(--c-grey-5);
 }
 
 /* user section */
@@ -43,12 +41,13 @@
     top: 0;
     left: 0;
     z-index: 9000;
-    border-radius: 0.6em;
+    border-bottom-right-radius: 0.6em;
+    border-bottom-left-radius: 0.6em;
     display: flex;
     flex-direction: column;
     width: 100%;
     height: calc( 100vh - 1.4em );
-    padding: 2em;
+    padding: 4em 2em 2em;
     background: rgba(255 255 255);
     box-shadow: 0px 0 30px 0px #333;
     transform: translateY( -100vh );
@@ -70,10 +69,6 @@
     list-style: none;
 }
 
-.item:last-child {
-    margin-top: auto;
-}
-
 .item {
     position: relative;
 }
@@ -85,7 +80,8 @@
     align-items: center;
     gap: 0.5em;
     color: var(--dark);
-    font-size: 1em;
+    font-size: 0.9em;
+    font-weight: 500;
     text-decoration: none;
 }
 
@@ -97,16 +93,21 @@
     width: 0.1em;
     height: 100%;
     background-color: currentColor;
+    opacity: 0.2;
 }
 
 .logout {
-    composes: btnReset from '../../index.css';
+    composes: link from global;
     display: flex;
     align-items: center;
     gap: 0.5em;
-    padding: 0.2em 0.8em;
+    border: none;
+    border-radius: 0;
+    padding: 0;
     color: var( --danger );
     font-size: 1em;
+    background: none;
+    cursor: pointer;
 }
 
 .open {
@@ -177,11 +178,6 @@
 .burger[ aria-expanded='true' ] > .line::before {
     transform: translateY( 0 ) rotate( 45deg );
 }
-
-.burger:hover {
-    background-color: var(--c-success);
-}
-
 
 /* cartBadge */
 
@@ -289,5 +285,9 @@
     .cartBadge {
         top: -0.4em;
         right: -1.2em;
+    }
+
+    .burger:hover {
+        background-color: var(--c-success);
     }
 }

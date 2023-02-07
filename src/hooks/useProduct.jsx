@@ -15,7 +15,7 @@ function useProduct() {
     const { id: productId } = useParams();
     const token = useSelector(state => state.token);
 
-    const handler = (id) => {
+    const handler = () => {
         const api = new Api({
             baseUrl: BASE_SERVER_URL, 
             groupId: SERVER_GROUP_NAME, 
@@ -25,15 +25,14 @@ function useProduct() {
             }
         });
 
-        return api.getProduct(id);
+        return api.getProduct(productId);
     }
     
     return useQuery({
         queryKey: ['products', {id: productId}], 
-        queryFn: () => handler(productId), 
+        queryFn: handler, 
     });
 }
-
 
 export {
     useProduct, 

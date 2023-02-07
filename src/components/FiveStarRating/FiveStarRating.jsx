@@ -1,11 +1,13 @@
 // css
 import classes from './FiveStarRating.module.css';
 
-function FiveStarRating({ rating }) {
+function FiveStarRating({ className, rating }) {
+    const cn = className ? [classes.wrap, className].join(' ') : classes.wrap;
+
     switch (rating) {
         case 0:
             return (
-                <div className={classes.wrap}>
+                <div className={cn}>
                     <StarIcon active={false} />
                     <StarIcon active={false} />
                     <StarIcon active={false} />
@@ -15,7 +17,7 @@ function FiveStarRating({ rating }) {
             )
         case 1:
             return (
-                <div className={classes.wrap}>
+                <div className={cn}>
                     <StarIcon active={true} />
                     <StarIcon active={false} />
                     <StarIcon active={false} />
@@ -25,7 +27,7 @@ function FiveStarRating({ rating }) {
             )
         case 2:
             return (
-                <div className={classes.wrap}>
+                <div className={cn}>
                     <StarIcon active={true} />
                     <StarIcon active={true} />
                     <StarIcon active={false} />
@@ -35,7 +37,7 @@ function FiveStarRating({ rating }) {
             )
         case 3:
             return (
-                <div className={classes.wrap}>
+                <div className={cn}>
                     <StarIcon active={true} />
                     <StarIcon active={true} />
                     <StarIcon active={true} />
@@ -45,7 +47,7 @@ function FiveStarRating({ rating }) {
             )
         case 4:
             return (
-                <div className={classes.wrap}>
+                <div className={cn}>
                     <StarIcon active={true} />
                     <StarIcon active={true} />
                     <StarIcon active={true} />
@@ -55,7 +57,7 @@ function FiveStarRating({ rating }) {
             )
         case 5:
             return (
-                <div className={classes.wrap}>
+                <div className={cn}>
                     <StarIcon active={true} />
                     <StarIcon active={true} />
                     <StarIcon active={true} />

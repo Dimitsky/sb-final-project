@@ -3,13 +3,24 @@
     box-sizing: border-box;
 
     /* colors */
+    --c-grey-1: #f8f9fa;
+    --c-grey-2: #e9ecef;
+    --c-grey-5: #adb5bd;
+    --c-grey-6: #6C757D;
     --c-link-hover: #0066ff;
     --c-main: #212529;
     --c-main-alter: #343a40;
     --c-danger: #ff686b;
     --c-danger-alter: #ffa69e;
+    --c-warning: #ffbe0b;
+    --c-warning-alter: #ffea00;
     --c-success: #a5ffd6;
+    --c-success-alter: #1dab45;
     --c-primary: #70d6ff;
+
+    /* transition */
+    --transition-duration: 150ms;
+    --transition-timing-function: ease;
 }
 
 *, 
@@ -20,28 +31,40 @@
 
 body {
     margin: 0;
+    background: var(--c-grey-2);
 }
 
 .container {
     max-width: 1200px;
     margin: auto;
-    padding-right: 0.5rem;
-    padding-left: 0.5rem;
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
 }
 
 .box {
     padding: 0.75em;
 }
 
+/* Ограничение размера текста с точками на конце  */
+
+.ellipsis {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
 @media screen and (min-width: 768px) {
-    .box {
-        padding: 1em;
+    .container {
+        padding-left: 1em;
+        padding-right: 1em;
     }
 }
 
 @media screen and (min-width:992px) {
-    .box {
-        padding: 1.25em;
+    .container {
+        padding-right: 2em;
+        padding-left: 2em;
     }
 }
 
@@ -62,11 +85,9 @@ body {
 
 .link {
     color: #000;
-    transition: color 200ms ease;
-}
-
-.link:hover {
-    color: var(--c-link-hover);
+    transition: 
+        color var(--transition-duration) var(--transition-timing-function), 
+        background-color var(--transition-duration) var(--transition-timing-function);
 }
 
 /* text */
@@ -74,6 +95,7 @@ body {
 .text {
     margin-top: 0;
     margin-bottom: 0;
+    line-height: 1.5;
 }
 
 /* heading */
@@ -81,4 +103,63 @@ body {
 .title {
     margin-top: 0;
     margin-bottom: 0;
+}
+
+/* form */
+
+.form label[for] {
+    display: block;
+    margin-bottom: 0.5em;
+    font-size: 1em;
+}
+
+.form input:not([type="checkbox"], [type="radio"]), 
+.form textarea {
+    display: block;
+    border: 1px solid var(--c-grey-2);
+    border-radius: 8px;
+    width: 100%;
+    padding: 0.75em;
+    color: var(--c-grey-6);
+    font-family: inherit;
+    font-size: 0.9em;
+    line-height: 1;
+}
+
+.form textarea {
+    min-height: 6em;
+    line-height: 1.2;
+}
+
+.form > div:not(:last-child) {
+    margin-bottom: 0.75em;
+}
+
+.form .error {
+    margin-top: 0.5em;
+    color: var(--c-danger);
+    font-size: 0.8em;
+}
+
+@media screen and (min-width: 992px) {
+    .form > div:not(:last-child) {
+        margin-bottom: 1em;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .link:hover, 
+    .link:hover > svg {
+        color: var(--c-link-hover);
+    }
+
+    /* form */
+
+    .form > div:not(:last-child) {
+        margin-bottom: 1.5em;
+    }
+
+    .form textarea {
+        min-height: 10em;
+    }
 }

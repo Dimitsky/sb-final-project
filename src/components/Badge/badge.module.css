@@ -1,7 +1,8 @@
 .badge {
-    padding: 0.25em 0.5em;
-    border-radius: 0.5em;
-    font-size: 0.8em;
+    padding: 0.5em;
+    border-radius: 0;
+    font-size: 0.7em;
     font-weight: 600;
+    line-height: 1;
     background: var(--c-danger);
 }

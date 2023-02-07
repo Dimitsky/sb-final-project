@@ -9,12 +9,14 @@ import { removeToken } from '../../RTK/slices/tokenSlice/tokenSlice';
 import { Link } from 'react-router-dom';
 
 // my comps
-import { Wrapper } from '../../components/Wrapper/Wrapper';
-import { Inner } from '../../components/Inner/Inner';
 import { Header } from '../../components/Header/Header';
+import { Logo } from '../../components/Logo/Logo';
+import { NavBar } from '../../components/NavBar/NavBar';
+import { CartLink } from '../../components/CartLink/CartLink';
+import { Search } from '../../components/Search/Search';
 import { Avatar } from '../../components/Avatar/Avatar';
 import { Button } from '../../components/Button/Button';
-import { GlassBox } from '../../components/GlassBox/GlassBox';
+import { IconCart, IconChevron, IconFileAdd, IconLogout, IconStar } from '../../components/Icon/Icon';
 
 // my hooks
 import { useUser } from '../../hooks/useUser';
@@ -24,86 +26,117 @@ import classes from './ProfilePage.module.css';
 
 function ProfilePage() {
     const dispatch = useDispatch();
-    const { data: user, error, isLoading, isError } = useUser();
+    const { data: user, error, status } = useUser();
 
     // handlers
+    // 
+
+    // 
     const handleLogout = () => {
         dispatch(removeToken());
     }
 
-    if ( isLoading ) return (
-        <div className="container">
-            <p>
-                Загрузка данных...
-            </p>
-        </div>
+    // Идет загрузка
+    if (status === 'loading') return (
+        <p>
+            Загрузка данных...
+        </p>
     );
 
-    if ( isError ) return (
-        <div className="container">
-            <p>
-               { error.message }
-            </p>
-        </div>
+    // Возникла ошибка
+    if (status === 'error') return (
+        <p>
+            {error.message}
+        </p>
     );
 
-    return (
-        <Wrapper className={classes.wrapper}>
-            <Inner>
-                <Header />
-                <div className={classes.layout}>
-                    <GlassBox>
+    // Данные успешно получены
+    if (status === 'success') {
+        return (
+            <>
+                <Header>
+                    <NavBar />
+                    <Logo className={classes.logo} />
+                    <div className={classes.box}>
+                        <Search />
+                        <CartLink className={classes.cart} />
+                    </div>
+                </Header>
+                <div className={classes.profile}>
+                    <div className={classes.top}>
                         <Avatar 
                             className={classes.avatar}
-                            link={ user.avatar }
+                            link={user.avatar}
                         />
-                        <h4 className={classes.title}>
-                            { user.name }
-                        </h4>
-                        <p className={classes.text}>
-                            { user.email }
-                        </p>
-                        <h4 className={classes.title}>ID пользователя</h4>
-                        <p className={classes.text}>
-                            { user._id }
-                        </p>
-                        <h4 className={classes.title}>Группа</h4>
-                        <p className={classes.text}>
-                            { user.group }
-                        </p>
-                    </GlassBox>
-                    <GlassBox>
-                        <h4 className={classes.title}>О себе</h4>
-                        <p className={classes.text}>
-                            { user.about }
-                        </p>
-                    </GlassBox>
-                    <GlassBox>
-                        <Link 
-                            className={classes.edit}
-                            to="/add_product"
-                        >
-                            Добавить новый товар
-                        </Link>
-                    </GlassBox>
-                    <GlassBox className={ classes.btnWrap}>
-                        <Link 
-                            className={classes.edit}
-                            to="/profile/edit-user"
-                        >
-                            Редактировать
-                        </Link>
-                        <Button
-                            className={classes.logout}
-                            onClick={ handleLogout }
-                        >
-                            Выйти
-                        </Button>
-                    </GlassBox>
+                        <div className={classes.info}>
+                            <span className={classes.name}>
+                                {user.name}
+                            </span>
+                            <span className={classes.email}>
+                                {user.email}
+                            </span>
+                            <Link
+                                className={classes.edit}
+                                to="/profile/edit-user"
+                            >
+                                Редактировать
+                            </Link>
+                        </div>
+                    </div>
+                    <ul className={classes.list}>
+                        <li className={classes.item}>
+                            <Link
+                                className={classes.link}
+                                to="/favorites"
+                            >
+                                <IconStar className={classes.icon} />
+                                Избранное
+                                <IconChevron 
+                                    className={[classes.icon, classes.chevron].join(' ')}
+                                />
+                            </Link>
+                        </li>
+                        <li className={[classes.item, classes.br].join(' ')}>
+                            <Link
+                                className={classes.link}
+                                to="/cart"
+                            >
+                                <IconCart className={classes.icon} />
+                                Корзина
+                                <IconChevron 
+                                    className={[classes.icon, classes.chevron].join(' ')}
+                                />
+                            </Link>
+                        </li>
+                        <li className={classes.item}>
+                            <Link
+                                className={classes.link}
+                                to="/add_product"
+                            >
+                                <IconFileAdd className={classes.icon} />
+                                Добавить товар
+                                <IconChevron 
+                                    className={[classes.icon, classes.chevron].join(' ')}
+                                />
+                            </Link>
+                        </li>
+                        <li className={classes.item}>
+                            <Link
+                                className={classes.link}
+                                onClick={handleLogout}
+                            >
+                                <IconLogout className={[classes.icon, classes.logout].join(' ')} />
+                                Выйти
+                                <IconChevron 
+                                    className={[classes.icon, classes.chevron].join(' ')}
+                                />
+                            </Link>
+                        </li>
+                    </ul>
                 </div>
-            </Inner>
-        </Wrapper>
-    );
+            </>
+        );
+    }
 }
 
 export {

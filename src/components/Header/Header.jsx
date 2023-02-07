@@ -1,20 +1,16 @@
-// my comps
-import { Logo } from '../Logo/Logo';
-import { GlassBox } from '../GlassBox/GlassBox';
-import { NavBar } from '../NavBar/NavBar';
-
 // css module
 import classes from './Header.module.css';
 
-function Header({ children }) {
+function Header({ className, children, ...restProps }) {
+    const cn = className ? [classes.header, className].join(' ') : classes.header;
+
     return (
-        <GlassBox className={classes.wrap}>
-            <header className={classes.header}>
-                <Logo />
-                {children}
-                <NavBar />
-            </header>
-        </GlassBox>
+        <header 
+            className={cn} 
+            {...restProps} 
+        >
+            {children}
+        </header>
     );
 }
 

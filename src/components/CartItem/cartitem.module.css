@@ -1,16 +1,14 @@
 .chooseProduct {
-    position: absolute;
-    top: 4px;
-    left: 4px;
+    position: relative;
     z-index: 8000;
     appearance: none;
     border: 1px solid transparent;
     border-radius: 3.125em;
-    margin: 0;
+    margin: 0 auto 0 0;
     width: 3.125em;
     height: 1.875em;
     font-size: 0.7em;
-    background: #fff;
+    background: var(--c-grey-5);
     cursor: pointer;
     transition: background-color 150ms ease;
 }
@@ -38,53 +36,100 @@
     left: 1.25em;
 }
 
+.card {
+    position: relative;
+    display: grid;
+    grid-template-areas: 
+        'img body' 
+        'footer footer';
+    grid-template-columns: 100px 1fr;
+    gap: 0.75em;
+}
+
+.badgeWrap {
+    composes: badgeWrap from '../ProductPreview/ProductPreview.module.css';
+}
+
 .img {
-    flex: 0 0 150px;
-    height: 175px;
-    margin: -0.75em 0 -0.75em -0.75em;
+    grid-area: img;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 100px;
+    overflow: hidden;
+}
+
+.img > img {
+    width: 100%;
+    max-width: 100%;
+}
+
+.body {
+    grid-area: body;
+    display: grid;
+    grid-template-areas: 'name remove';
+    grid-template-columns: 1fr min-content;
+    gap: 1em;
+    align-items: center;
+    padding: 0.75em;
+}
+
+.footer {
+    grid-area: footer;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 0.75em 0.75em;
+}
+
+.name {
+    composes: title from global;
+    grid-area: name;
+    font-size: 1em;
+    font-weight: 500;
+}
+
+.description {
+    composes: text from global;
+    grid-area: desc;
+    display: none;
+    max-width: 850px;
 }
 
 .price {
-    margin-bottom: 0.75em;
+    justify-content: flex-end;
+    min-width: 4.3em;
+    color: var(--c-main);
 }
 
-.counter {
-    font-size: 0.9em;
-    margin-top: auto;
-}
-
-.removeBtnWrap {
-    text-align: right;
-}
-
-.removeBtn {
-    composes: link from global;
+.remove {
+    grid-area: remove;
+    align-self: flex-start;
+    margin-left: auto;
+    color: var(--c-danger);
 }
 
 @media screen and (min-width: 768px) {
-    .chooseProduct {
-        top: 1.5em;
-        left: 1.5em;
+    .body {
+        grid-template-areas: 
+            'name remove'
+            'desc desc';
+        grid-auto-rows: min-content;
+        padding: 1em;
     }
-    
-    .img {
-        flex-basis: 200px;
-        height: 200px;
-        margin: -1.5em 0 -1.5em -1.5em;
+
+    .footer {
+        padding: 0 1em 1em;
+    }
+
+    .description {
+        display: unset;
     }
 }
 
 @media screen and (min-width: 992px) {
-    .img {
-        flex-basis: 200px;
-        height: 200px;
-        margin: -1.5em 0 -1.5em -1.5em;
-    }
-}
-
-@media screen and (min-width: 992px) {
-    .img {
-        height: 210px;
-        margin: -2em 0 -2em -2em;
+    .remove:hover {
+        color: var(--c-danger-alter);
     }
 }

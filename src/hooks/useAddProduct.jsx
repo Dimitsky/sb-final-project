@@ -4,6 +4,9 @@ import { useSelector } from 'react-redux';
 // tanstack
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+// react router dom
+import { useNavigate } from 'react-router-dom';
+
 // my comps
 import { Api } from '../components/Api/Api';
 import { BASE_SERVER_URL, SERVER_GROUP_NAME } from '../components/consts/consts';
@@ -11,6 +14,7 @@ import { BASE_SERVER_URL, SERVER_GROUP_NAME } from '../components/consts/consts'
 function useAddProduct() {
     const token = useSelector(state => state.token);
     const queryClient = useQueryClient();
+    const navigate = useNavigate();
 
     // handlers
     // 
@@ -27,14 +31,13 @@ function useAddProduct() {
         });
 
         return api.addProduct(data)
-            .then(result => result)
-            .catch(error => error.message)
     }
 
     return useMutation({
         mutationFn: handler, 
         onSuccess: () => {
             queryClient.invalidateQueries(['products']);
+            navigate('/');
         }
     })
 }

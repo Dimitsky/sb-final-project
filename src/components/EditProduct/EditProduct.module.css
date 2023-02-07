@@ -1,0 +1,11 @@
+.row {
+    flex-direction: row;
+}
+
+.edit {
+    composes: form from global;
+}
+
+.danger {
+    color: var(--c-danger);
+}
