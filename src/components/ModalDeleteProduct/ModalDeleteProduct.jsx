@@ -1,11 +1,14 @@
 // react
+import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { ButtonIcon } from '../ButtonIcon/ButtonIcon';
-import { IconClose } from '../Icon/Icon';
-import { ConfirmDialog } from "../ConfirmDialog/ConfirmDialog";
 
 // react router dom
 import { useNavigate } from 'react-router-dom';
+
+// my comps
+import { ButtonIcon } from '../ButtonIcon/ButtonIcon';
+import { IconClose } from '../Icon/Icon';
+import { ConfirmDialog } from "../ConfirmDialog/ConfirmDialog";
 
 // my hooks
 import { useDeleteProduct } from '../../hooks/useDeleteProduct';
@@ -22,7 +25,7 @@ function ModalDeleteProduct({ className, isOpen, closeHandler, cancelHandler, co
     // handlers
     // 
 
-    // 
+    // Сюда нужно передать колбэк, который будет закрывать модальное окно 
     const handleClose = () => {
         if (closeHandler && typeof closeHandler === 'function') closeHandler();
     }
@@ -40,13 +43,31 @@ function ModalDeleteProduct({ className, isOpen, closeHandler, cancelHandler, co
         if (confirmHandler && typeof confirmHandler === 'function') confirmHandler();
     }
 
+    // Закрывает модальное окно при нажатии на пустое пространство вокруг него 
+    useEffect(() => {
+        if (!isOpen) return
+
+        const handler = (e) => {
+            if (e.target.hasAttribute('data-overlay')) handleClose();
+        }
+
+        window.document.documentElement.addEventListener('click', handler);
+
+        return () => {
+            window.document.documentElement.removeEventListener('click', handler);
+        }
+    }, [isOpen])
+
     const component = (
         <>
             {
                 !isOpen ? (
                     null
                 ) : (
-                    <div className={classes.overlay}>
+                    <div 
+                        className={classes.overlay}
+                        data-overlay
+                    >
                         <div 
                             className={cn}
                             {...restProps}

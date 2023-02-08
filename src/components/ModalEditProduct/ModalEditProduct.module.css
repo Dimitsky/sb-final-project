@@ -1,5 +1,5 @@
 .form {
-    composes: form from global;
+    composes: form from '../../Styles/Form.module.css';
 }
 
 .overlay {
@@ -42,6 +42,15 @@
     color: var(--c-danger);
 }
 
+.submitWrap {
+    display: flex;
+}
+
+.submit {
+    composes: primary from '../../Styles/Button.module.css';
+    flex: 1;
+}
+
 @media screen and (min-width: 768px) {
     .modal {
         margin: 1em;
@@ -66,5 +75,13 @@
 
     .title {
         font-size: 1.3em;
+    }
+
+    .submitWrap {
+        justify-content: flex-end;
+    }
+
+    .submit {
+        flex: unset;
     }
 }

@@ -1,0 +1,22 @@
+.form {
+    composes: form from '../../Styles/Form.module.css';
+}
+
+.submitWrap {
+    display: flex;
+}
+
+.submit {
+    composes: primary from '../../Styles/Button.module.css';
+    flex: 1;
+}
+
+@media screen and (min-width: 992px) {
+    .submitWrap {
+        justify-content: flex-end;
+    }
+
+    .submit {
+        flex: unset;
+    }
+}

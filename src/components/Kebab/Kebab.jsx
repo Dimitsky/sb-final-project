@@ -35,7 +35,6 @@ function Kebab({ className, children, onClickHandler, ...restProps }) {
             window.document.documentElement.removeEventListener('click', handler);
         }
     }, [isOpen]);
-
     return (
         <div
             className={cn}

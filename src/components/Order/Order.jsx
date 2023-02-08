@@ -19,6 +19,7 @@ function Order({ className, onClick, data, ...restProps }) {
 
     // Высчитывает итоговую цену, заказанные товары и «поднимает» свое состояние наверх 
     const handleOnClick = () => {
+        return
         const discountedPrice = getDiscountedPrice(cart, data).toFixed(2);
         // Оформляет только выбранные товары
         const selectedProducts = data.filter(product => {
@@ -31,12 +32,12 @@ function Order({ className, onClick, data, ...restProps }) {
     }
 
     return (
-        <Button
+        <button
             className={cn}
             onClick={handleOnClick}
         >
             Оформить заказ
-        </Button>
+        </button>
     )
 }
 

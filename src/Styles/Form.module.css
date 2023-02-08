@@ -1,7 +1,5 @@
 .form > label {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
+    display: block;
     margin-bottom: 0.5em;
     color: var(--grey-7);
     font-size: 0.9em;
@@ -10,6 +8,11 @@
 
 .form > *:not(:last-child) {
     margin-bottom: 1em;
+}
+
+label > span {
+    display: block;
+    margin-bottom: 0.5em;
 }
 
 .form input:not([type="checkbox"], [type="radio"]), 
@@ -30,9 +33,17 @@
     line-height: 1.2;
 }
 
-.form div[data-error] {
+.form [data-error] {
     color: var(--c-danger);
     font-size: 0.8em;
+}
+
+.form [data-warning] {
+    color: var(--c-danger);
+}
+
+[data-error] {
+    margin-top: 0.5em;
 }
 
 @media screen and (min-width: 768px) {

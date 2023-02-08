@@ -1,0 +1,3 @@
+.order {
+    composes: primary from '../../Styles/Button.module.css';
+}
