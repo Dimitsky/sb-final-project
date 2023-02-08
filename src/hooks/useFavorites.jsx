@@ -46,6 +46,7 @@ function useFavorites() {
         return api.getProductsByIds(newFavoritesIds);
     }
 
+    // Свойство enabled гарантирует, что поиск избранных товаров в списке всех товаров начнется только после загрузки всех товаров с сервера 
     return useQuery({
         queryKey: ['favorites'], 
         queryFn: handleFavorites, 
