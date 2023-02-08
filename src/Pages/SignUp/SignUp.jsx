@@ -9,17 +9,15 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 // my comps
-import { Wrapper } from '../../components/Wrapper/Wrapper';
-import { Form, FormControl, FormBox } from '../../components/Form/Form';
-import { Button } from '../../components/Button/Button';
-import { GlassBox } from '../../components/GlassBox/GlassBox';
+import { Header } from '../../components/Header/Header';
+import { Logo } from '../../components/Logo/Logo';
 import { Api } from '../../components/Api/Api';
 import { BASE_SERVER_URL, SERVER_GROUP_NAME } from '../../components/consts/consts';
 
 // css
-import classes from './signup.module.css';
+import classes from './Signup.module.css';
 
-function SignUp() {
+function Signup() {
     const navigate = useNavigate();
 
     const handleSubmit = values => {
@@ -31,17 +29,17 @@ function SignUp() {
             }
         } )
         
-        api.signUp( values.email, values.password )
-            .then( () => {
-                navigate('/signin');
-            } )
-            .catch( error => {
-                alert( error.message );
-            })
+        return api.signUp( values.email, values.password );
     }
 
     const mutation = useMutation( {
-        mutationFn: handleSubmit,
+        mutationFn: handleSubmit, 
+        onSuccess: () => {
+            navigate('/signin');
+        }, 
+        onError: (error) => {
+            alert(error.message);
+        }
     } );
 
     const formik = useFormik( {
@@ -57,71 +55,72 @@ function SignUp() {
     } );
 
     return (
-        <Wrapper className={classes.wrapper}>
-            <GlassBox>
-                <h1 className={classes.title}>DoogFood</h1>
-                <h2 className={classes.subtitle}>
+        <>
+            <Header className={classes.header}>
+                <Logo />
+            </Header>
+            <div className={classes.signin}>
+                <h2 className={classes.title}>
                     Впервые у нас?
                 </h2>
                 <p className={classes.text}>
                     Зарегистрируйте новый аккаунт и получите доступ к нашему каталогу.
                 </p>
-                <Form 
+                <form 
+                    className={classes.form}
                     onSubmit={ formik.handleSubmit }
                 >
-                    <FormBox>
-                        <FormControl
-                            variant="email" 
+                    <label className={classes.label}>
+                        Электронная почта
+                        <input
+                            className={classes.input}
+                            variant="email"
                             id="email"
                             name="email"
                             type="email"
-                            placeholder="Электронная почта"
+                            placeholder="Введите ваш email"
                             onChange={ formik.handleChange }
                             value={ formik.values.email }
                         />
-                        { formik.errors.email ? <div className={classes.error}>{ formik.errors.email }</div> : null }
-                    </FormBox>
-                    <FormBox>
-                        <FormControl
-                            variant="password" 
+                        { formik.errors.email ? <div data-error>{ formik.errors.email }</div> : null }
+                    </label>
+                    <label className={classes.label}>
+                        Пароль
+                        <input
+                            className={classes.input}
+                            variant="password"
                             id="password"
                             name="password"
                             type="password"
-                            placeholder="Пароль"
+                            placeholder="Введите ваш пароль"
                             onChange={ formik.handleChange }
                             value={ formik.values.password } 
                         />
-                        { formik.errors.password ? <div className={classes.error}>{ formik.errors.password }</div> : null }
-                    </FormBox>
-                    <FormBox>
-                        <Button 
+                        { formik.errors.password ? <div data-error>{ formik.errors.password }</div> : null }
+                    </label>
+                    <div className={classes.buttonWrap}>
+                        <button 
                             className={classes.submit}
                             type="submit"
                         >
-                            Отправить
-                        </Button>
-                    </FormBox>
-                    <NavLink 
-                        className={classes.resetPass}
-                        to="/password-reset"
-                    >
-                        Забыли пароль
-                    </NavLink>
+                            Зарегистрироваться
+                        </button>
+                    </div>
                     <p className={classes.noPass}>
                         {'Есть аккаунта? '}
                         <NavLink 
-                            className={classes.signin} 
+                            className={classes.signup} 
                             to="/signin"
                         >
                             { "Войдите" }
                         </NavLink>
                     </p>
-                </Form>
-            </GlassBox>
-        </Wrapper>
+                </form>
+            </div>
+        </>
     );
 }
 
 export {
-    SignUp, 
+    Signup, 
 }

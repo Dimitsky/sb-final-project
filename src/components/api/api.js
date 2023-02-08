@@ -45,22 +45,27 @@ class Api {
             }), 
         }
 
-        const response = await fetch(`${this.baseUrl}/signup`, init);
-
-        if (!response.ok) {
-            switch (response.status) {
-                case 400:
-                    throw new Error('Некорректно заполнено одно из полей');
-                case 409: 
-                    throw new Error('Юзер с указанным email уже существует');
-                default:
-                    throw new Error(`Status code is ${response.status}`);
+        try {
+            const response = await fetch(`${this.baseUrl}/signup`, init);
+    
+            if (!response.ok) {
+                switch (response.status) {
+                    case 400:
+                        throw new Error('Некорректно заполнено одно из полей');
+                    case 409: 
+                        throw new Error('Юзер с указанным email уже существует');
+                    default:
+                        throw new Error(`Status code is ${response.status}`);
+                }
             }
+    
+            const result = await response.json();
+    
+            return result;
+        } catch (error) {
+            return new Promise((resolve, reject) => reject(error))
         }
 
-        const result = await response.json();
-
-        return result;
     }
 
     /*
@@ -89,24 +94,31 @@ class Api {
             }), 
         }
 
-        const response = await fetch(`${this.baseUrl}/signin`, init);
-
-        if (!response.ok) {
-            switch (response.status) {
-                case 401:
-                    throw new Error('Не правильные логин или пароль');
-                case 404:
-                    throw new Error('Пользователь с email не найден');
-                default:
-                    throw new Error(`Status code is ${response.status}`);
+        try {
+            const response = await fetch(`${this.baseUrl}/signin`, init);
+    
+            if (!response.ok) {
+                switch (response.status) {
+                    case 400:
+                        throw new Error('Поле email должно быть валидным email-адресом');
+                    case 401:
+                        throw new Error('Не правильные логин или пароль');
+                    case 404:
+                        throw new Error('Пользователь с email не найден');
+                    case 500:
+                        throw new Error('Ошибка на сервере');
+                    default:
+                        throw new Error(`Status code is ${response.status}`);
+                }
             }
+            const result = await response.json();
+    
+            this.headers.authorization = `Bearer ${result.token}`;
+    
+            return result;
+        } catch(error) {
+            return new Promise((resolve, reject) => reject(error));
         }
-
-        const result = await response.json();
-
-        this.headers.authorization = `Bearer ${result.token}`;
-
-        return result;
     }
 
     /*

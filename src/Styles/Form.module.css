@@ -1,0 +1,52 @@
+.form > label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    margin-bottom: 0.5em;
+    color: var(--grey-7);
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+.form > *:not(:last-child) {
+    margin-bottom: 1em;
+}
+
+.form input:not([type="checkbox"], [type="radio"]), 
+.form textarea {
+    display: block;
+    border: 1px solid var(--c-grey-2);
+    border-radius: 8px;
+    width: 100%;
+    padding: 0.75em;
+    color: var(--c-grey-6);
+    font-family: inherit;
+    font-size: 0.9em;
+    line-height: 1;
+}
+
+.form textarea {
+    min-height: 6em;
+    line-height: 1.2;
+}
+
+.form div[data-error] {
+    color: var(--c-danger);
+    font-size: 0.8em;
+}
+
+@media screen and (min-width: 768px) {
+    .form > *:not(:last-child) {
+        margin-bottom: 1.5em;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .form textarea {
+        min-height: 10em;
+    }
+
+    .form div[data-error] {
+        font-size: 0.9em;
+    }
+}

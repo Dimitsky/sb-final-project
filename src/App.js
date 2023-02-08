@@ -11,8 +11,8 @@ import { HomePage } from './Pages/HomePage/HomePage';
 import { DetailProductPage } from './Pages/DetailProductPage/DetailProductPage';
 import { ProfilePage } from './Pages/ProfilePage/ProfilePage';
 import { EditUserPage } from './Pages/EditUserPage/EditUserPage';
-import { SignIn } from './Pages/SignIn/SignIn';
-import { SignUp } from './Pages/SignUp/SignUp';
+import { Signin } from './Pages/Signin/Signin';
+import { Signup } from './Pages/Signup/Signup';
 import { CartPage } from './Pages/CartPage/CartPage';
 import { FavoritesPage } from './Pages/FavoritesPage/FavoritesPage';
 import { AddProductPage } from './Pages/AddProductPage/AddProductPage';
@@ -70,18 +70,18 @@ function App() {
 							<AddProductPage />
 						</RequireAuth>
 					} />
+					<Route path="/signin" element={ 
+						<RequireUnauth>
+							<Signin /> 
+						</RequireUnauth>
+					} />
+					<Route path="/signup" element={ 
+						<RequireUnauth>
+							<Signup /> 
+						</RequireUnauth>
+					} />
 				</Route>
 				
-				<Route path="/signin" element={ 
-					<RequireUnauth>
-						<SignIn /> 
-					</RequireUnauth>
-				} />
-				<Route path="/signup" element={ 
-					<RequireUnauth>
-						<SignUp /> 
-					</RequireUnauth>
-				} />
 				<Route path="*" element={ <NotFound /> } />
 			</Routes>
 		</QueryClientProvider>

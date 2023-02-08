@@ -1,0 +1,60 @@
+.reset {
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    background: none;
+}
+
+.button {
+    composes: reset;
+    border-radius: 8px;
+    padding: 1em;
+    font: 500 0.8em/1 sans-serif;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    box-shadow: 0 5px 10px 0px rgb(0 0 0 / 0.2);
+    cursor: pointer;
+    transition: 
+        opacity 50ms ease,
+        transform 50ms ease, 
+        background-color 50ms ease,
+        box-shadow 50ms ease, 
+        color 50ms ease;
+}
+
+.button:active {
+    box-shadow: 0 0 10px 5px transparent;
+    transform: scale(0.9) translateY(3px);
+}
+
+.primary {
+    composes: button;
+    color: #fff;
+    background-color: #333;
+}
+
+.alter {
+    composes: button;
+    border: 1px solid #333;
+    color: #333;
+    background: #fff;
+}
+
+.clear {
+    composes: button;
+    box-shadow: none;
+}
+
+@media screen and (min-width: 992px) {
+    .button:hover {
+        opacity: 0.9;
+    }
+
+    .alter:hover {
+        background-color: #eee;
+    }
+
+    .clear:hover {
+        color: #999;
+    }
+}

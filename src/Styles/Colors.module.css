@@ -1,0 +1,18 @@
+.colors {
+    /* GREY */
+    --grey-1: #F8F9FA;
+    --grey-2: #E9ECEF;
+    --grey-3: #DEE2E6;
+    --grey-4: #CED4DA;
+    --grey-5: #ADB5BD;
+    --grey-6: #6C757D;
+    --grey-7: #495057;
+    --grey-8: #343A40;
+    --grey-9: #212529;
+
+    /* STATES */
+    --danger: #d94545;
+    --warning: #e3b505;
+    --success: #61b030;
+    --primary: #0d75f8;
+}

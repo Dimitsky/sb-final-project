@@ -1,0 +1,57 @@
+.header {
+    justify-content: center;
+}
+
+.signin {
+    composes: body from '../../Styles/Body.module.css';
+}
+
+.title {
+    composes: title from '../../Styles/Types.module.css';
+    text-align: center;
+}
+
+.text {
+    composes: p2 from '../../Styles/Types.module.css';
+    margin-bottom: 2em;
+}
+
+.form {
+    composes: form from '../../Styles/Form.module.css';
+}
+
+.buttonWrap {
+    display: flex;
+    margin-top: 2em;
+}
+
+.submit {
+    composes: primary from '../../Styles/Button.module.css';
+    flex: 1;
+}
+
+.noPass {
+    composes: p2 from '../../Styles/Types.module.css';
+    text-align: center;
+}
+
+.signup {
+    composes: link from '../../Styles/Types.module.css';
+}
+
+@media screen and (min-width: 992px) {
+    .signin {
+        max-width: 500px;
+        margin: auto;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .buttonWrap {
+        justify-content: flex-end;
+    }
+
+    .submit {
+        flex: unset;
+    }
+}

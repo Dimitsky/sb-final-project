@@ -1,3 +1,4 @@
 .template {
+    composes: colors from '../../Styles/Colors.module.css';
     background-color: var(--c-grey-2);
 }
