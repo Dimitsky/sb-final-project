@@ -63,6 +63,10 @@
 }
 
 @media  screen and (min-width: 992px) {
+    .cart > svg {
+        width: 20px;
+    }
+    
     .list {
         grid-template-columns: 1fr 1fr 1fr;
         gap: 2em;

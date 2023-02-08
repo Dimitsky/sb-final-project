@@ -31,6 +31,9 @@ function useProduct() {
     return useQuery({
         queryKey: ['products', {id: productId}], 
         queryFn: handler, 
+        onError: (error) => {
+            alert(error.message);
+        }
     });
 }
 

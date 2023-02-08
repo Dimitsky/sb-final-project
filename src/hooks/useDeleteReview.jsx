@@ -27,14 +27,15 @@ function useDeleteReview() {
         });
 
         return api.deleteReview(variables.productId, variables.reviewId)
-            .then(result => result)
-            .catch(error => alert(error.message));
     }
 
     return useMutation({
         mutationFn: handler, 
         onSuccess: (data, variables) => {
             queryClient.invalidateQueries(['reviews', {id: variables.productId}]);
+        }, 
+        onError: (error) => {
+            alert(error.message);
         }
     })
 }

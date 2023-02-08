@@ -33,6 +33,9 @@ function useEditProduct(productId) {
         mutationFn: handler, 
         onSuccess: () => {
             queryClient.invalidateQueries(['products']);
+        }, 
+        onError: (error) => {
+            alert(error.message)
         }
     })
 }

@@ -50,6 +50,9 @@ function useFavorites() {
         queryKey: ['favorites'], 
         queryFn: handleFavorites, 
         enabled: !!products, 
+        onError: (error) => {
+            alert(error.message)
+        }
     })
 }
 

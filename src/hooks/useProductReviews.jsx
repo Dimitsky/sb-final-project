@@ -35,6 +35,9 @@ function useProductReviews() {
     return useQuery({
         queryKey: ['reviews', {id: productId}], 
         queryFn: handler, 
+        onError: (error) => {
+            alert(error.message)
+        }
     })
 }
 

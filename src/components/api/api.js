@@ -195,22 +195,28 @@ class Api {
         const init = {
             headers: this.headers, 
         }
-        const response = await fetch(`${this.baseUrl}/products`, init);
 
-        if(!response.ok) {
-            switch (response.status) {
-                case 400:
-                    throw new Error('Токен не передан или передан не в том формате');
-                case 401:
-                    throw new Error('Переданный токен некорректен');
-                default:
-                    throw new Error(`Status code is ${response.status}`);
+        try {
+            const response = await fetch(`${this.baseUrl}/products`, init);
+    
+            if(!response.ok || response.status === 404 || response.status === 500) {
+                switch (response.status) {
+                    case 400:
+                        throw new Error('Токен не передан или передан не в том формате');
+                    case 401:
+                        throw new Error('Переданный токен некорректен');
+                    default:
+                        throw new Error(`Status code is ${response.status}`);
+                }
             }
+    
+            const result = await response.json()
+                .then((result) => result.products);
+    
+            return result;
+        } catch (error) {
+            return new Promise((resolve, reject) => reject(error))
         }
-
-        const result = await response.json();
-
-        return result;
     }
 
     // Загружает товары по массиву id
@@ -388,15 +394,19 @@ class Api {
             headers: this.headers, 
         }
 
-        const response = await fetch(`${this.baseUrl}/products/review/${productId}`, init);
-
-        if (!response.ok) {
-            throw new Error(`Error! Status code is ${response.status}`);
+        try {
+            const response = await fetch(`${this.baseUrl}/products/review/${productId}`, init);
+    
+            if (!response.ok || response.status === 404 || response.status === 500) {
+                throw new Error(`Error! Status code is ${response.status}`);
+            }
+    
+            const result = await response.json();
+    
+            return result;
+        } catch (error) {
+            return new Promise((resolve, reject) => reject(error))
         }
-
-        const result = await response.json();
-
-        return result;
     }
 
     // Добавить отзыв
@@ -430,15 +440,20 @@ class Api {
             headers: this.headers, 
         }
 
-        const response = await fetch(`${this.baseUrl}/products/review/${productId}/${reviewId}`, init);
-
-        if (!response.ok) {
-            throw new Error(`Error! Status code is ${response.status}`);
+        try {
+            const response = await fetch(`${this.baseUrl}/products/review/${productId}/${reviewId}`, init);
+    
+            if (!response.ok || response.status === 404 || response.status === 500) {
+                throw new Error(`Error! Status code is ${response.status}`);
+            }
+    
+            const result = await response.json();
+    
+            return result
+        } catch (error) {
+            return new Promise((resolve, reject) => reject(error))
         }
 
-        const result = await response.json();
-
-        return result;
     }
 
     // Добавить новый товар на сервер 
@@ -473,15 +488,20 @@ class Api {
             body: JSON.stringify(data), 
         };
 
-        const response = await fetch(`${this.baseUrl}/products/${productId}`, init);
-
-        if (!response.ok || response.status === 404 || response.status === 500) {
-            throw new Error(`Error! Status code is ${response.status}`);
+        try {
+            const response = await fetch(`${this.baseUrl}/products/${productId}`, init);
+    
+            if (!response.ok || response.status === 404 || response.status === 500) {
+                throw new Error(`Error! Status code is ${response.status}`);
+            }
+    
+            const result = await response.json();
+    
+            return result;
+        } catch (error) {
+            return new Promise((resolve, reject) => reject(error))
         }
 
-        const result = await response.json();
-
-        return result;
     }
 
     // Удалить товар
@@ -491,12 +511,16 @@ class Api {
             headers: this.headers, 
         };
 
-        const response = await fetch(`${this.baseUrl}/products/${productId}`, init);
-
-        if (!response.ok || response.status === 404 || response.status === 500) {
-            alert(`Error ${response.status}`);
-            throw new Error(`Error! Status code is ${response.status}`);
+        try {
+            const response = await fetch(`${this.baseUrl}/products/${productId}`, init);
+    
+            if (!response.ok || response.status === 404 || response.status === 500) {
+                throw new Error(`Error! Status code is ${response.status}`);
+            }
+        } catch (error) {
+            return new Promise((resolve, reject) => reject(error))
         }
+
     }
 }
 
