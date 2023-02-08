@@ -2,7 +2,6 @@
 import { useSelector } from 'react-redux';
 
 // my comps
-import { Button } from '../Button/Button';
 import { getDiscountedPrice } from '../utils/utils';
 
 // css
@@ -19,7 +18,6 @@ function Order({ className, onClick, data, ...restProps }) {
 
     // Высчитывает итоговую цену, заказанные товары и «поднимает» свое состояние наверх 
     const handleOnClick = () => {
-        return
         const discountedPrice = getDiscountedPrice(cart, data).toFixed(2);
         // Оформляет только выбранные товары
         const selectedProducts = data.filter(product => {

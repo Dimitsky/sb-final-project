@@ -16,6 +16,7 @@ import { Reviews, ReviewsForm } from '../../components/Reviews/Reviews';
 import { ReviewsInfo } from '../../components/ReviewsInfo/ReviewsInfo';
 import { Avatar } from '../../components/Avatar/Avatar';
 import { CartLink } from '../../components/CartLink/CartLink';
+import { SoldOut } from '../../components/SoldOut/SoldOut';
 
 // my hooks
 import { useProduct } from '../../hooks/useProduct';
@@ -196,6 +197,13 @@ function DetailProductPage() {
                                 product.tags.includes('new') ? <Badge text={`New`} style={{backgroundColor: 'var(--c-primary)'}} /> : null
                             }
                         </div>
+                        {
+                            product.available ? (
+                                null
+                            ) : (
+                                <SoldOut />
+                            )
+                        }
                     </div>
                     <div className={classes.body}>
                         <h2 className={classes.name}>
@@ -234,6 +242,7 @@ function DetailProductPage() {
                             className={classes.cart}
                             productId={product._id} 
                             showText={true}
+                            disabled={product.available ? null : true}
                         />
                     </div>
                 </div>

@@ -51,6 +51,7 @@ function CartButton({ className, productId, showText = false, ...restProps }) {
                 ) : (
                     <ButtonIcon 
                         className={[...cn, classes.add].join(' ')}
+                        {...restProps}
                         aria-label="Положить в корзину"
                         onClick={handleAddToCart}
                     >

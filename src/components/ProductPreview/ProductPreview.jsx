@@ -10,6 +10,7 @@ import { CartButton } from '../CartButton/CartButton';
 import { Kebab, KebabItem } from '../Kebab/Kebab';
 import { ModalEditProduct } from '../ModalEditProduct/ModalEditProduct';
 import { ModalDeleteProduct } from '../ModalDeleteProduct/ModalDeleteProduct';
+import { SoldOut } from '../SoldOut/SoldOut';
 
 // my hooks
 import { useUser } from '../../hooks/useUser';
@@ -98,6 +99,13 @@ function ProductPreview( { data: product } ) {
                             src={product.pictures} 
                             alt="Фотография товара" 
                         />
+                        {
+                            product.available ? (
+                                null 
+                            ) : (
+                                <SoldOut />
+                            )
+                        }
                     </Link>
                     <div className={classes.body}>
                         <Link
@@ -151,6 +159,7 @@ function ProductPreview( { data: product } ) {
                         <CartButton 
                             className={classes.cart}
                             productId={product._id}
+                            disabled={product.available ? null : true}
                         />
                     </footer>
                 </div>

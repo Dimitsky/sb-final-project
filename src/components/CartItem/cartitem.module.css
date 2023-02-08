@@ -36,6 +36,15 @@
     left: 1.25em;
 }
 
+.chooseProduct:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.chooseProduct:disabled::after {
+    background-color: var(--grey-4);
+}
+
 .card {
     position: relative;
     display: grid;
@@ -51,6 +60,7 @@
 }
 
 .img {
+    position: relative;
     grid-area: img;
     align-self: center;
     display: flex;
@@ -63,6 +73,10 @@
 .img > img {
     width: 100%;
     max-width: 100%;
+}
+
+.soldOut > span {
+    font-size: 1.1em;
 }
 
 .body {
@@ -129,6 +143,9 @@
 }
 
 @media screen and (min-width: 992px) {
+    .name {
+        font-size: 1.3em;
+    }
     .remove:hover {
         color: var(--c-danger-alter);
     }

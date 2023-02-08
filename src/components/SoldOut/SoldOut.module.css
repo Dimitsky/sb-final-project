@@ -1,0 +1,27 @@
+.soldOut {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(2px);
+}
+
+.text {
+    border: 4px solid var(--c-danger);
+    border-radius: 8px;
+    padding: 0 0.3em;
+    color: var(--c-danger);
+    font-size: 1.3em;
+    font-weight: 600;
+    text-shadow: 2px 2px black;
+    box-shadow: 2px 2px 0 0 black, inset 2px 2px black;
+    transform: rotate(15deg);
+}
+
+@media screen and (min-width: 992px) {
+    .text {
+        font-size: 2.5em;
+    }
+}

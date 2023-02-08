@@ -1,9 +1,9 @@
 // react 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { clearCart } from '../../RTK/slices/cartSlice/cartSlice';
+import { clearCart, setNotChoosed, toggle } from '../../RTK/slices/cartSlice/cartSlice';
 
 // react-router-dom
 import { Link } from 'react-router-dom';
@@ -54,6 +54,16 @@ function CartPage() {
 
         dispatch(clearCart());
     }
+
+    useEffect(() => {
+        if (status === 'success') {
+            data.forEach((product) => {
+                if (!product.available) {
+                    dispatch(setNotChoosed(product._id));
+                }
+            })
+        }
+    }, [data])
     
     if (status === 'loading') return (
         <div className="container">

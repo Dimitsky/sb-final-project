@@ -35,10 +35,15 @@ export const cartSlice = createSlice({
         clearCart: () => [], 
         replaceAllCart: (state, action) => {
             return action.payload
+        }, 
+        setNotChoosed: (state, action) => {
+            const product = state.find((product) => product.id === action.payload);
+
+            product.isChoosed = false;
         }
     }
 })
 
-export const {addToCart, removeFromCart, increment, decrement, toggle, clearCart, replaceAllCart} = cartSlice.actions;
+export const {addToCart, removeFromCart, increment, decrement, toggle, clearCart, replaceAllCart, setNotChoosed} = cartSlice.actions;
 
 export default cartSlice.reducer;

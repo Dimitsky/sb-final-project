@@ -15,8 +15,15 @@
     overflow: hidden;
 }
 
+
 .button:active {
     transform: translateY(3px);
+}
+
+.button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    transform: none;
 }
 
 @media screen and (min-width: 992px) {

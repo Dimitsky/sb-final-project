@@ -10,6 +10,7 @@ import { Price } from '../Price/Price';
 import { Counter } from '../Counter/Counter';
 import { ButtonIcon } from '../ButtonIcon/ButtonIcon';
 import { Badge } from '../Badge/Badge';
+import { SoldOut } from '../SoldOut/SoldOut';
 
 // css
 import classes from './cartitem.module.css';
@@ -67,6 +68,13 @@ function CartItem({ className, data, ...restProps }) {
                         src={data.pictures} 
                         alt="Фотография продукта" 
                     />
+                    {
+                        data.available ? (
+                            null
+                        ) : (
+                            <SoldOut className={classes.soldOut} />
+                        )
+                    }
                 </div>
                 <div className={classes.body}>
                     {/* Заголовок товара */}
@@ -94,18 +102,31 @@ function CartItem({ className, data, ...restProps }) {
                         type="checkbox"
                         name={data._id}
                         id={data._id}
-                        checked={cart.find(cartProduct => cartProduct.id === data._id).isChoosed}
+                        checked={
+                            data.available ? (
+                                cart.find(cartProduct => cartProduct.id === data._id).isChoosed
+                            ) : (
+                                false
+                            )
+                        }
+                        disabled={data.available ? null : true}
                         onChange={handleToggle} 
                     />
-                    <Counter 
-                        // т.к. клиентский ui зависит от данных в tanStack, а количество, которое пользователь хочет купить,
-                        // хранится в redux, то приходится для каждого товара из tanStack искать его количество в состоянии redux'а
-                        className={classes.counter}
-                        count={cart.find(cartProduct => cartProduct.id === data._id).count}
-                        maxCount={data.stock}
-                        handlerDecrement={handleDecrement}
-                        handlerIncrement={handleIncrement}
-                    />
+                    {
+                        data.available ? (
+                            <Counter 
+                                // т.к. клиентский ui зависит от данных в tanStack, а количество, которое пользователь хочет купить,
+                                // хранится в redux, то приходится для каждого товара из tanStack искать его количество в состоянии redux'а
+                                className={classes.counter}
+                                count={cart.find(cartProduct => cartProduct.id === data._id).count}
+                                maxCount={data.stock}
+                                handlerDecrement={handleDecrement}
+                                handlerIncrement={handleIncrement}
+                            />
+                        ) : (
+                            null
+                        )
+                    }
                     {/* Выводит цену товара (если есть скидка, то выводится две цены – со скидкой и без) */}
                     <Price
                         className={classes.price} 

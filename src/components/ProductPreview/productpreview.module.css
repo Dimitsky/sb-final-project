@@ -42,6 +42,7 @@
 }
 
 .img {
+    position: relative;
     grid-area: img;
     align-self: center;
     display: flex;
