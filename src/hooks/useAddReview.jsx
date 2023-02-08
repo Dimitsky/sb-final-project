@@ -35,14 +35,15 @@ function useAddReview() {
         }
 
         return api.addReview(body, productId)
-            .then((result) => result)
-            .catch((error) => alert(error.message))
     }
 
     return useMutation({
         mutationFn: handler, 
         onSuccess: () => {
             queryClient.invalidateQueries(['reviews', {id: productId}]);
+        }, 
+        onError: (error) => {
+            alert(error.message);
         }
     })
 }

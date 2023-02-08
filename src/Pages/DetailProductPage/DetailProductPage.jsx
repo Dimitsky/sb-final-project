@@ -15,6 +15,7 @@ import { CartButton } from '../../components/CartButton/CartButton';
 import { Reviews, ReviewsForm } from '../../components/Reviews/Reviews';
 import { ReviewsInfo } from '../../components/ReviewsInfo/ReviewsInfo';
 import { Avatar } from '../../components/Avatar/Avatar';
+import { CartLink } from '../../components/CartLink/CartLink';
 
 // my hooks
 import { useProduct } from '../../hooks/useProduct';
@@ -149,7 +150,7 @@ function DetailProductPage() {
                     <BackButton 
                         text="Назад"
                     />
-                    <CartButton />
+                    <CartLink className={classes.cart} />
                 </Header>
                 <div className={classes.card}>
                     <div className={classes.top}>

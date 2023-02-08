@@ -19,7 +19,7 @@ function useAddProduct() {
     // handlers
     // 
 
-    // Добавляет товар на сервер 
+    // Управляет добавлением товара на сервер  
     const handler = (data) => {
         const api = new Api({
             baseUrl: BASE_SERVER_URL, 
@@ -38,6 +38,9 @@ function useAddProduct() {
         onSuccess: () => {
             queryClient.invalidateQueries(['products']);
             navigate('/');
+        }, 
+        onError: (error) => {
+            alert(error.message);
         }
     })
 }

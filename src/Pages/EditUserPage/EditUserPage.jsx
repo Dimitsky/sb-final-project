@@ -69,12 +69,10 @@ function EditUserForm({ user }) {
         },
         validationSchema: Yup.object().shape({
             avatar: Yup.string().required('Необходимо заполнить'),
-            name: Yup.string().required('Необходимо заполнить'),
-            about: Yup.string().required('Необходимо заполнить'),
+            name: Yup.string().required('Необходимо заполнить').max(100, 'Максимальная длина 100 символов'),
+            about: Yup.string().required('Необходимо заполнить').max(300, 'Максимальная длина 300 символов').min(2, 'Нужно минимум 2 символа'),
         }),
-        onSubmit: variables => {
-            mutation.mutate(variables)
-        },
+        onSubmit: mutation.mutate,
     });
 
     return (

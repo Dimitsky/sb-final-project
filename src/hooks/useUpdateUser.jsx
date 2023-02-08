@@ -16,6 +16,46 @@ function useUpdateUser() {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
 
+    const api = new Api({
+        baseUrl: BASE_SERVER_URL, 
+        groupId: SERVER_GROUP_NAME, 
+        headers: {
+            'Content-Type': 'application/json', 
+            'authorization': `Bearer ${token}`, 
+        }
+    });
+
+    // handlers
+    // 
+
+    // Управляет обновлением аватара 
+    const handleUpdateAvatar = ({ avatar }) => {
+        return api.updateUserAvatar({avatar})
+    }
+
+    // Управляет обновлением имени и информации «о себе»
+    const handleUpdateInfo = ({ name, about }) => {
+        return api.updateUserInfo({name, about})
+    }
+
+    const { data: avatar } = useMutation({
+        mutationFn: handleUpdateAvatar, 
+        onError: (error) => {
+            alert(error.message);
+        }
+    });
+
+    useMutation({
+        mutationFn: handleUpdateInfo, 
+        onSuccess: () => {
+            queryClient.invalidateQueries(['user']);
+        }, 
+        onError: (error) => {
+            alert(error.message);
+        }, 
+        enabled: !!avatar, 
+    })
+
     return useMutation({
         mutationKey: ['userUpdate'], 
         mutationFn: values => {

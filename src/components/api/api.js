@@ -48,7 +48,7 @@ class Api {
         try {
             const response = await fetch(`${this.baseUrl}/signup`, init);
     
-            if (!response.ok) {
+            if (!response.ok || response.status === 404 || response.status === 500) {
                 switch (response.status) {
                     case 400:
                         throw new Error('Некорректно заполнено одно из полей');
@@ -97,7 +97,7 @@ class Api {
         try {
             const response = await fetch(`${this.baseUrl}/signin`, init);
     
-            if (!response.ok) {
+            if (!response.ok || response.status === 404 || response.status === 500) {
                 switch (response.status) {
                     case 400:
                         throw new Error('Поле email должно быть валидным email-адресом');
@@ -139,15 +139,20 @@ class Api {
             headers: this.headers, 
         }
 
-        const response = await fetch( `${this.baseUrl}/v2/${this.groupId}/users/me`, init );
-
-        if( !response.ok ) {
-            throw new Error( `Error! Status code is ${response.status}` );
+        try {
+            const response = await fetch(`${this.baseUrl}/v2/${this.groupId}/users/me`, init);
+    
+            if(!response.ok || response.status === 404 || response.status === 500) {
+                throw new Error(`Error! Status code is ${response.status}`);
+            }
+    
+            const result = await response.json();
+    
+            return result;
+        } catch (error) {
+            return new Promise((resolve, reject) => reject(error))
         }
 
-        const result = await response.json();
-
-        return result;
     }
 
     /*
@@ -219,15 +224,20 @@ class Api {
             headers: this.headers, 
         }
 
-        const response = await fetch( `${ this.baseUrl }/products/${ id }`, init );
-
-        if ( !response.ok || response.status === 404 || response.status === 500 ) {
-            throw new Error( `Error ${ response.status }: ${ response.statusText }` );
+        try {
+            const response = await fetch( `${ this.baseUrl }/products/${ id }`, init );
+    
+            if ( !response.ok || response.status === 404 || response.status === 500 ) {
+                throw new Error( `Error ${ response.status }: ${ response.statusText }` );
+            }
+    
+            const result = await response.json();
+    
+            return result
+        } catch (error) {
+            return new Promise((resolve, reject) => reject(error))
         }
 
-        const result = await response.json();
-
-        return result;
     }
 
     /*
@@ -269,7 +279,7 @@ class Api {
 
         const response = await fetch( `${this.baseUrl}/products/likes/${productId}`, init );
 
-        if( !response.ok ) {
+        if(!response.ok || response.status === 404 || response.status === 500) {
             switch ( response.status ) {
                 case 401:
                     throw new Error( 'Пользователь не авторизован' );
@@ -296,22 +306,25 @@ class Api {
             body: JSON.stringify( body ), 
         }
 
-        const response = await fetch( `${ this.baseUrl }/v2/${ this.groupId }/users/me`, init );
-
-        if ( !response.ok ) {
-            switch ( response.status ) {
-                case 400: 
-                    const result = await response.json();
-                    
-                    throw new Error( `Status code is ${response.status}: ${result.message}` );
-                default:
-                    throw new Error( `Status code is ${response.status}: ${ response.statusText }` );                
+        try {
+            const response = await fetch( `${ this.baseUrl }/v2/${ this.groupId }/users/me`, init );
+    
+            if (!response.ok || response.status === 404 || response.status === 500) {
+                switch (response.status) {
+                    case 400: 
+                        throw new Error(`Status code is ${response.status}`);
+                    default:
+                        throw new Error( `Status code is ${response.status}: ${ response.statusText }` );                
+                }
             }
+    
+            const result = await response.json();
+    
+            return result;
+        } catch (error) {
+            return new Promise((resolve, reject) => reject(error))
         }
 
-        const result = await response.json();
-
-        return result;
     }
 
     /*
@@ -328,18 +341,21 @@ class Api {
             body: JSON.stringify( data )
         }
 
-        const response = await fetch( `${ this.baseUrl }/v2/${ this.groupId }/users/me/avatar`, init );
-
-        if ( !response.ok ) {
-            switch ( response.status ) {
-                case 400: 
-                    const result = await response.json();
-                    
-                    throw new Error( `Status code is ${response.status}: ${result.message}` );
-                default:
-                    throw new Error( `Status code is ${response.status}: ${ response.statusText }` );
+        try {
+            const response = await fetch( `${ this.baseUrl }/v2/${ this.groupId }/users/me/avatar`, init );
+    
+            if (!response.ok || response.status === 404 || response.status === 500) {
+                switch ( response.status ) {
+                    case 400:                    
+                        throw new Error( `Status code is ${response.status}` );
+                    default:
+                        throw new Error( `Status code is ${response.status}: ${ response.statusText }` );
+                }
             }
+        } catch (error) {
+            return new Promise((resolve, reject) => reject(error))
         }
+
     }
 
     // Поиск товаров 
@@ -391,15 +407,20 @@ class Api {
             body: JSON.stringify(data), 
         }
 
-        const response = await fetch(`${this.baseUrl}/products/review/${productId}`, init);
-
-        if (!response.ok) {
-            throw new Error(`Error! Status code is ${response.status}`);
+        try {
+            const response = await fetch(`${this.baseUrl}/products/review/${productId}`, init);
+    
+            if (!response.ok || response.status === 404 || response.status === 500) {
+                throw new Error(`Error! Status code is ${response.status}`);
+            }
+    
+            const result = await response.json();
+    
+            return result;
+        } catch (error) {
+            return new Promise((resolve, reject) => reject(error))
         }
 
-        const result = await response.json();
-
-        return result;
     }
 
     // Удалить отзыв
@@ -428,16 +449,20 @@ class Api {
             body: JSON.stringify(data), 
         };
 
-        const response = await fetch(`${this.baseUrl}/products`, init);
-
-        if (!response.ok || response.status === 404 || response.status === 500) {
-            alert(`Error ${response.status}`);
-            throw new Error(`Error! Status code is ${response.status}`);
+        try {
+            const response = await fetch(`${this.baseUrl}/products`, init);
+    
+            if (!response.ok || response.status === 404 || response.status === 500) {
+                alert(`Error ${response.status}`);
+                throw new Error(`Error! Status code is ${response.status}`);
+            }
+    
+            const result = await response.json();
+    
+            return result
+        } catch (error) {
+            return new Promise((resolve, reject) => reject(error))
         }
-
-        const result = await response.json();
-
-        return result;
     }
 
     // Редактировать товар

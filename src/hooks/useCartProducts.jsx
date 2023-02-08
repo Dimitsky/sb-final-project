@@ -30,6 +30,9 @@ function useCartProducts() {
         queryKey: ['cart'], 
         queryFn: handler, 
         cacheTime: 0, 
+        onError: (error) => {
+            alert(error.message);
+        }
     })
 }
 

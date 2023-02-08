@@ -26,6 +26,9 @@ function useUser() {
             return api.getUserData();
         }, 
         enabled: !!token, 
+        onError: (error) => {
+            alert(error.message)
+        }
     });
 }
 
