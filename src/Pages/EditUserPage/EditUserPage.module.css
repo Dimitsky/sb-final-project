@@ -24,6 +24,14 @@
     composes: error from '../../components/Form/Form.module.css';
 }
 
+.cancel {
+    composes: clear from '../../Styles/Button.module.css';
+}
+
+.submit {
+    composes: primary from '../../Styles/Button.module.css';
+}
+
 @media screen and (min-width: 768px) {
     .edit {
         padding: 1em;

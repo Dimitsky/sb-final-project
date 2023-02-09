@@ -104,10 +104,14 @@
     border: none;
     border-radius: 0;
     padding: 0;
-    color: var( --danger );
-    font-size: 1em;
+    font-size: 0.9em;
+    line-height: 1;
     background: none;
     cursor: pointer;
+}
+
+.iconLogout {
+    color: var( --danger );
 }
 
 .open {
@@ -265,6 +269,10 @@
     .link {
         font-size: 1em;
         font-weight: 500;
+    }
+    
+    .link, 
+    .logout {
         padding: 0.5em 0;
     }
 

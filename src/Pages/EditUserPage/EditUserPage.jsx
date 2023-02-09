@@ -115,16 +115,19 @@ function EditUserForm({ user }) {
                 {formik.errors.about ? <div className={classes.error}>{ formik.errors.about }</div> : null}
             </FormBox>
             <FormBox className={classes.btnWrap}>
-                <Button 
-                    variant="outline"
+                <button 
+                    className={classes.cancel}
                     type="button"
                     onClick={ () => navigate( '/profile' ) }
                 >
                     Отменить
-                </Button>
-                <Button type="submit">
+                </button>
+                <button 
+                    className={classes.submit}
+                    type="submit"
+                >
                     Применить
-                </Button>
+                </button>
             </FormBox>
         </Form>
     );

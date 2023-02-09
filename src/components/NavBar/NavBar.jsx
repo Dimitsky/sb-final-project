@@ -96,7 +96,7 @@ function NavBar() {
                             type="button"
                             onClick={ handleLogout }
                         >
-                            <IconLogout className={classes.icon} />
+                            <IconLogout className={[classes.icon, classes.iconLogout].join(' ')} />
                             Выйти
                         </button>
                     </li>
