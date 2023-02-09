@@ -114,7 +114,7 @@ class Api {
             const result = await response.json();
     
             this.headers.authorization = `Bearer ${result.token}`;
-    
+
             return result;
         } catch(error) {
             return new Promise((resolve, reject) => reject(error));

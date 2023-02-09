@@ -1,6 +1,7 @@
 .badgeWrap {
     position: absolute;
     top: 0.75rem;
+    z-index: 1000;
     left: 0;
     display: grid;
     gap: 0.5rem;

@@ -28,60 +28,35 @@ function useUpdateUser() {
     // handlers
     // 
 
-    // Управляет обновлением аватара 
-    const handleUpdateAvatar = ({ avatar }) => {
-        return api.updateUserAvatar({avatar})
+    // 
+    const handler = (values) => {
+        const api = new Api( {
+            baseUrl: BASE_SERVER_URL, 
+            groupId: SERVER_GROUP_NAME, 
+            headers: {
+                'Content-Type': 'application/json', 
+                'authorization': `Bearer ${ token }`, 
+            }
+        } );
+
+        return api.updateUserInfo({
+            name: values.name, 
+            about: values.about, 
+        })
+            .then(() => {
+                return api.updateUserAvatar( {
+                    avatar: values.avatar, 
+                } );
+            })
+            .then(() => navigate('/profile'))
+            .catch(error => {
+                alert( error )
+            })
     }
-
-    // Управляет обновлением имени и информации «о себе»
-    const handleUpdateInfo = ({ name, about }) => {
-        return api.updateUserInfo({name, about})
-    }
-
-    const { data: avatar } = useMutation({
-        mutationFn: handleUpdateAvatar, 
-        onError: (error) => {
-            alert(error.message);
-        }
-    });
-
-    useMutation({
-        mutationFn: handleUpdateInfo, 
-        onSuccess: () => {
-            queryClient.invalidateQueries(['user']);
-        }, 
-        onError: (error) => {
-            alert(error.message);
-        }, 
-        enabled: !!avatar, 
-    })
 
     return useMutation({
         mutationKey: ['userUpdate'], 
-        mutationFn: values => {
-            const api = new Api( {
-                baseUrl: BASE_SERVER_URL, 
-                groupId: SERVER_GROUP_NAME, 
-                headers: {
-                    'Content-Type': 'application/json', 
-                    'authorization': `Bearer ${ token }`, 
-                }
-            } );
-
-            return api.updateUserInfo({
-                name: values.name, 
-                about: values.about, 
-            })
-                .then(() => {
-                    return api.updateUserAvatar( {
-                        avatar: values.avatar, 
-                    } );
-                })
-                .then(() => navigate('/profile'))
-                .catch(error => {
-                    alert( error )
-                })
-        },
+        mutationFn: handler,
         onSuccess: () => {        
             queryClient.invalidateQueries(['user']);
         },

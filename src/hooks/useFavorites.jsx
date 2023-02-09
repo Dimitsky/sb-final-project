@@ -39,7 +39,7 @@ function useFavorites() {
         const newFavoritesIds = favoritesIds.filter((favoriteId) => products.find((product) => product._id === favoriteId));
 
         // Если из избранного были удалены какие то товары, то обновляем список в редаксе. 
-        if (favoritesIds.length !== newFavoritesIds) {
+        if (favoritesIds.length !== newFavoritesIds.length) {
             dispatch(replaceAllFavorites(newFavoritesIds));
         }
 
