@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { clearCart, setNotChoosed, toggle } from '../../RTK/slices/cartSlice/cartSlice';
+import { clearCart, setNotChoosed } from '../../RTK/slices/cartSlice/cartSlice';
 
 // react-router-dom
 import { Link } from 'react-router-dom';
@@ -33,7 +33,7 @@ function CartPage() {
     // Состояние я использовал для вывода чека после оформление заказа. 
     // Processed означает, что заказ оформлен. Not placed значит еще нет. 
     // В зависимости от этого статуса компонент рендерит разные части интерфейса, 
-    // а так же использует данные из состояния для вывода чека после покупки 
+    // а так же использует данные из состояния для вывода чека после покупки
     const [order, setOrder] = useState({
         status: 'not placed', 
     });
@@ -63,7 +63,7 @@ function CartPage() {
                 }
             })
         }
-    }, [data])
+    }, [data, dispatch, status])
     
     if (status === 'loading') return (
         <div className="container">

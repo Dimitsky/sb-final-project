@@ -1,7 +1,3 @@
-// my comps
-import { ButtonIcon } from '../ButtonIcon/ButtonIcon';
-import { IconCancelSquare, IconCheckSquare } from '../Icon/Icon';
-
 // css
 import classes from './ConfirmDialog.module.css';
 
@@ -28,20 +24,18 @@ function ConfirmDialog({ className, confirmHandler, cancelHandler, text, ...rest
                     text || null
                 }
             </p>
-            <ButtonIcon
+            <button
                 className={[classes.button, classes.cancelButton].join(' ')}
                 onClick={handleCancel}
                 >
-                <IconCancelSquare className={classes.cancelIcon} />
                 Отмена
-            </ButtonIcon>
-            <ButtonIcon
+            </button>
+            <button
                 className={[classes.button, classes.confirmButton].join(' ')}
                 onClick={handleConfirm}
             >
-                <IconCheckSquare className={classes.confirmIcon} />
                 Подтвердить
-            </ButtonIcon>
+            </button>
         </div>
     )
 }

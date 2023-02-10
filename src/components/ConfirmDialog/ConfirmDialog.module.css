@@ -15,29 +15,12 @@
     text-align: center;
 }
 
-.button {
-    grid-template-columns: min-content min-content;
-    gap: 1em;
-    border: 1px solid;
-    padding: 0 1em;
-}
-
 .cancelButton {
-    grid-area: cancel;
-    border-color: var(--c-danger);
+    composes: clear from '../../Styles/Button.module.css';
 }
 
 .confirmButton {
-    grid-area: confirm;
-    border-color: var(--c-success-alter);
-}
-
-.cancelIcon {
-    color: var(--c-danger);
-}
-
-.confirmIcon {
-    color: var(--c-success-alter);
+    composes: primary from '../../Styles/Button.module.css';
 }
 
 @media screen and (min-width: 992px) {
