@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { REDUX_LS_KEY } from "../../../components/consts/consts";
 
 const SORT = {
     PRICE_UP: 'PRICE_UP', 

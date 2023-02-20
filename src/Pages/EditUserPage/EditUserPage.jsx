@@ -10,7 +10,6 @@ import { Header } from '../../components/Header/Header';
 import { CartLink } from '../../components/CartLink/CartLink';
 import { Logo } from '../../components/Logo/Logo';
 import { Form, FormControl, FormBox, FormTextarea } from '../../components/Form/Form';
-import { Button } from '../../components/Button/Button';
 import { BackButton } from '../../components/BackButton/BackButton';
 
 // my hooks

@@ -16,15 +16,6 @@ function useUpdateUser() {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
 
-    const api = new Api({
-        baseUrl: BASE_SERVER_URL, 
-        groupId: SERVER_GROUP_NAME, 
-        headers: {
-            'Content-Type': 'application/json', 
-            'authorization': `Bearer ${token}`, 
-        }
-    });
-
     // handlers
     // 
 

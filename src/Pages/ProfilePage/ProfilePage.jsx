@@ -15,7 +15,6 @@ import { NavBar } from '../../components/NavBar/NavBar';
 import { CartLink } from '../../components/CartLink/CartLink';
 import { Search } from '../../components/Search/Search';
 import { Avatar } from '../../components/Avatar/Avatar';
-import { Button } from '../../components/Button/Button';
 import { IconCart, IconChevron, IconFileAdd, IconLogout, IconStar } from '../../components/Icon/Icon';
 
 // my hooks

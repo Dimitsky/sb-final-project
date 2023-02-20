@@ -8,7 +8,7 @@ export function useDebounce(value, ms = 300) {
         const timeoutId = setTimeout(() => setDebounceValue(value), ms);
 
         return () => clearTimeout(timeoutId);
-    }, [value])
+    }, [value, ms])
 
     return debounceValue;
 }

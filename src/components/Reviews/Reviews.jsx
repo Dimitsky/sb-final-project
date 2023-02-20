@@ -1,5 +1,5 @@
 // formik
-import { Formik, useFormik } from 'formik';
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 // my comps
@@ -17,15 +17,7 @@ import classes from './Reviews.module.css';
 import { useAddReview } from '../../hooks/useAddReview';
 import { useDeleteReview } from '../../hooks/useDeleteReview';
 
-// 
-const placeholderTemplate = (
-    <div className={classes.placeholder}>
-        Нет отзывов
-    </div>
-);
-
 function Reviews({ data, placeholder, ...restProps }) {
-    const ph = placeholder ? placeholder : placeholderTemplate;
     const { data: userData, status: userStatus } = useUser();
     const deleteReviewMutation = useDeleteReview();
 

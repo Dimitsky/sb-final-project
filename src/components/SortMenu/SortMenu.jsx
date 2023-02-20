@@ -8,10 +8,6 @@ import { setSort , SORT} from '../../RTK/slices/sortSlice/sortSlice';
 // react router dom
 import { useSearchParams } from 'react-router-dom';
 
-// my comps
-import { Kebab, KebabItem } from '../Kebab/Kebab';
-import { IconChevronDown, IconChevronUp } from '../Icon/Icon';
-
 // css
 import classes from './SortMenu.module.css';
 

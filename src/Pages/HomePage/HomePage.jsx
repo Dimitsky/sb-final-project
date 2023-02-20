@@ -8,14 +8,13 @@ import { useSelector } from 'react-redux';
 import { getFilteredProducts } from '../../components/Categories/Categories';
 import { ProductPreview } from '../../components/ProductPreview/ProductPreview';
 import { Placeholder } from '../../components/Placeholder/Placeholder';
-import { FILTERS } from '../../RTK/slices/visibilityFilterSlice/visibilityFilterSlice';
-import { Categories, CategoriesLink } from '../../components/Categories/Categories';
+import { Categories } from '../../components/Categories/Categories';
 import { Header } from '../../components/Header/Header';
 import  { NavBar } from '../../components/NavBar/NavBar';
 import { Logo } from '../../components/Logo/Logo';
 import { CartLink } from '../../components/CartLink/CartLink';
 import { Search } from '../../components/Search/Search';
-import { SortMenu, SORT, getSortedProducts } from '../../components/SortMenu/SortMenu';
+import { SortMenu, getSortedProducts } from '../../components/SortMenu/SortMenu';
 import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon';
 import { IconFilter } from '../../components/Icon/Icon';
 
